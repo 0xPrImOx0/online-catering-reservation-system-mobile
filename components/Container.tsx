@@ -46,7 +46,7 @@ const Container: FC<ContainerProps> = ({
             {children}
           </ScrollView>
         ) : (
-          <View className={`${viewStyle}`}>{children}</View>
+          <View className={`h-full w-full ${viewStyle}`}>{children}</View>
         )}
       </KeyboardAvoidingView>
     </SafeAreaView>

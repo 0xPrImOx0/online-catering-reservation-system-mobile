@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import React, { FC, ReactNode } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 
 interface ContainerProps {
   children?: ReactNode;
@@ -29,6 +30,7 @@ const Container: FC<ContainerProps> = ({
 }) => {
   return (
     <SafeAreaView className={`bg-[${bg}] h-full flex-1 ${containerStyle}`}>
+      <StatusBar />
       <KeyboardAvoidingView
         className={"flex-1 justify-center"}
         behavior={Platform.OS === "ios" ? "padding" : "padding"}

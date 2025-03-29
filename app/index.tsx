@@ -6,7 +6,12 @@ import "../global.css";
 const index = () => {
   return (
     <Container scroll={false}>
-      <Text className="text-red-500 text-[300px] self-center">Hello World</Text>
+      <Text className="text-blue-500 text-4xl self-center border border-green-400">
+        Hello World
+      </Text>
+      <Text className="text-blue-500 text-xl self-center border border-red-900">
+        Hello Worldsdasdsadasdawdadadwdaw
+      </Text>
     </Container>
   );
 };

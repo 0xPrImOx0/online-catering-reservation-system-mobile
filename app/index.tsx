@@ -110,11 +110,13 @@ export default function Screen() {
           >
             <Text>Update</Text>
           </Button>
-          <CustomButton
-            label="Get Started"
-            textStyle="font-medium text-base text-[#fff] w-full"
+          <Button
+            variant="outline"
+            className="shadow shadow-foreground/5"
             onPress={() => router.push("./(auth)/signIn")}
-          />
+          >
+            <Text>Log in</Text>
+          </Button>
         </CardFooter>
       </Card>
     </View>

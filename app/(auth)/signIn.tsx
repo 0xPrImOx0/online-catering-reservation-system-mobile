@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native"
+import { View, Text, TextInput, TouchableOpacity, Image, Alert } from "react-native"
 import { Link, router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import CustomButton from "../../components/CustomButton"
@@ -23,17 +23,14 @@ export default function SignInScreen() {
 
   const handleGoogleSignIn = () => {
     // Implement Google sign in
+    Alert.alert('Google Sign In', 'Google sign in would be implemented here');
   }
 
   return (
     <View className="flex-1 bg-black">
       <StatusBar style="light" />
-      <View className="items-center mb-8 mt-10">
-        <Image source={require("../../assets/images/logo.png")} className="w-24 h-24" resizeMode="contain" />
-        <Text className="text-white text-2xl font-bold mt-2">Food Sentinel</Text>
-      </View>
-
       <View className="flex-1 justify-center px-6">
+      <View className="border-[1.5px] border-white rounded-2xl p-6">
         <View className="mb-8">
           <Text className="text-white text-4xl font-bold mb-2">Sign in to your account</Text>
           <Text className="text-gray-400 text-xl">Enter your email below to sign in to your account</Text>
@@ -55,11 +52,6 @@ export default function SignInScreen() {
         <View className="mb-4">
           <View className="flex-row justify-between items-center mb-2">
             <Text className="text-white text-lg">Password</Text>
-            <Link href="/(auth)/forgotPassword" asChild>
-              <TouchableOpacity>
-                <Text className="text-white">Forgot password?</Text>
-              </TouchableOpacity>
-            </Link>
           </View>
           <TextInput
             className="bg-black text-white border border-gray-700 rounded-xl px-4 py-3 text-lg"
@@ -69,7 +61,13 @@ export default function SignInScreen() {
             onChangeText={setPassword}
             secureTextEntry
           />
+          <Link href="/(auth)/forgotPassword" asChild>
+              <TouchableOpacity>
+                <Text className="text-white mt-4">Forgot password?</Text>
+              </TouchableOpacity>
+            </Link>
         </View>
+        
 
         <CustomButton
           label={loading ? "Signing in..." : "Sign In"}
@@ -88,7 +86,7 @@ export default function SignInScreen() {
         <CustomButton
           onPress={handleGoogleSignIn}
           buttonStyles="bg-black border border-gray-700 py-4 rounded-full mb-4"
-          icon={require("../../assets/images/google.png")}
+          icon={require("../../assets/google.png")}
           iconStyle="w-5 h-5 mr-2"
           label="Sign in with Google"
           textStyle="text-white text-lg"
@@ -101,6 +99,7 @@ export default function SignInScreen() {
               <Text className="text-white text-lg font-medium">Sign up</Text>
             </TouchableOpacity>
           </Link>
+        </View>
         </View>
       </View>
     </View>

@@ -25,16 +25,8 @@ export default function ForgotPasswordScreen() {
 
   return (
     <Container bg="#000" scroll={true} containerStyle="px-0 bg-black">
-      <View className="items-center mb-8 mt-10">
-        <Image 
-          source={require('../../assets/images/logo.png')} 
-          className="w-24 h-24"
-          resizeMode="contain"
-        />
-        <Text className="text-white text-3xl font-bold mt-2">Food Sentinel</Text>
-      </View>
-      
       <View className="flex-1 justify-center px-6">
+      <View className="border-[1.5px] border-white rounded-2xl p-6"> 
         <View className="mb-8">
           <Text className="text-white text-4xl font-bold mb-2">Forgot your password?</Text>
           <Text className="text-gray-400 text-xl">
@@ -62,6 +54,7 @@ export default function ForgotPasswordScreen() {
           buttonStyles="bg-white py-4 rounded-full mb-4"
           textStyle="text-black text-lg"
         />
+      </View>
       </View>
     </Container>
   );

@@ -10,11 +10,11 @@ export default function home() {
         {/* Header with logo and profile */}
         <View className="flex-row justify-between items-center mb-8">
           <View className="flex-row items-center">
-            <Image source={require("../../assets/images/logo.png")} className="w-16 h-16" resizeMode="contain" />
+            <Image source={require("../../assets/catering-logo.png")} className="w-16 h-16" resizeMode="contain" />
             <Text className="text-white text-2xl font-bold ml-2">Food Sentinel</Text>
           </View>
           <TouchableOpacity className="rounded-full overflow-hidden" onPress={() => {}}>
-            <Image source={require("../../assets/images/Profile-Pic.png")} className="w-12 h-12" />
+            <Image source={require("../../assets/daug-avatar.jpg")} className="w-12 h-12" />
           </TouchableOpacity>
         </View>
 
@@ -38,7 +38,7 @@ export default function home() {
 
         {/* Featured image */}
         <View className="rounded-3xl overflow-hidden mb-8">
-          <Image source={require("../../assets/images/catering.jpg")} className="w-full h-56" resizeMode="cover" />
+          <Image source={require("../../assets/catering-logo.png")} className="w-full h-56" resizeMode="cover" />
         </View>
 
         {/* About section */}

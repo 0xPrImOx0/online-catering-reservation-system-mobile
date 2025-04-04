@@ -21,7 +21,7 @@ export default function SplashScreen() {
       
       {/* Logo image */}
       <Image 
-        source={require('../../assets/images/logo.png')} 
+        source={require('../../assets/catering-logo.png')} 
         className="w-40 h-40"
         resizeMode="contain"
       />

@@ -52,18 +52,9 @@ export default function SignUpScreen() {
 
   return (
     <Container bg="#000" scroll={true} containerStyle="px-0 bg-black">
-      {/* Logo and app name */}
-      <View className="items-center mb-8 mt-10">
-        <Image 
-          source={require('../../assets/images/logo.png')} 
-          className="w-24 h-24"
-          resizeMode="contain"
-        />
-        <Text className="text-white text-3xl font-bold mt-2">Food Sentinel</Text>
-      </View>
-      
       {/* Sign up form */}
       <View className="flex-1 justify-center px-6">
+      <View className="border-[1.5px] border-white rounded-2xl p-6">
         {/* Header text */}
         <View className="mb-8">
           <Text className="text-white text-4xl font-bold mb-2">Create a new account</Text>
@@ -144,7 +135,7 @@ export default function SignUpScreen() {
         <CustomButton
           onPress={handleGoogleSignIn}
           buttonStyles="bg-black border border-gray-700 py-4 rounded-full mb-4"
-          icon={require('../../assets/images/google.png')}
+          icon={require('../../assets/google.png')}
           iconStyle="w-5 h-5 mr-2"
           label="Sign in with Google"
           textStyle="text-white text-lg"
@@ -158,6 +149,7 @@ export default function SignUpScreen() {
               <Text className="text-white text-lg font-medium">Sign in</Text>
             </TouchableOpacity>
           </Link>
+        </View>
         </View>
       </View>
     </Container>

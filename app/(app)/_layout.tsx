@@ -1,7 +1,16 @@
 "use client"
 
 import React, { useState } from "react"
-import { View, TouchableOpacity, Animated, Dimensions, ScrollView, StatusBar as RNStatusBar, Image, Platform } from "react-native"
+import {
+  View,
+  TouchableOpacity,
+  Animated,
+  Dimensions,
+  ScrollView,
+  StatusBar as RNStatusBar,
+  Image,
+  Platform,
+} from "react-native"
 import { Stack, useRouter, usePathname } from "expo-router"
 import { Ionicons } from "@expo/vector-icons"
 import { Text } from "~/components/ui/text"
@@ -11,7 +20,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { Avatar } from "~/components/ui/avatar"
 
 const { width, height } = Dimensions.get("window")
-const HEADER_HEIGHT = 10// Approximate header height
+const HEADER_HEIGHT = 10 // Approximate header height
 const DRAWER_HEIGHT = height * 0.45 // 80% of screen height
 
 export default function AppLayout() {
@@ -53,7 +62,7 @@ export default function AppLayout() {
   ]
 
   const navigateTo = (route: string) => {
-    router.push("/")
+    router.push(route)
     toggleDrawer()
   }
 
@@ -74,7 +83,11 @@ export default function AppLayout() {
     >
       <View className="flex-row items-center">
         <Avatar className="w-10 h-10 mr-3" alt={""}>
-          <Image source={require("../../assets/daug-avatar.jpg")} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
+          <Image
+            source={require("../../assets/daug-avatar.jpg")}
+            style={{ width: "100%", height: "100%" }}
+            resizeMode="cover"
+          />
         </Avatar>
         <Text className="text-foreground text-xl font-bold">{title}</Text>
       </View>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   TextInput,
   TouchableOpacity,
   Image,
@@ -10,6 +9,7 @@ import {
 import { Link, router } from 'expo-router';
 import Container from '../../components/Container';
 import CustomButton from '../../components/CustomButton';
+import { Text } from "~/components/ui/text"
 
 export default function SignUpScreen() {
   // State variables for form inputs

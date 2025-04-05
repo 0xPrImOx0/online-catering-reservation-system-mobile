@@ -1,5 +1,6 @@
-import { View, Text } from "react-native"
+import { View, } from "react-native"
 import { StatusBar } from "expo-status-bar"
+import { Text } from "~/components/ui/text"
 
 export default function ContactScreen() {
   return (

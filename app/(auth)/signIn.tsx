@@ -1,7 +1,7 @@
 "use client"
-
+import { Text } from "~/components/ui/text"
 import { useState } from "react"
-import { View, Text, TextInput, TouchableOpacity, Image, Alert } from "react-native"
+import { View, TextInput, TouchableOpacity, Image, Alert } from "react-native"
 import { Link, router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import CustomButton from "../../components/CustomButton"

@@ -1,6 +1,9 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native"
+import { View, Image, TouchableOpacity, ScrollView } from "react-native"
 import { StatusBar } from "expo-status-bar"
 import CustomButton from "../../components/CustomButton"
+import {Avatar} from "~/components/ui/avatar"
+import { Text } from "~/components/ui/text"
+import {ThemeToggle} from "~/components/ThemeToggle"
 
 export default function home() {
   return (
@@ -14,7 +17,9 @@ export default function home() {
             <Text className="text-white text-2xl font-bold ml-2">Food Sentinel</Text>
           </View>
           <TouchableOpacity className="rounded-full overflow-hidden" onPress={() => {}}>
-            <Image source={require("../../assets/daug-avatar.jpg")} className="w-12 h-12" />
+            <Avatar className="w-12 h-12" alt={""}>
+              <Image source={require("../../assets/daug-avatar.jpg")} className="w-full h-full" resizeMode="cover" />
+            </Avatar>
           </TouchableOpacity>
         </View>
 
@@ -50,6 +55,11 @@ export default function home() {
             experiences tailored to your preferences and dietary requirements.
           </Text>
         </View>
+        <CustomButton
+          onPress={() => {}}
+          buttonStyles="bg-white py-4 px-6 rounded-full self-start mb-8">
+          <Text className="text-black text-lg font-bold">Learn more</Text>
+        </CustomButton>
       </ScrollView>
     </View>
   )

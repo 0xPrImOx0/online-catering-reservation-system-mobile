@@ -1,7 +1,7 @@
 "use client"
-
+import { Text } from "~/components/ui/text"
 import { useEffect } from "react"
-import { View, Text, Image } from "react-native"
+import { View, Image } from "react-native"
 import { router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 

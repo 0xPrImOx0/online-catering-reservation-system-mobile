@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   TextInput,
   Image,
 } from 'react-native';
 import { router } from 'expo-router';
 import Container from '../../components/Container';
 import CustomButton from '../../components/CustomButton';
+import { Text } from "~/components/ui/text"
 
 export default function ForgotPasswordScreen() {
   const [email, setEmail] = useState('');

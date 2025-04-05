@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { View, Image, Text, ActivityIndicator } from 'react-native';
+import { View, Image, ActivityIndicator } from 'react-native';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { Text } from "~/components/ui/text"
 
 export default function SplashScreen() {
   // Effect to navigate to sign up screen after a delay

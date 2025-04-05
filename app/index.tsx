@@ -14,7 +14,7 @@ export default function SplashScreen() {
       <Text className="text-gray-400 text-lg mt-2 mb-10">Premium Catering Services</Text>
       <Button
             variant="outline"
-            className="shadow shadow-foreground/5"
+            className="bg-white shadow shadow-foreground/5"
             onPress={() => router.push("./(auth)/signIn")}
           >
             <Text>Continue</Text>

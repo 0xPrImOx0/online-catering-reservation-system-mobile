@@ -1,6 +1,6 @@
 import { View, Image, ScrollView } from "react-native"
 import { StatusBar } from "expo-status-bar"
-import CustomButton from "../../components/CustomButton"
+import CustomButton from "components/CustomButton"
 import { Text } from "~/components/ui/text"
 import { useColorScheme } from "~/lib/useColorScheme"
 
@@ -51,4 +51,3 @@ export default function home() {
     </View>
   )
 }
-

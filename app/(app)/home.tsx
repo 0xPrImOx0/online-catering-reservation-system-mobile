@@ -14,6 +14,13 @@ import {
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
 
+  const packageImages = {
+    Essential: require("../../assets/images/essential.png"),
+    Classic: require("../../assets/images/classic.png"),
+    Elegant: require("../../assets/images/elegant.png"),
+    Luxurious: require("../../assets/images/luxurious.png"),
+  };
+
   return (
     <View className="flex-1 bg-background">
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
@@ -141,10 +148,11 @@ export default function Home() {
                   className="w-[250px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
                 >
                   <Image
-                    source={{
-                      uri: `https://placeholder.com/250x150?text=Package+${pkg.name}`,
-                    }}
+                    source={
+                      packageImages[pkg.name as keyof typeof packageImages]
+                    }
                     className="h-[120px] w-full"
+                    resizeMode="cover"
                   />
                   <View className="p-3">
                     <Text className="font-bold text-base text-foreground">
@@ -234,7 +242,7 @@ export default function Home() {
                 >
                   <Image
                     source={{
-                      uri: `https://placeholder.com/150x100?text=Appetizer+${item}`,
+                      uri: `https://via.placeholder.com/150x100.png?text=Appetizer+${item}`,
                     }}
                     className="h-[100px] w-full"
                   />

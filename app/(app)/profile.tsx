@@ -1,10 +1,11 @@
+import type React from "react"
 import { View, Image, ScrollView } from "react-native"
 import { Text } from "~/components/ui/text"
 import { useColorScheme } from "~/lib/useColorScheme"
 import { Button } from "~/components/ui/button"
-import { Ionicons } from "@expo/vector-icons"
+import { Pencil, Settings, User, Mail, Phone, MapPin } from "lucide-react-native"
 
-export default function profile() {
+export default function ProfileScreen() {
   const { isDarkColorScheme } = useColorScheme()
 
   return (
@@ -19,21 +20,11 @@ export default function profile() {
 
           <View className="flex-row mt-4 space-x-2">
             <Button variant="outline" className="flex-row items-center px-4">
-              <Ionicons
-                name="pencil-outline"
-                size={16}
-                color={isDarkColorScheme ? "white" : "black"}
-                className="mr-2"
-              />
+              <Pencil size={16} color={isDarkColorScheme ? "white" : "black"} className="mr-2" />
               <Text className="text-foreground">Edit Profile</Text>
             </Button>
             <Button variant="outline" className="flex-row items-center px-4">
-              <Ionicons
-                name="settings-outline"
-                size={16}
-                color={isDarkColorScheme ? "white" : "black"}
-                className="mr-2"
-              />
+              <Settings size={16} color={isDarkColorScheme ? "white" : "black"} className="mr-2" />
               <Text className="text-foreground">Settings</Text>
             </Button>
           </View>
@@ -43,10 +34,26 @@ export default function profile() {
           <Text className="text-foreground text-xl font-bold mb-4">Account Information</Text>
 
           <View className="space-y-4">
-            <ProfileItem icon="person-outline" label="Full Name" value="John Doe" />
-            <ProfileItem icon="mail-outline" label="Email" value="john.doe@example.com" />
-            <ProfileItem icon="call-outline" label="Phone" value="+1 (555) 123-4567" />
-            <ProfileItem icon="location-outline" label="Address" value="123 Main St, Anytown, USA" />
+            <ProfileItem
+              icon={<User size={20} color={isDarkColorScheme ? "white" : "black"} />}
+              label="Full Name"
+              value="John Doe"
+            />
+            <ProfileItem
+              icon={<Mail size={20} color={isDarkColorScheme ? "white" : "black"} />}
+              label="Email"
+              value="john.doe@example.com"
+            />
+            <ProfileItem
+              icon={<Phone size={20} color={isDarkColorScheme ? "white" : "black"} />}
+              label="Phone"
+              value="+1 (555) 123-4567"
+            />
+            <ProfileItem
+              icon={<MapPin size={20} color={isDarkColorScheme ? "white" : "black"} />}
+              label="Address"
+              value="123 Main St, Anytown, USA"
+            />
           </View>
         </View>
 
@@ -74,14 +81,10 @@ export default function profile() {
   )
 }
 
-function ProfileItem({ icon, label, value }: { icon: any; label: string; value: string }) {
-  const { isDarkColorScheme } = useColorScheme()
-
+function ProfileItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <View className="flex-row items-center">
-      <View className="w-10 h-10 rounded-full bg-muted items-center justify-center mr-3">
-        <Ionicons name={icon} size={20} color={isDarkColorScheme ? "white" : "black"} />
-      </View>
+      <View className="w-10 h-10 rounded-full bg-muted items-center justify-center mr-3">{icon}</View>
       <View className="flex-1">
         <Text className="text-muted-foreground text-sm">{label}</Text>
         <Text className="text-foreground">{value}</Text>

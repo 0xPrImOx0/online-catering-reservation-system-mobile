@@ -1,11 +1,11 @@
 "use client"
 import { View, Platform } from "react-native"
 import { Tabs } from "expo-router"
-import { Ionicons } from "@expo/vector-icons"
 import { useColorScheme } from "~/lib/useColorScheme"
 import { Text } from "~/components/ui/text"
 import { Avatar } from "~/components/ui/avatar"
 import { Image } from "react-native"
+import { Home, UtensilsCrossed, Package, Phone, Users, User } from "lucide-react-native"
 
 export default function AppLayout() {
   const { isDarkColorScheme } = useColorScheme()
@@ -52,10 +52,11 @@ export default function AppLayout() {
         name="home"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
           headerTitle: () => (
             <View className="flex-row items-center">
               <Text className="text-foreground text-xl font-bold">Food Sentinel</Text>
+              
             </View>
           ),
         }}
@@ -64,35 +65,35 @@ export default function AppLayout() {
         name="menus"
         options={{
           title: "Menus",
-          tabBarIcon: ({ color, size }) => <Ionicons name="restaurant-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <UtensilsCrossed size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="packages"
         options={{
           title: "Packages",
-          tabBarIcon: ({ color, size }) => <Ionicons name="cube-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <Package size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="contact"
         options={{
           title: "Contact",
-          tabBarIcon: ({ color, size }) => <Ionicons name="call-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <Phone size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="about"
         options={{
           title: "About",
-          tabBarIcon: ({ color, size }) => <Ionicons name="people-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <Users size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <User size={size} color={color} />,
         }}
       />
     </Tabs>

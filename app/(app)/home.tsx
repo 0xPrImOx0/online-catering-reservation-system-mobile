@@ -41,11 +41,12 @@ export default function Home() {
           {/* Hero section with main heading and CTA */}
           <View className="mb-8">
             <Text className="text-foreground text-4xl font-bold leading-tight mb-4">
-              Experience the very best catering for your special events
+              Seamless Catering, Unforgettable Events
             </Text>
             <Text className="text-muted-foreground text-lg mb-6">
-              Gourmet ingredients made by professional chefs, delivered with
-              care to your venue.
+              Effortless bookings, delicious menus, and stress-free planning—all
+              in one platform. Reserve your perfect event catering in just a few
+              clicks!
             </Text>
             <CustomButton
               label="Book now"

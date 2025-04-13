@@ -170,19 +170,10 @@ export default function Home() {
                         </Text>
                         <View className="flex-row items-center mt-1">
                           {[...Array(4)].map((_, index) => (
-                            <Star
-                              key={index}
-                              size={16}
-                              color="#F59E0B"
-                              className="mr-0.5"
-                            />
+                            <Star key={index} size={16} color="#F59E0B" />
                           ))}
                           <View className="relative">
-                            <Star
-                              size={16}
-                              color="#D1D5DB"
-                              className="mr-0.5"
-                            />
+                            <Star size={16} color="#D1D5DB" />
                             <View
                               style={{
                                 position: "absolute",
@@ -290,6 +281,11 @@ export default function Home() {
                     <Text className="text-xs text-muted-foreground mt-1">
                       {item.price}
                     </Text>
+                    <TouchableOpacity className="mt-2 bg-primary px-2 py-1 rounded">
+                      <Text className="text-primary-foreground text-xs text-center">
+                        View
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               ))}

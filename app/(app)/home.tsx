@@ -21,6 +21,24 @@ export default function Home() {
     Luxurious: require("../../assets/images/luxurious.png"),
   };
 
+  const appetizers = [
+    {
+      name: "Ensaladang Talong",
+      price: "₱203.00",
+      image: require("../../assets/images/eggplant.png"),
+    },
+    {
+      name: "Kinilaw na Tuna",
+      price: "₱436.00",
+      image: require("../../assets/images/kinilaw.png"),
+    },
+    {
+      name: "Ensaladang Mangga",
+      price: "₱232.00",
+      image: require("../../assets/images/mango.png"),
+    },
+  ];
+
   return (
     <View className="flex-1 bg-background">
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
@@ -45,7 +63,7 @@ export default function Home() {
 
         {/* Main content */}
         <View className="px-4">
-          {/* Hero section with main heading and CTA */}
+          {/* Hero heading and CTA */}
           <View className="mb-8">
             <Text className="text-foreground text-4xl font-bold leading-tight mb-4">
               Seamless Catering, Unforgettable Events
@@ -84,17 +102,18 @@ export default function Home() {
             </TouchableOpacity>
           </View>
 
-          {/* About section */}
+          {/* About Section */}
           <View className="mb-8">
             <Text className="text-foreground text-3xl font-bold mb-4">
-              About our catering service
+              Get to know us
             </Text>
             <Text className="text-muted-foreground text-base">
-              We provide premium catering services for all types of events, from
-              intimate gatherings to large corporate functions. Our team of
-              professional chefs uses only the finest ingredients to create
-              memorable dining experiences tailored to your preferences and
-              dietary requirements.
+              At Food Sentinel, we make catering reservations simple, fast, and
+              hassle-free. Whether you're planning an intimate gathering or a
+              grand celebration, our platform connects you with expertly crafted
+              menus and seamless booking options. With a commitment to quality,
+              convenience, and customer satisfaction, we ensure every event is a
+              memorable dining experience.
             </Text>
           </View>
 
@@ -117,92 +136,88 @@ export default function Home() {
               showsHorizontalScrollIndicator={false}
               className="mb-2"
             >
-              {[
-                {
-                  name: "Essential",
-                  description:
-                    "An essential wedding reception package for intimate celebrations.",
-                  price: "₱ 550.00 / pax",
-                },
-                {
-                  name: "Classic",
-                  description:
-                    "A classic wedding reception package with enhanced offerings.",
-                  price: "₱ 750.00 / pax",
-                },
-                {
-                  name: "Elegant",
-                  description:
-                    "An elegant wedding reception package for a beautiful celebration.",
-                  price: "₱ 950.00 / pax",
-                },
-                {
-                  name: "Luxurious",
-                  description:
-                    "A luxurious wedding reception package for an unforgettable celebration",
-                  price: "₱ 1250.00 / pax",
-                },
-              ].map((pkg) => (
-                <View
-                  key={pkg.name}
-                  className="w-[250px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
-                >
-                  <Image
-                    source={
-                      packageImages[pkg.name as keyof typeof packageImages]
-                    }
-                    className="h-[120px] w-full"
-                    resizeMode="cover"
-                  />
-                  <View className="p-3">
-                    <Text className="font-bold text-base text-foreground">
-                      Wedding Reception {pkg.name}
-                    </Text>
-                    <View className="flex-row items-center mt-1">
-                      {[...Array(4)].map((_, index) => (
-                        <Star
-                          key={index}
-                          size={16}
-                          color="#F59E0B"
-                          className="mr-0.5"
-                        />
-                      ))}
-                      {/* Half star */}
-                      <View className="relative">
-                        <Star size={16} color="#D1D5DB" className="mr-0.5" />
-                        <View
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: 8,
-                            height: 16,
-                            overflow: "hidden",
-                          }}
-                        >
-                          <Star size={16} color="#F59E0B" />
+              {["Essential", "Classic", "Elegant", "Luxurious"].map(
+                (pkgName) => {
+                  const descriptions = {
+                    Essential:
+                      "An essential wedding reception package for intimate celebrations.",
+                    Classic:
+                      "A classic wedding reception package with enhanced offerings.",
+                    Elegant:
+                      "An elegant wedding reception package for a beautiful celebration.",
+                    Luxurious:
+                      "A luxurious wedding reception package for an unforgettable celebration",
+                  };
+                  const prices = {
+                    Essential: "₱ 550.00 / pax",
+                    Classic: "₱ 750.00 / pax",
+                    Elegant: "₱ 950.00 / pax",
+                    Luxurious: "₱ 1250.00 / pax",
+                  };
+                  return (
+                    <View
+                      key={pkgName}
+                      className="w-[250px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
+                    >
+                      <Image
+                        source={packageImages[pkgName]}
+                        className="h-[120px] w-full"
+                        resizeMode="cover"
+                      />
+                      <View className="p-3">
+                        <Text className="font-bold text-base text-foreground">
+                          Wedding Reception {pkgName}
+                        </Text>
+                        <View className="flex-row items-center mt-1">
+                          {[...Array(4)].map((_, index) => (
+                            <Star
+                              key={index}
+                              size={16}
+                              color="#F59E0B"
+                              className="mr-0.5"
+                            />
+                          ))}
+                          <View className="relative">
+                            <Star
+                              size={16}
+                              color="#D1D5DB"
+                              className="mr-0.5"
+                            />
+                            <View
+                              style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: 8,
+                                height: 16,
+                                overflow: "hidden",
+                              }}
+                            >
+                              <Star size={16} color="#F59E0B" />
+                            </View>
+                          </View>
+                          <Text className="text-xs text-muted-foreground ml-1">
+                            4.5
+                          </Text>
                         </View>
+                        <Text className="text-sm mt-2 text-foreground">
+                          {descriptions[pkgName]}
+                        </Text>
                       </View>
-                      <Text className="text-xs text-muted-foreground ml-1">
-                        4.5
-                      </Text>
+                      <View className="flex-row justify-between items-center px-3 pb-3">
+                        <Text className="font-bold text-base text-foreground">
+                          {prices[pkgName]}
+                        </Text>
+                        <TouchableOpacity className="bg-primary px-3 py-1.5 rounded">
+                          <Text className="text-primary-foreground text-sm">
+                            View
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                    <Text className="text-sm mt-2 text-foreground">
-                      {pkg.description}
-                    </Text>
-                  </View>
-                  <View className="flex-row justify-between items-center px-3 pb-3">
-                    <Text className="font-bold text-base text-foreground">
-                      {pkg.price}
-                    </Text>
-                    <TouchableOpacity className="bg-primary px-3 py-1.5 rounded">
-                      <Text className="text-primary-foreground text-sm">
-                        View
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              ))}
+                  );
+                }
+              )}
             </ScrollView>
           </View>
 
@@ -235,23 +250,45 @@ export default function Home() {
               showsHorizontalScrollIndicator={false}
               className="mb-2"
             >
-              {[1, 2, 3].map((item) => (
+              {appetizers.map((item, index) => (
                 <View
-                  key={item}
+                  key={index}
                   className="w-[150px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
                 >
                   <Image
-                    source={{
-                      uri: `https://via.placeholder.com/150x100.png?text=Appetizer+${item}`,
-                    }}
+                    source={item.image}
                     className="h-[100px] w-full"
+                    resizeMode="cover"
                   />
                   <View className="p-2">
                     <Text className="font-medium text-sm text-foreground">
-                      Bruschetta {item}
+                      {item.name}
                     </Text>
+                    <View className="flex-row items-center mt-1">
+                      {[...Array(4)].map((_, i) => (
+                        <Star key={i} size={14} color="#F59E0B" />
+                      ))}
+                      <View className="relative ml-0.5">
+                        <Star size={14} color="#D1D5DB" />
+                        <View
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: 7,
+                            height: 14,
+                            overflow: "hidden",
+                          }}
+                        >
+                          <Star size={14} color="#F59E0B" />
+                        </View>
+                      </View>
+                      <Text className="text-xs text-muted-foreground ml-1">
+                        4.5
+                      </Text>
+                    </View>
                     <Text className="text-xs text-muted-foreground mt-1">
-                      $12.99
+                      {item.price}
                     </Text>
                   </View>
                 </View>

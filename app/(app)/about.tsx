@@ -6,7 +6,7 @@ import { Award, Clock, MapPin, Phone, Mail, Star, Users } from "lucide-react-nat
 
 export default function AboutUsPage() {
   const { isDarkColorScheme } = useColorScheme()
-  
+
   const team = [
     {
       name: "Maria Rodriguez",
@@ -47,11 +47,15 @@ export default function AboutUsPage() {
   return (
     <View className="flex-1 bg-background">
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-      
+
       <ScrollView>
         {/* Hero Section */}
-        <View className="relative h-50">
-          <Image source={{ uri: "https://placeholder.com/800x400?text=Our+Story" }} className="h-full w-full" />
+        <View className="relative h-48">
+          <Image
+            source={{ uri: "https://placeholder.com/800x400?text=Our+Story" }}
+            className="h-full w-full"
+            resizeMode="cover"
+          />
           <View className="absolute inset-0 bg-black/40 justify-center items-center">
             <Text className="text-white text-2xl font-bold">Our Story</Text>
           </View>
@@ -61,8 +65,8 @@ export default function AboutUsPage() {
         <View className="p-4">
           <Text className="text-foreground text-base leading-6 mb-6">
             Founded in 2010, Food Sentinel has been providing exceptional catering services for all types of events. Our
-            passion for food and dedication to customer satisfaction has made us one of the leading catering companies in
-            the region.
+            passion for food and dedication to customer satisfaction has made us one of the leading catering companies
+            in the region.
           </Text>
 
           <View className="flex-row flex-wrap justify-between mb-6">
@@ -89,14 +93,13 @@ export default function AboutUsPage() {
         <View className="px-4 mb-6">
           <Text className="text-foreground text-xl font-bold mb-4">Meet Our Team</Text>
           {team.map((member, index) => (
-            <View key={index} className="mb-4">
-              <Image source={{ uri: member.image }} className="w-20 h-20 rounded-full self-center mb-3" />
-              <View>
-                <Text className="text-foreground text-lg font-bold text-center">{member.name}</Text>
-                <Text className="text-foreground text-sm text-center mb-1">{member.role}</Text>
-                <Text className="text-muted-foreground text-sm text-center leading-5">{member.bio}</Text>
+            <View key={index} className="flex-row items-center mb-4 bg-card border border-border rounded-lg p-4">
+              <Image source={{ uri: member.image }} className="w-20 h-20 rounded-full mr-4" />
+              <View className="flex-1">
+                <Text className="text-foreground text-lg font-bold">{member.name}</Text>
+                <Text className="text-foreground text-sm mb-1">{member.role}</Text>
+                <Text className="text-muted-foreground text-sm leading-5">{member.bio}</Text>
               </View>
-              {index < team.length - 1 && <View className="h-px bg-border my-4" />}
             </View>
           ))}
         </View>

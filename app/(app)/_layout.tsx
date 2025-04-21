@@ -17,14 +17,12 @@ import {
   HelpCircle,
 } from "lucide-react-native";
 import { useState } from "react";
-import { ScrollView } from "react-native";
-import CustomButton from "~/components/CustomButton";
 import { Separator } from "~/components/ui/separator";
 import AdditionalSettingsButtons from "~/components/AdditionalSettingsButtons";
 
 export default function AppLayout() {
   const { isDarkColorScheme } = useColorScheme();
-  const [showInfoModal, setShowInfoModal] = useState(true);
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   return (
     <>
@@ -159,7 +157,7 @@ export default function AppLayout() {
             <Separator />
             <View className="flex-1 gap-2">
               <AdditionalSettingsButtons
-                link={"/profile"}
+                link={"/contact-us"}
                 icon={Phone}
                 title="Contact Us"
                 setShowInfoModal={setShowInfoModal}
@@ -171,7 +169,7 @@ export default function AppLayout() {
                 setShowInfoModal={setShowInfoModal}
               />
               <AdditionalSettingsButtons
-                link={"/profile"}
+                link={"/about-us"}
                 icon={HelpCircle}
                 title="About Food Sentinel"
                 setShowInfoModal={setShowInfoModal}

@@ -5,11 +5,11 @@ import { Button } from "~/components/ui/button";
 import { useState } from "react";
 
 export default function SplashScreen() {
-  const [user, setUser] = useState(false);
+  // const [user, setUser] = useState(false);
 
-  if (!user) {
-    return <Redirect href="/home" />;
-  }
+  // if (!user) {
+  //   return <Redirect href="/home" />;
+  // }
 
   return (
     <View className="items-center justify-center flex-1 bg-black">

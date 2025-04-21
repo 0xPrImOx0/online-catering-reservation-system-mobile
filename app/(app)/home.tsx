@@ -19,6 +19,8 @@ import {
 import { categories } from "~/lib/menu-lists";
 import clsx from "clsx";
 import { useState } from "react";
+import Hero from "~/components/home/Hero";
+import { cateringPackages } from "~/lib/packages-metadata";
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
@@ -56,21 +58,7 @@ export default function Home() {
 
       <ScrollView className="pb-20">
         {/* Hero Section */}
-        <View className="relative w-full h-56 mb-8">
-          <Image
-            source={require("../../assets/catering-logo.png")}
-            className="w-full h-full"
-            resizeMode="cover"
-          />
-          <View className="absolute bottom-0 left-0 right-0 px-4 py-3 bg-black/40">
-            <Text className="text-2xl font-bold text-white">
-              Delicious Catering
-            </Text>
-            <Text className="text-base text-white">
-              For Every Special Occasion
-            </Text>
-          </View>
-        </View>
+        <Hero />
 
         {/* Main content */}
         <View className="px-4">
@@ -142,85 +130,65 @@ export default function Home() {
             <Text className="mb-4 text-3xl font-bold text-foreground">
               Featured Packages
             </Text>
-            <ScrollView
+            <FlatList
               horizontal
               showsHorizontalScrollIndicator={false}
-              className="mb-2"
-            >
-              {(["Essential", "Classic", "Elegant", "Luxurious"] as const).map(
-                (pkgName: keyof typeof packageImages) => {
-                  const descriptions = {
-                    Essential:
-                      "An essential wedding reception package for intimate celebrations.",
-                    Classic:
-                      "A classic wedding reception package with enhanced offerings.",
-                    Elegant:
-                      "An elegant wedding reception package for a beautiful celebration.",
-                    Luxurious:
-                      "A luxurious wedding reception package for an unforgettable celebration",
-                  };
-                  const prices = {
-                    Essential: "₱ 550.00 / pax",
-                    Classic: "₱ 750.00 / pax",
-                    Elegant: "₱ 950.00 / pax",
-                    Luxurious: "₱ 1250.00 / pax",
-                  };
-                  return (
-                    <View
-                      key={pkgName}
-                      className="w-[250px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
-                    >
-                      <Image
-                        source={packageImages[pkgName]}
-                        className="h-[120px] w-full"
-                        resizeMode="cover"
-                      />
-                      <View className="p-3">
-                        <Text className="text-base font-bold text-foreground">
-                          Wedding Reception {pkgName}
-                        </Text>
-                        <View className="flex-row items-center mt-1">
-                          {[...Array(4)].map((_, index) => (
-                            <Star key={index} size={16} color="#F59E0B" />
-                          ))}
-                          <View className="relative">
-                            <Star size={16} color="#D1D5DB" />
-                            <View
-                              style={{
-                                position: "absolute",
-                                top: 0,
-                                left: 0,
-                                width: 8,
-                                height: 16,
-                                overflow: "hidden",
-                              }}
-                            >
-                              <Star size={16} color="#F59E0B" />
-                            </View>
-                          </View>
-                          <Text className="ml-1 text-xs text-muted-foreground">
-                            4.5
-                          </Text>
+              data={cateringPackages.slice(0, 4)}
+              renderItem={({ item }) => (
+                <View
+                  key={item._id}
+                  className="w-[250px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
+                >
+                  <Image
+                    source={{ uri: item.imageUrl }}
+                    className="h-[120px] w-full"
+                    resizeMode="cover"
+                  />
+                  <View className="p-3">
+                    <Text className="text-base font-bold text-foreground">
+                      {item.name}
+                    </Text>
+                    <View className="flex-row items-center mt-1">
+                      {[...Array(4)].map((_, index) => (
+                        <Star key={index} size={16} color="#F59E0B" />
+                      ))}
+                      <View className="relative">
+                        <Star size={16} color="#D1D5DB" />
+                        <View
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: 8,
+                            height: 16,
+                            overflow: "hidden",
+                          }}
+                        >
+                          <Star size={16} color="#F59E0B" />
                         </View>
-                        <Text className="mt-2 text-sm text-foreground">
-                          {descriptions[pkgName]}
-                        </Text>
                       </View>
-                      <View className="flex-row items-center justify-between px-3 pb-3">
-                        <Text className="text-base font-bold text-foreground">
-                          {prices[pkgName]}
-                        </Text>
-                        <TouchableOpacity className="bg-primary px-3 py-1.5 rounded">
-                          <Text className="text-sm text-primary-foreground">
-                            View
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
+                      <Text className="ml-1 text-xs text-muted-foreground">
+                        4.5
+                      </Text>
                     </View>
-                  );
-                }
+                    <Text className="mt-2 text-sm text-foreground">
+                      {item.description}
+                    </Text>
+                  </View>
+                  <View className="flex-row items-center justify-between px-3 pb-3">
+                    <Text className="text-base font-bold text-foreground">
+                      ₱{item.pricePerPax.toFixed(2)} / per pax
+                    </Text>
+                    <TouchableOpacity className="bg-primary px-3 py-1.5 rounded">
+                      <Text className="text-sm text-primary-foreground">
+                        View
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
               )}
-            </ScrollView>
+              keyExtractor={(item) => item._id}
+            />
           </View>
 
           {/* Popular Menu Items */}

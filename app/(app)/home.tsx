@@ -45,17 +45,17 @@ export default function Home() {
 
       <ScrollView className="pb-20">
         {/* Hero Section */}
-        <View className="relative h-56 w-full mb-8">
+        <View className="relative w-full h-56 mb-8">
           <Image
             source={require("../../assets/catering-logo.png")}
-            className="h-full w-full"
+            className="w-full h-full"
             resizeMode="cover"
           />
-          <View className="absolute bottom-0 left-0 right-0 bg-black/40 px-4 py-3">
-            <Text className="text-white text-2xl font-bold">
+          <View className="absolute bottom-0 left-0 right-0 px-4 py-3 bg-black/40">
+            <Text className="text-2xl font-bold text-white">
               Delicious Catering
             </Text>
-            <Text className="text-white text-base">
+            <Text className="text-base text-white">
               For Every Special Occasion
             </Text>
           </View>
@@ -65,10 +65,10 @@ export default function Home() {
         <View className="px-4">
           {/* Hero heading and CTA */}
           <View className="mb-8">
-            <Text className="text-foreground text-4xl font-bold leading-tight mb-4">
+            <Text className="mb-4 text-4xl font-bold leading-tight text-foreground">
               Seamless Catering, Unforgettable Events
             </Text>
-            <Text className="text-muted-foreground text-lg mb-6">
+            <Text className="mb-6 text-lg text-muted-foreground">
               Effortless bookings, delicious menus, and stress-free planning—all
               in one platform. Reserve your perfect event catering in just a few
               clicks!
@@ -85,18 +85,18 @@ export default function Home() {
 
           {/* Quick Actions */}
           <View className="flex-row justify-between mb-8">
-            <TouchableOpacity className="flex-1 h-20 mr-2 justify-center items-center bg-card rounded-lg border border-border">
+            <TouchableOpacity className="items-center justify-center flex-1 h-20 mr-2 border rounded-lg bg-card border-border">
               <UtensilsCrossed
                 size={24}
                 color={isDarkColorScheme ? "#fff" : "#333"}
               />
               <Text className="mt-2 text-sm text-foreground">Menus</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex-1 h-20 mx-2 justify-center items-center bg-card rounded-lg border border-border">
+            <TouchableOpacity className="items-center justify-center flex-1 h-20 mx-2 border rounded-lg bg-card border-border">
               <Calendar size={24} color={isDarkColorScheme ? "#fff" : "#333"} />
               <Text className="mt-2 text-sm text-foreground">Book Now</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex-1 h-20 ml-2 justify-center items-center bg-card rounded-lg border border-border">
+            <TouchableOpacity className="items-center justify-center flex-1 h-20 ml-2 border rounded-lg bg-card border-border">
               <MapPin size={24} color={isDarkColorScheme ? "#fff" : "#333"} />
               <Text className="mt-2 text-sm text-foreground">Find Us</Text>
             </TouchableOpacity>
@@ -104,10 +104,10 @@ export default function Home() {
 
           {/* About Section */}
           <View className="mb-8">
-            <Text className="text-foreground text-3xl font-bold mb-4">
+            <Text className="mb-4 text-3xl font-bold text-foreground">
               Get to know us
             </Text>
-            <Text className="text-muted-foreground text-base">
+            <Text className="text-base text-muted-foreground">
               At Food Sentinel, we make catering reservations simple, fast, and
               hassle-free. Whether you're planning an intimate gathering or a
               grand celebration, our platform connects you with expertly crafted
@@ -121,14 +121,14 @@ export default function Home() {
             onPress={() => {}}
             buttonStyles="bg-primary py-4 px-6 rounded-full self-start mb-8"
           >
-            <Text className="text-primary-foreground text-lg font-bold">
+            <Text className="text-lg font-bold text-primary-foreground">
               Learn more
             </Text>
           </CustomButton>
 
           {/* Featured Packages */}
           <View className="mb-8">
-            <Text className="text-foreground text-3xl font-bold mb-4">
+            <Text className="mb-4 text-3xl font-bold text-foreground">
               Featured Packages
             </Text>
             <ScrollView
@@ -136,8 +136,8 @@ export default function Home() {
               showsHorizontalScrollIndicator={false}
               className="mb-2"
             >
-              {["Essential", "Classic", "Elegant", "Luxurious"].map(
-                (pkgName) => {
+              {(["Essential", "Classic", "Elegant", "Luxurious"] as const).map(
+                (pkgName: keyof typeof packageImages) => {
                   const descriptions = {
                     Essential:
                       "An essential wedding reception package for intimate celebrations.",
@@ -165,7 +165,7 @@ export default function Home() {
                         resizeMode="cover"
                       />
                       <View className="p-3">
-                        <Text className="font-bold text-base text-foreground">
+                        <Text className="text-base font-bold text-foreground">
                           Wedding Reception {pkgName}
                         </Text>
                         <View className="flex-row items-center mt-1">
@@ -187,20 +187,20 @@ export default function Home() {
                               <Star size={16} color="#F59E0B" />
                             </View>
                           </View>
-                          <Text className="text-xs text-muted-foreground ml-1">
+                          <Text className="ml-1 text-xs text-muted-foreground">
                             4.5
                           </Text>
                         </View>
-                        <Text className="text-sm mt-2 text-foreground">
+                        <Text className="mt-2 text-sm text-foreground">
                           {descriptions[pkgName]}
                         </Text>
                       </View>
-                      <View className="flex-row justify-between items-center px-3 pb-3">
-                        <Text className="font-bold text-base text-foreground">
+                      <View className="flex-row items-center justify-between px-3 pb-3">
+                        <Text className="text-base font-bold text-foreground">
                           {prices[pkgName]}
                         </Text>
                         <TouchableOpacity className="bg-primary px-3 py-1.5 rounded">
-                          <Text className="text-primary-foreground text-sm">
+                          <Text className="text-sm text-primary-foreground">
                             View
                           </Text>
                         </TouchableOpacity>
@@ -214,23 +214,23 @@ export default function Home() {
 
           {/* Popular Menu Items */}
           <View className="mb-8">
-            <Text className="text-foreground text-3xl font-bold mb-4">
+            <Text className="mb-4 text-3xl font-bold text-foreground">
               Popular Menu Items
             </Text>
             <View className="mb-4">
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <TouchableOpacity className="px-4 py-2 mr-2 rounded-full border border-primary bg-primary">
+                <TouchableOpacity className="px-4 py-2 mr-2 border rounded-full border-primary bg-primary">
                   <Text className="text-sm text-primary-foreground">
                     Appetizers
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity className="px-4 py-2 mr-2 rounded-full border border-border">
+                <TouchableOpacity className="px-4 py-2 mr-2 border rounded-full border-border">
                   <Text className="text-sm text-foreground">Main Course</Text>
                 </TouchableOpacity>
-                <TouchableOpacity className="px-4 py-2 mr-2 rounded-full border border-border">
+                <TouchableOpacity className="px-4 py-2 mr-2 border rounded-full border-border">
                   <Text className="text-sm text-foreground">Desserts</Text>
                 </TouchableOpacity>
-                <TouchableOpacity className="px-4 py-2 mr-2 rounded-full border border-border">
+                <TouchableOpacity className="px-4 py-2 mr-2 border rounded-full border-border">
                   <Text className="text-sm text-foreground">Drinks</Text>
                 </TouchableOpacity>
               </ScrollView>
@@ -252,7 +252,7 @@ export default function Home() {
                     resizeMode="cover"
                   />
                   <View className="p-2">
-                    <Text className="font-medium text-sm text-foreground">
+                    <Text className="text-sm font-medium text-foreground">
                       {item.name}
                     </Text>
                     <View className="flex-row items-center mt-1">
@@ -274,15 +274,15 @@ export default function Home() {
                           <Star size={14} color="#F59E0B" />
                         </View>
                       </View>
-                      <Text className="text-xs text-muted-foreground ml-1">
+                      <Text className="ml-1 text-xs text-muted-foreground">
                         4.5
                       </Text>
                     </View>
-                    <Text className="text-xs text-muted-foreground mt-1">
+                    <Text className="mt-1 text-xs text-muted-foreground">
                       {item.price}
                     </Text>
-                    <TouchableOpacity className="mt-2 bg-primary px-2 py-1 rounded">
-                      <Text className="text-primary-foreground text-xs text-center">
+                    <TouchableOpacity className="px-2 py-1 mt-2 rounded bg-primary">
+                      <Text className="text-xs text-center text-primary-foreground">
                         View
                       </Text>
                     </TouchableOpacity>
@@ -294,17 +294,17 @@ export default function Home() {
 
           {/* Upcoming Events */}
           <View className="mb-8">
-            <Text className="text-foreground text-3xl font-bold mb-4">
+            <Text className="mb-4 text-3xl font-bold text-foreground">
               Upcoming Events
             </Text>
             {[1, 2].map((item) => (
               <View
                 key={item}
-                className="mb-4 rounded-lg bg-card border border-border p-4"
+                className="p-4 mb-4 border rounded-lg bg-card border-border"
               >
                 <View className="flex-row">
-                  <View className="w-14 h-14 bg-muted rounded-lg justify-center items-center mr-4">
-                    <Text className="font-bold text-lg text-foreground">
+                  <View className="items-center justify-center mr-4 rounded-lg w-14 h-14 bg-muted">
+                    <Text className="text-lg font-bold text-foreground">
                       {item === 1 ? "15" : "22"}
                     </Text>
                     <Text className="text-xs text-muted-foreground">
@@ -312,7 +312,7 @@ export default function Home() {
                     </Text>
                   </View>
                   <View className="flex-1">
-                    <Text className="font-bold text-base text-foreground">
+                    <Text className="text-base font-bold text-foreground">
                       {item === 1 ? "Corporate Lunch" : "Wedding Reception"}
                     </Text>
                     <View className="flex-row items-center mt-1">

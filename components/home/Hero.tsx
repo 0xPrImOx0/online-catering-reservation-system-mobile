@@ -3,18 +3,12 @@ import React from 'react'
 
 export default function Hero() {
   return (
-    <View className="relative w-full h-56 mb-8">
+    <View className="relative w-full h-80 mb-8 rounded-lg">
       <Image
-        source={require("../../assets/catering-logo.png")}
-        className="w-full h-full"
+        source={require("../../assets/images/hero.jpg")}
+        className="w-full h-80 rounded-lg"
         resizeMode="cover"
       />
-      <View className="absolute bottom-0 left-0 right-0 px-4 py-3 bg-black/40">
-        <Text className="text-2xl font-bold text-white">
-          Delicious Catering
-        </Text>
-        <Text className="text-base text-white">For Every Special Occasion</Text>
-      </View>
     </View>
   );
 }

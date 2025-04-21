@@ -21,6 +21,7 @@ import clsx from "clsx";
 import { useState } from "react";
 import Hero from "~/components/home/Hero";
 import { cateringPackages } from "~/lib/packages-metadata";
+import { Card } from "~/components/ui/card";
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
@@ -57,30 +58,33 @@ export default function Home() {
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
 
       <ScrollView className="pb-20">
-        {/* Hero Section */}
-        <Hero />
 
         {/* Main content */}
         <View className="px-4">
           {/* Hero section with main heading and CTA */}
           <View className="mb-8">
-            <Text className="mb-4 text-4xl font-bold leading-tight text-foreground">
+            <Text className="mt-4 mb-4 text-4xl font-bold leading-tight text-foreground">
               Seamless Catering, Unforgettable Events
             </Text>
-            <Text className="mb-6 text-lg text-muted-foreground">
+            <Text className="mt-2 mb-6 text-lg text-muted-foreground">
               Effortless bookings, delicious menus, and stress-free planning—all
               in one platform. Reserve your perfect event catering in just a few
               clicks!
             </Text>
             <CustomButton
-              label="Book now"
               onPress={() => {}}
-              buttonStyles="bg-primary py-4 px-6 rounded-full self-center"
-              textStyle="text-primary-foreground text-lg font-bold"
-              icon={require("../../assets/images/calendar.png")}
-              iconStyle="w-6 h-6 mr-2"
-            />
+              buttonStyles="bg-primary py-4 px-6 m-2 rounded-full self-center"
+              >
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Calendar size={20} color="black" />
+                <Text className="text-primary-foreground text-lg font-bold ml-2">
+                  Book now
+                </Text>
+              </View>
+            </CustomButton>
           </View>
+          {/* Hero Section */}
+            <Hero />
 
           {/* Quick Actions */}
           <View className="flex-row justify-between mb-8">
@@ -118,14 +122,13 @@ export default function Home() {
 
           <CustomButton
             onPress={() => {}}
-            buttonStyles="bg-primary py-4 px-6 rounded-full self-start mb-8"
+            buttonStyles="bg-primary py-4 px-6 rounded-full self-center mb-8"
           >
             <Text className="text-lg font-bold text-primary-foreground">
               Learn more
             </Text>
           </CustomButton>
 
-          {/* Quick Actions */}
          <View className="flex-row justify-between mb-5 py=4 px-5 bg-card rounded-lg">
             <Card className="flex-1 h-50 mr-3 justify-center items-center bg-card rounded-lg border-white">
               <Text className="text-2xl text-foreground">5,000+</Text>
@@ -292,59 +295,6 @@ export default function Home() {
                 </View>
               ))}
             </ScrollView>
-          </View>
-
-          {/* Upcoming Events */}
-          <View className="mb-8">
-            <Text className="mb-4 text-3xl font-bold text-foreground">
-              Upcoming Events
-            </Text>
-            {[1, 2].map((item) => (
-              <View
-                key={item}
-                className="p-4 mb-4 border rounded-lg bg-card border-border"
-              >
-                <View className="flex-row">
-                  <View className="items-center justify-center mr-4 rounded-lg w-14 h-14 bg-muted">
-                    <Text className="text-lg font-bold text-foreground">
-                      {item === 1 ? "15" : "22"}
-                    </Text>
-                    <Text className="text-xs text-muted-foreground">
-                      {item === 1 ? "May" : "Jun"}
-                    </Text>
-                  </View>
-                  <View className="flex-1">
-                    <Text className="text-base font-bold text-foreground">
-                      {item === 1 ? "Corporate Lunch" : "Wedding Reception"}
-                    </Text>
-                    <View className="flex-row items-center mt-1">
-                      <Clock
-                        size={12}
-                        color={isDarkColorScheme ? "#999" : "#666"}
-                        className="mr-1"
-                      />
-                      <Text className="text-xs text-muted-foreground">
-                        {item === 1
-                          ? "12:00 PM - 3:00 PM"
-                          : "6:00 PM - 11:00 PM"}
-                      </Text>
-                    </View>
-                    <View className="flex-row items-center mt-1">
-                      <MapPin
-                        size={12}
-                        color={isDarkColorScheme ? "#999" : "#666"}
-                        className="mr-1"
-                      />
-                      <Text className="text-xs text-muted-foreground">
-                        {item === 1
-                          ? "Tech Park, Building A"
-                          : "Grand Ballroom, Hotel Majestic"}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            ))}
           </View>
         </View>
       </ScrollView>

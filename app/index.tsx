@@ -8,14 +8,14 @@ export default function SplashScreen() {
   // const [user, setUser] = useState(false);
 
   // if (!user) {
-  //   return <Redirect href="/home" />;
+  //   return <Redirect href="/packages/1" />;
   // }
 
   return (
     <View className="items-center justify-center flex-1 bg-black">
       <StatusBar style="light" />
       <Image
-        source={{ uri: "../assets/catering-logo.png" }}
+        source={require("../assets/catering-logo.png")}
         className="w-[150px] h-[150px]"
         resizeMode="contain"
       />

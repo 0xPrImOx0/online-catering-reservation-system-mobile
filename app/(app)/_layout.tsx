@@ -1,4 +1,3 @@
-"use client";
 import { View, Platform } from "react-native";
 import { Tabs } from "expo-router";
 import { useColorScheme } from "~/lib/useColorScheme";
@@ -46,7 +45,8 @@ export default function AppLayout() {
           <View className="ml-4">
             <Avatar className="w-8 h-8" alt={""}>
               <Image
-                source={require("../../assets/catering-logo.png")}
+                src=""
+                source={require("")}
                 style={{ width: "100%", height: "100%" }}
                 resizeMode="cover"
               />
@@ -64,7 +64,7 @@ export default function AppLayout() {
           ),
           headerTitle: () => (
             <View className="flex-row items-center">
-              <Text className="text-foreground text-xl font-bold">
+              <Text className="text-xl font-bold text-foreground">
                 Food Sentinel
               </Text>
             </View>

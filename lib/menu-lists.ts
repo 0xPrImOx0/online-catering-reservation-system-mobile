@@ -1,4 +1,4 @@
-import { MenuItem } from "~/types/menu-types";
+import { CategoryProps, MenuItem } from "~/types/menu-types";
 
 // Update the first dish as an example of the new structure
 export const menuItems: MenuItem[] = [
@@ -3384,4 +3384,17 @@ export const priceOptions = [
   { value: "standard", title: "Standard ($25-40/person)" },
   { value: "premium", title: "Premium ($40-60/person)" },
   { value: "luxury", title: "Luxury ($60+/person)" },
+];
+
+export const categories: CategoryProps[] = [
+  "Soup",
+  "Salad",
+  "Beef",
+  "Pork",
+  "Noodle",
+  "Chicken",
+  "Seafood",
+  "Vegetable",
+  "Dessert",
+  "Beverage",
 ];

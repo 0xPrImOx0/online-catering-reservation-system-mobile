@@ -10,6 +10,7 @@ import {
   Star,
   UtensilsCrossed,
 } from "lucide-react-native";
+import { Card } from "~/components/ui/card"
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
@@ -282,7 +283,7 @@ export default function Home() {
                 </View>
               </View>
             ))}
-          </View> */}
+          </View>
         </View>
       </ScrollView>
     </View>

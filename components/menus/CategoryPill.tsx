@@ -7,13 +7,13 @@ export default function CategoryPill({
   selectedCategory,
   setSelectedCategory,
 }: {
-  item: CategoryProps;
+  item: string;
   selectedCategory: string;
   setSelectedCategory: (e: string) => void;
 }) {
   return (
     <TouchableOpacity
-      className={`px-4 py-2 mr-2 rounded-full border h-10 ${
+      className={`px-4 py-2 rounded-full border h-10 ${
         selectedCategory === item
           ? "bg-primary border-primary"
           : "bg-card border-border"

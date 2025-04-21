@@ -1,4 +1,10 @@
-import { View, ScrollView, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  FlatList,
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
 import CustomButton from "components/CustomButton";
 import { Text } from "~/components/ui/text";
@@ -10,6 +16,9 @@ import {
   Star,
   UtensilsCrossed,
 } from "lucide-react-native";
+import { categories } from "~/lib/menu-lists";
+import clsx from "clsx";
+import { useState } from "react";
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
@@ -38,6 +47,8 @@ export default function Home() {
       image: require("../../assets/images/mango.png"),
     },
   ];
+
+  const [popularMenuPill, setPopularMenuPill] = useState("Soup");
 
   return (
     <View className="flex-1 bg-background">
@@ -218,22 +229,29 @@ export default function Home() {
               Popular Menu Items
             </Text>
             <View className="mb-4">
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <TouchableOpacity className="px-4 py-2 mr-2 border rounded-full border-primary bg-primary">
-                  <Text className="text-sm text-primary-foreground">
-                    Appetizers
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity className="px-4 py-2 mr-2 border rounded-full border-border">
-                  <Text className="text-sm text-foreground">Main Course</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className="px-4 py-2 mr-2 border rounded-full border-border">
-                  <Text className="text-sm text-foreground">Desserts</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className="px-4 py-2 mr-2 border rounded-full border-border">
-                  <Text className="text-sm text-foreground">Drinks</Text>
-                </TouchableOpacity>
-              </ScrollView>
+              <FlatList
+                horizontal
+                data={categories}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item) => item}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    className={clsx(
+                      "px-4 py-2 mr-2 border rounded-full border-primary",
+                      { "bg-primary": item === popularMenuPill }
+                    )}
+                    onPress={() => setPopularMenuPill(item)}
+                  >
+                    <Text
+                      className={clsx("text-sm", {
+                        "text-primary-foreground": item === popularMenuPill,
+                      })}
+                    >
+                      {item}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
             </View>
 
             <ScrollView

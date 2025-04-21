@@ -37,7 +37,7 @@ export default function MenusPage() {
         horizontal
         showsHorizontalScrollIndicator={false}
         className="px-4 py-3"
-        contentContainerStyle={{ alignItems: "center" }}
+        contentContainerStyle={{ alignItems: "center", gap: 10 }}
         renderItem={({ item }) => (
           <CategoryPill
             item={item}

@@ -1462,3 +1462,5 @@ export const options = [
       "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*jQSVrNafdz4IW5D7",
   },
 ];
+
+export const packages = ["All", "Birthday", "Wedding", "Corporate", "Graduation"];

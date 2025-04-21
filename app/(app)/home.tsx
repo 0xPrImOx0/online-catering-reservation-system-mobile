@@ -4,6 +4,7 @@ import CustomButton from "components/CustomButton"
 import { Text } from "~/components/ui/text"
 import { useColorScheme } from "~/lib/useColorScheme"
 import { Calendar, Clock, MapPin, Star, UtensilsCrossed } from "lucide-react-native"
+import { Card } from "~/components/ui/card"
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme()
@@ -13,54 +14,37 @@ export default function Home() {
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
 
       <ScrollView className="pb-20">
-        {/* Hero Section */}
-        <View className="relative h-56 w-full mb-8">
-          <Image source={require("../../assets/catering-logo.png")} className="h-full w-full" resizeMode="cover" />
-          <View className="absolute bottom-0 left-0 right-0 bg-black/40 px-4 py-3">
-            <Text className="text-white text-2xl font-bold">Delicious Catering</Text>
-            <Text className="text-white text-base">For Every Special Occasion</Text>
-          </View>
-        </View>
 
         {/* Main content */}
-        <View className="px-4">
+        <View className="px-4 py-6">
           {/* Hero section with main heading and CTA */}
           <View className="mb-8">
-            <Text className="text-foreground text-4xl font-bold leading-tight mb-4">
-              Experience the very best catering for your special events
+            <Text className="text-foreground text-4xl font-bold leading-tight text-center">
+              Seamless Catering,
             </Text>
-            <Text className="text-muted-foreground text-lg mb-6">
-              Gourmet ingredients made by professional chefs, delivered with care to your venue.
+            <Text className="text-foreground text-4xl font-bold leading-tight text-center mb-4">
+              Unforgettable Events
+            </Text>
+            <Text className="text-muted-foreground text-lg mb-6 text-center">
+            Effortless bookings, delicious menus, and stress-free planning—all in one platform. Reserve your perfect event catering in just a few clicks!
             </Text>
             <CustomButton
               label="Book now"
               onPress={() => {}}
-              buttonStyles="bg-primary py-4 px-6 rounded-full self-start"
+              buttonStyles="bg-primary py-4 px-6 rounded-full self-center"
               textStyle="text-primary-foreground text-lg font-bold"
               icon={require("../../assets/images/calendar.png")}
               iconStyle="w-6 h-6 mr-2"
             />
+             {/* Hero Section */}
+           <View className="relative h-56 w-full mb-20 pt-4">
+            <Image source={require("../../assets/images/hero.jpg")} className="h-80 w-full" resizeMode="cover" />
+            </View>
           </View>
-
-          {/* Quick Actions */}
-          <View className="flex-row justify-between mb-8">
-            <TouchableOpacity className="flex-1 h-20 mr-2 justify-center items-center bg-card rounded-lg border border-border">
-              <UtensilsCrossed size={24} color={isDarkColorScheme ? "#fff" : "#333"} />
-              <Text className="mt-2 text-sm text-foreground">Menus</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="flex-1 h-20 mx-2 justify-center items-center bg-card rounded-lg border border-border">
-              <Calendar size={24} color={isDarkColorScheme ? "#fff" : "#333"} />
-              <Text className="mt-2 text-sm text-foreground">Book Now</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="flex-1 h-20 ml-2 justify-center items-center bg-card rounded-lg border border-border">
-              <MapPin size={24} color={isDarkColorScheme ? "#fff" : "#333"} />
-              <Text className="mt-2 text-sm text-foreground">Find Us</Text>
-            </TouchableOpacity>
-          </View>
-
+        
           {/* About section */}
-          <View className="mb-8">
-            <Text className="text-foreground text-3xl font-bold mb-4">About our catering service</Text>
+          <View className="mt-10 mb-8">
+            <Text className="text-foreground text-3xl font-bold text-center mb-4">About our catering service</Text>
             <Text className="text-muted-foreground text-base">
               We provide premium catering services for all types of events, from intimate gatherings to large corporate
               functions. Our team of professional chefs uses only the finest ingredients to create memorable dining
@@ -68,13 +52,29 @@ export default function Home() {
             </Text>
           </View>
 
-          <CustomButton onPress={() => {}} buttonStyles="bg-primary py-4 px-6 rounded-full self-start mb-8">
+          <CustomButton onPress={() => {}} buttonStyles="bg-primary py-4 px-6 rounded-full self-center mb-8">
             <Text className="text-primary-foreground text-lg font-bold">Learn more</Text>
           </CustomButton>
 
+          {/* Quick Actions */}
+         <View className="flex-row justify-between mb-5 py=4 px-5 bg-card rounded-lg">
+            <Card className="flex-1 h-50 mr-3 justify-center items-center bg-card rounded-lg border-white">
+              <Text className="text-2xl text-foreground">5,000+</Text>
+              <Text className="mt-.5 text-sm text-muted-foreground">Events Successfully Catered</Text>
+            </Card>
+            <Card className="flex-1 h-50 mr-3 justify-center items-center bg-card rounded-lg border-white">
+              <Text className="text-2xl text-foreground">{"< 1 m"}</Text>
+              <Text className="mt-1 text-sm text-muted-foreground">Instant Booking Confirmation</Text>
+            </Card>
+            <Card className="flex-1 h-50 mr-3 justify-center items-center bg-card rounded-lg border-white">
+              <Text className="text-2xl text-foreground">95%</Text>
+              <Text className="mt-1 text-sm text-muted-foreground">Customer Satisfaction Rate</Text>
+            </Card>
+          </View>
+
           {/* Featured Packages */}
           <View className="mb-8">
-            <Text className="text-foreground text-3xl font-bold mb-4">Featured Packages</Text>
+            <Text className="text-foreground text-3xl font-bold mb-4 mt-10">Featured Packages</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-2">
               {[1, 2, 3].map((item) => (
                 <View key={item} className="w-[250px] mr-4 rounded-lg bg-card border border-border overflow-hidden">
@@ -140,7 +140,7 @@ export default function Home() {
           </View>
 
           {/* Upcoming Events */}
-          <View className="mb-8">
+          {/* <View className="mb-8">
             <Text className="text-foreground text-3xl font-bold mb-4">Upcoming Events</Text>
             {[1, 2].map((item) => (
               <View key={item} className="mb-4 rounded-lg bg-card border border-border p-4">
@@ -169,7 +169,7 @@ export default function Home() {
                 </View>
               </View>
             ))}
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </View>

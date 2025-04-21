@@ -37,7 +37,7 @@ export default function AppLayout() {
         },
         headerLeft: () => (
           <View className="ml-4">
-            <Avatar className="w-8 h-8" alt={""}>
+            <Avatar className="w-14 h-14" alt={""}>
               <Image
                 source={require("../../assets/catering-logo.png")}
                 style={{ width: "100%", height: "100%" }}
@@ -55,8 +55,7 @@ export default function AppLayout() {
           tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
           headerTitle: () => (
             <View className="flex-row items-center">
-              <Text className="text-foreground text-xl font-bold">Food Sentinel</Text>
-              
+              <Text className="text-foreground text-2xl font-bold">Food Sentinel</Text>
             </View>
           ),
         }}

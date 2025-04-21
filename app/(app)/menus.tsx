@@ -97,19 +97,23 @@ export default function MenusPage() {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        className="py-3 border-b border-border"
+        className="py-3 border-b border-border mb-2"
         contentContainerClassName="px-4"
       >
         {categories.map((category) => (
           <TouchableOpacity
             key={category}
-            className={`px-4 py-2 mr-2 rounded-full border ${
-              selectedCategory === category ? "bg-primary border-primary" : "bg-card border-border"
-            }`}
+            className={`justify-center items-center h-10 px-4 mr-2 border ${
+              selectedCategory === category
+                ? "bg-primary border-primary"
+                : "bg-card border-foreground"
+            } rounded-full`}
             onPress={() => setSelectedCategory(category)}
           >
             <Text
-              className={`text-sm ${selectedCategory === category ? "text-primary-foreground" : "text-foreground"}`}
+              className={`text-sm text-center ${
+                selectedCategory === category ? "text-primary-foreground" : "text-foreground"
+              }`}
             >
               {category}
             </Text>
@@ -118,7 +122,7 @@ export default function MenusPage() {
       </ScrollView>
 
       {/* Menu Items */}
-      <ScrollView className="flex-1 p-4">
+      <ScrollView className="flex-1 px-4">
         {menuItems.map((item) => (
           <View key={item.id} className="flex-row mb-4 border border-border rounded-lg overflow-hidden">
             <Image source={{ uri: item.image }} className="w-24 h-24" />

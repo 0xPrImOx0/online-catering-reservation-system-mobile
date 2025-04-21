@@ -1,4 +1,10 @@
-import { View, ScrollView, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  FlatList,
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
 import CustomButton from "components/CustomButton";
 import { Text } from "~/components/ui/text";
@@ -10,7 +16,11 @@ import {
   Star,
   UtensilsCrossed,
 } from "lucide-react-native";
-import { Card } from "~/components/ui/card"
+import { categories } from "~/lib/menu-lists";
+import clsx from "clsx";
+import { useState } from "react";
+import Hero from "~/components/home/Hero";
+import { cateringPackages } from "~/lib/packages-metadata";
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
@@ -40,29 +50,27 @@ export default function Home() {
     },
   ];
 
+  const [popularMenuPill, setPopularMenuPill] = useState("Soup");
+
   return (
     <View className="flex-1 bg-background">
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
 
       <ScrollView className="pb-20">
         {/* Hero Section */}
-        <View className="relative h-56 w-full mb-8">
-          <Image source={require("../../assets/catering-logo.png")} className="h-full w-full" resizeMode="cover" />
-          <View className="absolute bottom-0 left-0 right-0 bg-black/40 px-4 py-3">
-            <Text className="text-white text-2xl font-bold">Delicious Catering</Text>
-            <Text className="text-white text-base">For Every Special Occasion</Text>
-          </View>
-        </View>
+        <Hero />
 
         {/* Main content */}
         <View className="px-4">
           {/* Hero section with main heading and CTA */}
           <View className="mb-8">
-            <Text className="text-foreground text-4xl font-bold leading-tight mb-4">
-              Experience the very best catering for your special events
+            <Text className="mb-4 text-4xl font-bold leading-tight text-foreground">
+              Seamless Catering, Unforgettable Events
             </Text>
-            <Text className="text-muted-foreground text-lg mb-6">
-              Gourmet ingredients made by professional chefs, delivered with care to your venue.
+            <Text className="mb-6 text-lg text-muted-foreground">
+              Effortless bookings, delicious menus, and stress-free planning—all
+              in one platform. Reserve your perfect event catering in just a few
+              clicks!
             </Text>
             <CustomButton
               label="Book now"
@@ -76,15 +84,18 @@ export default function Home() {
 
           {/* Quick Actions */}
           <View className="flex-row justify-between mb-8">
-            <TouchableOpacity className="flex-1 h-20 mr-2 justify-center items-center bg-card rounded-lg border border-border">
-              <UtensilsCrossed size={24} color={isDarkColorScheme ? "#fff" : "#333"} />
+            <TouchableOpacity className="items-center justify-center flex-1 h-20 mr-2 border rounded-lg bg-card border-border">
+              <UtensilsCrossed
+                size={24}
+                color={isDarkColorScheme ? "#fff" : "#333"}
+              />
               <Text className="mt-2 text-sm text-foreground">Menus</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex-1 h-20 mx-2 justify-center items-center bg-card rounded-lg border border-border">
+            <TouchableOpacity className="items-center justify-center flex-1 h-20 mx-2 border rounded-lg bg-card border-border">
               <Calendar size={24} color={isDarkColorScheme ? "#fff" : "#333"} />
               <Text className="mt-2 text-sm text-foreground">Book Now</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex-1 h-20 ml-2 justify-center items-center bg-card rounded-lg border border-border">
+            <TouchableOpacity className="items-center justify-center flex-1 h-20 ml-2 border rounded-lg bg-card border-border">
               <MapPin size={24} color={isDarkColorScheme ? "#fff" : "#333"} />
               <Text className="mt-2 text-sm text-foreground">Find Us</Text>
             </TouchableOpacity>
@@ -92,8 +103,10 @@ export default function Home() {
 
           {/* About section */}
           <View className="mb-8">
-            <Text className="text-foreground text-3xl font-bold mb-4">About our catering service</Text>
-            <Text className="text-muted-foreground text-base">
+            <Text className="mb-4 text-3xl font-bold text-foreground">
+              Get to know us
+            </Text>
+            <Text className="text-base text-muted-foreground">
               At Food Sentinel, we make catering reservations simple, fast, and
               hassle-free. Whether you're planning an intimate gathering or a
               grand celebration, our platform connects you with expertly crafted
@@ -103,8 +116,13 @@ export default function Home() {
             </Text>
           </View>
 
-          <CustomButton onPress={() => {}} buttonStyles="bg-primary py-4 px-6 rounded-full self-start mb-8">
-            <Text className="text-primary-foreground text-lg font-bold">Learn more</Text>
+          <CustomButton
+            onPress={() => {}}
+            buttonStyles="bg-primary py-4 px-6 rounded-full self-start mb-8"
+          >
+            <Text className="text-lg font-bold text-primary-foreground">
+              Learn more
+            </Text>
           </CustomButton>
 
           {/* Quick Actions */}
@@ -125,57 +143,99 @@ export default function Home() {
 
           {/* Featured Packages */}
           <View className="mb-8">
-            <Text className="text-foreground text-3xl font-bold mb-4">Featured Packages</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-2">
-              {[1, 2, 3].map((item) => (
-                <View key={item} className="w-[250px] mr-4 rounded-lg bg-card border border-border overflow-hidden">
+            <Text className="mb-4 text-3xl font-bold text-foreground">
+              Featured Packages
+            </Text>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={cateringPackages.slice(0, 4)}
+              renderItem={({ item }) => (
+                <View
+                  key={item._id}
+                  className="w-[250px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
+                >
                   <Image
-                    source={{ uri: `https://placeholder.com/250x150?text=Package+${item}` }}
+                    source={{ uri: item.imageUrl }}
                     className="h-[120px] w-full"
+                    resizeMode="cover"
                   />
                   <View className="p-3">
-                    <Text className="font-bold text-base text-foreground">Wedding Package {item}</Text>
+                    <Text className="text-base font-bold text-foreground">
+                      {item.name}
+                    </Text>
                     <View className="flex-row items-center mt-1">
-                      <Star size={16} color="#F59E0B" />
-                      <Text className="text-xs text-muted-foreground ml-1">4.8 (120 reviews)</Text>
+                      {[...Array(4)].map((_, index) => (
+                        <Star key={index} size={16} color="#F59E0B" />
+                      ))}
+                      <View className="relative">
+                        <Star size={16} color="#D1D5DB" />
+                        <View
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: 8,
+                            height: 16,
+                            overflow: "hidden",
+                          }}
+                        >
+                          <Star size={16} color="#F59E0B" />
+                        </View>
+                      </View>
+                      <Text className="ml-1 text-xs text-muted-foreground">
+                        4.5
+                      </Text>
                     </View>
-                    <Text className="text-sm mt-2 text-foreground">
-                      Complete catering solution for your special day
+                    <Text className="mt-2 text-sm text-foreground">
+                      {item.description}
                     </Text>
                   </View>
-                  <View className="flex-row justify-between items-center px-3 pb-3">
-                    <Text className="font-bold text-base text-foreground">$999</Text>
+                  <View className="flex-row items-center justify-between px-3 pb-3">
+                    <Text className="text-base font-bold text-foreground">
+                      ₱{item.pricePerPax.toFixed(2)} / per pax
+                    </Text>
                     <TouchableOpacity className="bg-primary px-3 py-1.5 rounded">
-                      <Text className="text-primary-foreground text-sm">View</Text>
+                      <Text className="text-sm text-primary-foreground">
+                        View
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
-              ))}
-            </ScrollView>
+              )}
+              keyExtractor={(item) => item._id}
+            />
           </View>
 
           {/* Popular Menu Items */}
           <View className="mb-8">
-            <Text className="text-foreground text-3xl font-bold mb-4">
+            <Text className="mb-4 text-3xl font-bold text-foreground">
               Popular Menu Items
             </Text>
             <View className="mb-4">
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <TouchableOpacity className="px-4 py-2 mr-2 rounded-full border border-primary bg-primary">
-                  <Text className="text-sm text-primary-foreground">
-                    Appetizers
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity className="px-4 py-2 mr-2 rounded-full border border-border">
-                  <Text className="text-sm text-foreground">Main Course</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className="px-4 py-2 mr-2 rounded-full border border-border">
-                  <Text className="text-sm text-foreground">Desserts</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className="px-4 py-2 mr-2 rounded-full border border-border">
-                  <Text className="text-sm text-foreground">Drinks</Text>
-                </TouchableOpacity>
-              </ScrollView>
+              <FlatList
+                horizontal
+                data={categories}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item) => item}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    className={clsx(
+                      "px-4 py-2 mr-2 border rounded-full border-primary",
+                      { "bg-primary": item === popularMenuPill }
+                    )}
+                    onPress={() => setPopularMenuPill(item)}
+                  >
+                    <Text
+                      className={clsx("text-sm", {
+                        "text-primary-foreground": item === popularMenuPill,
+                      })}
+                    >
+                      {item}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
             </View>
 
             <ScrollView
@@ -194,7 +254,7 @@ export default function Home() {
                     resizeMode="cover"
                   />
                   <View className="p-2">
-                    <Text className="font-medium text-sm text-foreground">
+                    <Text className="text-sm font-medium text-foreground">
                       {item.name}
                     </Text>
                     <View className="flex-row items-center mt-1">
@@ -216,15 +276,15 @@ export default function Home() {
                           <Star size={14} color="#F59E0B" />
                         </View>
                       </View>
-                      <Text className="text-xs text-muted-foreground ml-1">
+                      <Text className="ml-1 text-xs text-muted-foreground">
                         4.5
                       </Text>
                     </View>
-                    <Text className="text-xs text-muted-foreground mt-1">
+                    <Text className="mt-1 text-xs text-muted-foreground">
                       {item.price}
                     </Text>
-                    <TouchableOpacity className="mt-2 bg-primary px-2 py-1 rounded">
-                      <Text className="text-primary-foreground text-xs text-center">
+                    <TouchableOpacity className="px-2 py-1 mt-2 rounded bg-primary">
+                      <Text className="text-xs text-center text-primary-foreground">
                         View
                       </Text>
                     </TouchableOpacity>
@@ -236,15 +296,17 @@ export default function Home() {
 
           {/* Upcoming Events */}
           <View className="mb-8">
-            <Text className="text-foreground text-3xl font-bold mb-4">Upcoming Events</Text>
+            <Text className="mb-4 text-3xl font-bold text-foreground">
+              Upcoming Events
+            </Text>
             {[1, 2].map((item) => (
               <View
                 key={item}
-                className="mb-4 rounded-lg bg-card border border-border p-4"
+                className="p-4 mb-4 border rounded-lg bg-card border-border"
               >
                 <View className="flex-row">
-                  <View className="w-14 h-14 bg-muted rounded-lg justify-center items-center mr-4">
-                    <Text className="font-bold text-lg text-foreground">
+                  <View className="items-center justify-center mr-4 rounded-lg w-14 h-14 bg-muted">
+                    <Text className="text-lg font-bold text-foreground">
                       {item === 1 ? "15" : "22"}
                     </Text>
                     <Text className="text-xs text-muted-foreground">
@@ -252,7 +314,7 @@ export default function Home() {
                     </Text>
                   </View>
                   <View className="flex-1">
-                    <Text className="font-bold text-base text-foreground">
+                    <Text className="text-base font-bold text-foreground">
                       {item === 1 ? "Corporate Lunch" : "Wedding Reception"}
                     </Text>
                     <View className="flex-row items-center mt-1">

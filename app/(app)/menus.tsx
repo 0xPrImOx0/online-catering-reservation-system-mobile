@@ -3,124 +3,57 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Image,
-  TextInput,
   Modal,
   FlatList,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "~/components/ui/text";
 import { useColorScheme } from "~/lib/useColorScheme";
-import { Search, Filter, Star } from "lucide-react-native";
 import CustomButton from "components/CustomButton";
 import { categories, menuItems } from "~/lib/menu-lists";
+import MenuCard from "~/components/menus/MenuCard";
+import { Separator } from "~/components/ui/separator";
+import CategoryPill from "~/components/menus/CategoryPill";
+import MenuSearchBar from "~/components/menus/MenuSearchBar";
 
 export default function MenusPage() {
   const { isDarkColorScheme } = useColorScheme();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [query, setQuery] = useState("");
 
   return (
     <View className="flex-1 bg-background">
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
       {/* Search and Filter */}
-      <View className="flex-row items-center p-4 ">
-        <View className="flex-row items-center flex-1 px-3 py-2 mr-2 rounded-lg bg-muted">
-          <Search
-            size={16}
-            color={isDarkColorScheme ? "#999" : "#666"}
-            className="mr-2"
-          />
-          <TextInput
-            className="flex-1 text-base text-foreground"
-            placeholder="Search menus..."
-            placeholderTextColor={isDarkColorScheme ? "#777" : "#999"}
-          />
-        </View>
-        <TouchableOpacity
-          className="items-center justify-center w-10 h-10 border rounded-lg border-border"
-          onPress={() => setFilterModalVisible(true)}
-        >
-          <Filter size={20} color={isDarkColorScheme ? "#fff" : "#333"} />
-        </TouchableOpacity>
-      </View>
-
+      <MenuSearchBar
+        setFilterModalVisible={setFilterModalVisible}
+        query={query}
+        setQuery={setQuery}
+      />
       {/* Categories */}
       <FlatList
         data={categories}
         horizontal
         showsHorizontalScrollIndicator={false}
-        className=" max-h-12"
+        className="px-4 py-3"
         contentContainerStyle={{ alignItems: "center" }}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            className={`px-4 py-2 mr-2 rounded-full border h-10 ${
-              selectedCategory === item
-                ? "bg-primary border-primary"
-                : "bg-card border-border"
-            }`}
-            onPress={() => setSelectedCategory(item)}
-          >
-            <Text
-              className={`text-sm ${
-                selectedCategory === item
-                  ? "text-primary-foreground"
-                  : "text-foreground"
-              }`}
-            >
-              {item}
-            </Text>
-          </TouchableOpacity>
+          <CategoryPill
+            item={item}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
         )}
         keyExtractor={(item) => item}
       />
-
+      <Separator className="mb-4 " />
       {/* Menu Items */}
-      <ScrollView className="flex-1 p-4">
-        {menuItems.map((item) => (
-          <View
-            key={item._id}
-            className="flex-row mb-4 overflow-hidden border rounded-lg border-border"
-          >
-            <Image source={{ uri: item.imageUrl }} className="w-24 h-24" />
-            <View className="flex-1 p-3">
-              <View className="flex-row items-start justify-between">
-                <View>
-                  <Text className="text-base font-bold text-foreground">
-                    {item.name}
-                  </Text>
-                  <Text className="text-xs text-muted-foreground">
-                    {item.category}
-                  </Text>
-                </View>
-                <Text className="text-base font-bold text-foreground">
-                  ₱{item.prices[0].price.toFixed(2)}
-                </Text>
-              </View>
-              <Text
-                className="mt-1 text-xs text-muted-foreground"
-                numberOfLines={2}
-              >
-                {item.shortDescription}
-              </Text>
-              <View className="flex-row items-center justify-between mt-2">
-                <View className="flex-row items-center">
-                  <Star size={12} color="#F59E0B" />
-                  <Text className="ml-1 text-xs">
-                    {item.rating} ({item.ratingCount})
-                  </Text>
-                </View>
-                <TouchableOpacity className="bg-primary px-3 py-1.5 rounded">
-                  <Text className="text-xs font-medium text-primary-foreground">
-                    Add
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        ))}
-      </ScrollView>
-
+      <FlatList
+        contentContainerStyle={{ paddingHorizontal: 16 }}
+        data={menuItems}
+        renderItem={(item) => <MenuCard item={item.item} />}
+      />
       {/* Filter Modal */}
       <Modal
         animationType="slide"

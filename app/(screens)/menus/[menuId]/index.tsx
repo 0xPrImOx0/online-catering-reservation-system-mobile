@@ -1,5 +1,5 @@
 import { View, Text, Image, ScrollView, FlatList } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { menuItems } from "~/libs/menu-lists";
 import { Badge } from "~/components/ui/badge";
@@ -9,14 +9,40 @@ import { Flame } from "lucide-react-native";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import TrayPriceCard from "~/components/menus/TrayPriceCard";
+import api from "~/libs/axiosInstance";
+import { MenuItem } from "~/types/menu-types";
+import axios from "axios";
 
 export default function MenuShowcasePage() {
   const { menuId } = useLocalSearchParams();
-  const menu = menuItems.find((item) => item._id === menuId);
-  if (menu) {
-    return (
+  // const menu = menuItems.find((item) => item._id === menuId);
+  const [menu, setMenu] = useState<MenuItem | null>(null);
+
+  useEffect(() => {
+    const getMenu = async () => {
+      try {
+        const response = await api.get(`/menus/${menuId}`);
+        setMenu(response.data.data);
+      } catch (err: unknown) {
+        console.log("ERRRORRR", err);
+
+        if (axios.isAxiosError<{ error: string }>(err)) {
+          const message = err.response?.data.error || "Unexpected Error Occur";
+
+          console.error("ERROR FETCHING MENUS", message);
+        } else {
+          console.error("Something went wrong. Please try again.");
+        }
+      }
+    };
+
+    getMenu();
+  }, []);
+
+  {
+    menu && (
       <View className="flex-1 bg-background">
-        <View className="">
+        <View>
           <View className="relative w-full ">
             <Image
               source={{ uri: menu.imageUrl }}

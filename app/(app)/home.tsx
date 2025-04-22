@@ -59,7 +59,6 @@ export default function Home() {
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
 
       <ScrollView className="pb-20">
-
         {/* Main content */}
         <View className="px-4">
           {/* Hero section with main heading and CTA */}
@@ -81,28 +80,17 @@ export default function Home() {
               onPress={() => {}}
               buttonStyles="bg-primary py-4 px-6 m-2 rounded-full self-center"
             >
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Calendar size={20} color="black" />
-                <Text className="text-primary-foreground text-lg font-bold ml-2">
-                  Book Now
-                </Text>
-              </View>
-            </CustomButton>
-            <CustomButton
-              onPress={() => {}}
-              buttonStyles="bg-black py-4 px-6 m-2 rounded-full self-center"
-            >
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Phone size={20} color="white" />
-                <Text className="text-white text-lg font-bold ml-2">
-                  Contact Us
+                <Text className="ml-2 text-lg font-bold text-primary-foreground">
+                  Book now
                 </Text>
               </View>
             </CustomButton>
           </View>
 
           {/* Hero Section */}
-            <Hero />
+          <Hero />
 
           {/* Quick Actions */}
           <View className="flex-row justify-between mb-8">
@@ -147,18 +135,24 @@ export default function Home() {
             </Text>
           </CustomButton>
 
-         <View className="flex-row justify-between mb-5 py=4 px-5 bg-card rounded-lg">
-            <Card className="flex-1 h-50 mr-3 justify-center items-center bg-card rounded-lg border-white">
-              <Text className="text-2xl text-foreground">5,000+</Text>
-              <Text className="mt-.5 text-sm text-muted-foreground">Events Successfully Catered</Text>
+          <View className="justify-between gap-4 mb-5 rounded-lg bg-card">
+            <Card className="justify-center gap-1 p-4 rounded-lg items- justify- border-border h-50 bg-card">
+              <Text className="text-3xl text-foreground">5,000+</Text>
+              <Text className="mt-.5 text-sm text-muted-foreground">
+                Events Successfully Catered
+              </Text>
             </Card>
-            <Card className="flex-1 h-50 mr-3 justify-center items-center bg-card rounded-lg border-white">
-              <Text className="text-2xl text-foreground">{"< 1 m"}</Text>
-              <Text className="mt-1 text-sm text-muted-foreground">Instant Booking Confirmation</Text>
+            <Card className="justify-center gap-1 p-4 rounded-lg border-border flex- h-50 bg-card">
+              <Text className="text-3xl text-foreground">{"< 1 m"}</Text>
+              <Text className="mt-1 text-sm text-muted-foreground">
+                Instant Booking Confirmation
+              </Text>
             </Card>
-            <Card className="flex-1 h-50 mr-3 justify-center items-center bg-card rounded-lg border-white">
-              <Text className="text-2xl text-foreground">95%</Text>
-              <Text className="mt-1 text-sm text-muted-foreground">Customer Satisfaction Rate</Text>
+            <Card className="justify-center flex-1 gap-1 p-4 rounded-lg border-border h-50 bg-card">
+              <Text className="text-3xl text-foreground">95%</Text>
+              <Text className="mt-1 text-sm text-muted-foreground">
+                Customer Satisfaction Rate
+              </Text>
             </Card>
           </View>
 

@@ -17,12 +17,15 @@ import {
   Phone,
 } from "lucide-react-native";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Hero from "~/components/home/Hero";
 import { Card } from "~/components/ui/card";
 import { useColorScheme } from "~/libs/useColorScheme";
-import { cateringPackages } from "~/libs/packages-metadata";
+// import { cateringPackages } from "~/libs/packages-metadata";
 import { categories } from "~/libs/menu-lists";
+import { CateringPackagesProps } from "~/types/package-types";
+import api from "~/libs/axiosInstance";
+import axios from "axios";
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
@@ -53,6 +56,24 @@ export default function Home() {
   ];
 
   const [popularMenuPill, setPopularMenuPill] = useState("Soup");
+
+  const [cateringPackages, setCateringPackages] = useState<
+    Array<CateringPackagesProps>
+  >([]);
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      try {
+        const response = await api.get("/packages/featured");
+        setCateringPackages(response.data.data);
+      } catch (err: unknown) {
+        if (axios.isAxiosError<{ message: string }>(err)) alert(err.message);
+        // toast.error(err.message);
+      }
+    };
+
+    fetchFeatured();
+  }, []);
 
   return (
     <View className="flex-1 bg-background">

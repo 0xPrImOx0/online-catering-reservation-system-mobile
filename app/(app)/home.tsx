@@ -15,6 +15,7 @@ import {
   MapPin,
   Star,
   UtensilsCrossed,
+  Phone
 } from "lucide-react-native";
 import { categories } from "~/lib/menu-lists";
 import clsx from "clsx";
@@ -58,33 +59,49 @@ export default function Home() {
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
 
       <ScrollView className="pb-20">
-
         {/* Main content */}
         <View className="px-4">
           {/* Hero section with main heading and CTA */}
           <View className="mb-8">
-            <Text className="mt-4 mb-4 text-4xl font-bold leading-tight text-foreground">
-              Seamless Catering, Unforgettable Events
+            <Text className="mt-4 text-4xl text-center font-bold leading-tight text-foreground">
+              Seamless Catering,
             </Text>
-            <Text className="mt-2 mb-6 text-lg text-muted-foreground">
+            <Text className="mt-1 mb-4 text-4xl text-center font-bold leading-tight text-foreground">
+              Unforgettable Events
+            </Text>
+            <Text className="mt-2 mb-6 text-lg text-center text-muted-foreground">
               Effortless bookings, delicious menus, and stress-free planning—all
               in one platform. Reserve your perfect event catering in just a few
               clicks!
             </Text>
+          </View>
+          <View className="mb-8 flex-row justify-center">
             <CustomButton
               onPress={() => {}}
               buttonStyles="bg-primary py-4 px-6 m-2 rounded-full self-center"
-              >
+            >
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Calendar size={20} color="black" />
                 <Text className="text-primary-foreground text-lg font-bold ml-2">
-                  Book now
+                  Book Now
+                </Text>
+              </View>
+            </CustomButton>
+            <CustomButton
+              onPress={() => {}}
+              buttonStyles="bg-black py-4 px-6 m-2 rounded-full self-center"
+            >
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Phone size={20} color="white" />
+                <Text className="text-white text-lg font-bold ml-2">
+                  Contact Us
                 </Text>
               </View>
             </CustomButton>
           </View>
+          
           {/* Hero Section */}
-            <Hero />
+          <Hero />
 
           {/* Quick Actions */}
           <View className="flex-row justify-between mb-8">
@@ -129,18 +146,24 @@ export default function Home() {
             </Text>
           </CustomButton>
 
-         <View className="flex-row justify-between mb-5 py=4 px-5 bg-card rounded-lg">
-            <Card className="flex-1 h-50 mr-3 justify-center items-center bg-card rounded-lg border-white">
-              <Text className="text-2xl text-foreground">5,000+</Text>
-              <Text className="mt-.5 text-sm text-muted-foreground">Events Successfully Catered</Text>
+          <View className="justify-between gap-4 mb-5 rounded-lg bg-card">
+            <Card className="justify-center gap-1 p-4 rounded-lg items- justify- border-border h-50 bg-card">
+              <Text className="text-3xl text-foreground">5,000+</Text>
+              <Text className="mt-.5 text-sm text-muted-foreground">
+                Events Successfully Catered
+              </Text>
             </Card>
-            <Card className="flex-1 h-50 mr-3 justify-center items-center bg-card rounded-lg border-white">
-              <Text className="text-2xl text-foreground">{"< 1 m"}</Text>
-              <Text className="mt-1 text-sm text-muted-foreground">Instant Booking Confirmation</Text>
+            <Card className="justify-center gap-1 p-4 rounded-lg border-border flex- h-50 bg-card">
+              <Text className="text-3xl text-foreground">{"< 1 m"}</Text>
+              <Text className="mt-1 text-sm text-muted-foreground">
+                Instant Booking Confirmation
+              </Text>
             </Card>
-            <Card className="flex-1 h-50 mr-3 justify-center items-center bg-card rounded-lg border-white">
-              <Text className="text-2xl text-foreground">95%</Text>
-              <Text className="mt-1 text-sm text-muted-foreground">Customer Satisfaction Rate</Text>
+            <Card className="justify-center flex-1 gap-1 p-4 rounded-lg border-border h-50 bg-card">
+              <Text className="text-3xl text-foreground">95%</Text>
+              <Text className="mt-1 text-sm text-muted-foreground">
+                Customer Satisfaction Rate
+              </Text>
             </Card>
           </View>
 

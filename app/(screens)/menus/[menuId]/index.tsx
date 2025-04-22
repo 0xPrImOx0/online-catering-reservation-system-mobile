@@ -1,6 +1,6 @@
 import { View, Text, Image, ScrollView, FlatList } from "react-native";
 import React from "react";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { menuItems } from "~/lib/menu-lists";
 import { Badge } from "~/components/ui/badge";
 import clsx from "clsx";
@@ -21,7 +21,7 @@ export default function MenuShowcasePage() {
             <Image
               source={{ uri: menu.imageUrl }}
               alt={menu.name}
-              className="object-cover h-[240px]"
+              className="object-cover object-center h-[240px]"
             />
 
             <View className="absolute flex-row gap-2 top-2 right-2">
@@ -63,10 +63,11 @@ export default function MenuShowcasePage() {
               <Text className="text-lg font-bold">
                 &#8369;{menu.regularPricePerPax.toFixed(2)} per pax
               </Text>
-              <Button variant={"secondary"}>
-                <Link href={`/book-now`}>
-                  <Text className="text-white">Book Now </Text>
-                </Link>
+              <Button
+                variant={"secondary"}
+                onPress={() => router.push("/book-now")}
+              >
+                <Text className="text-white">Book Now </Text>
               </Button>
             </View>
           </View>

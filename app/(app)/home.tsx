@@ -15,6 +15,7 @@ import {
   MapPin,
   Star,
   UtensilsCrossed,
+  Phone
 } from "lucide-react-native";
 import { categories } from "~/lib/menu-lists";
 import clsx from "clsx";
@@ -63,26 +64,43 @@ export default function Home() {
         <View className="px-4">
           {/* Hero section with main heading and CTA */}
           <View className="mb-8">
-            <Text className="mt-4 mb-4 text-4xl font-bold leading-tight text-foreground">
-              Seamless Catering, Unforgettable Events
+            <Text className="mt-4 text-4xl text-center font-bold leading-tight text-foreground">
+              Seamless Catering,
             </Text>
-            <Text className="mt-2 mb-6 text-lg text-muted-foreground">
+            <Text className="mt-1 mb-4 text-4xl text-center font-bold leading-tight text-foreground">
+              Unforgettable Events
+            </Text>
+            <Text className="mt-2 mb-6 text-lg text-center text-muted-foreground">
               Effortless bookings, delicious menus, and stress-free planning—all
               in one platform. Reserve your perfect event catering in just a few
               clicks!
             </Text>
+          </View>
+          <View className="mb-8 flex-row justify-center">
             <CustomButton
               onPress={() => {}}
               buttonStyles="bg-primary py-4 px-6 m-2 rounded-full self-center"
-              >
+            >
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Calendar size={20} color="black" />
                 <Text className="text-primary-foreground text-lg font-bold ml-2">
-                  Book now
+                  Book Now
+                </Text>
+              </View>
+            </CustomButton>
+            <CustomButton
+              onPress={() => {}}
+              buttonStyles="bg-black py-4 px-6 m-2 rounded-full self-center"
+            >
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Phone size={20} color="white" />
+                <Text className="text-white text-lg font-bold ml-2">
+                  Contact Us
                 </Text>
               </View>
             </CustomButton>
           </View>
+
           {/* Hero Section */}
             <Hero />
 

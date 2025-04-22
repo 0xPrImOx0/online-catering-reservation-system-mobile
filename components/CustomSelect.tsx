@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import {
   Select,
@@ -6,11 +6,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  type Option,
 } from "./ui/select";
 import { SortAsc } from "lucide-react-native";
 import { clsx } from "clsx";
 
-//Custom Select Types
+// Custom Select Types
 export type CustomSelectItemProps = {
   label: string;
   value: string;
@@ -33,23 +34,20 @@ const CustomSelect = ({
   value,
   onValueChange,
 }: CustomSelectProps) => {
-  // Map CustomSelectItemProps to library Option type
-  const options: CustomSelectItemProps[] = items.map(({ value, label }) => ({
-    value,
-    label,
-  }));
+  const toOption = (item: CustomSelectItemProps): Option => ({
+    value: item.value,
+    label: item.label,
+  });
 
-  // Find matching Option from CustomSelectItemProps
-  const selectedOption = options.find((opt) => opt.value === value.value);
-  const defaultOption = options.find((opt) => opt.value === defaultValue.value);
+  const selectedOption = toOption(value);
+  const defaultOption = toOption(defaultValue);
+
   return (
     <Select
       defaultValue={defaultOption}
       value={selectedOption}
       onValueChange={(option) => {
-        if (option) {
-          onValueChange({ value: option.value, label: option.label });
-        }
+        if (option) onValueChange({ value: option.value, label: option.label });
       }}
     >
       <SelectTrigger
@@ -61,12 +59,12 @@ const CustomSelect = ({
       >
         <View className="flex items-center">
           <SortAsc className="mr-2 h-4 w-4" />
-          <SelectValue className="" placeholder={placeholder} />
+          <SelectValue placeholder={placeholder} />
         </View>
       </SelectTrigger>
       <SelectContent>
         {items.map((item) => (
-          <SelectItem label={item.label} value={item.value} key={item.value}>
+          <SelectItem key={item.value} value={item.value} label={item.label}>
             {item.label}
           </SelectItem>
         ))}

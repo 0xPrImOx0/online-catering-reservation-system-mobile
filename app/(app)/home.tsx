@@ -80,15 +80,26 @@ export default function Home() {
               onPress={() => {}}
               buttonStyles="bg-primary py-4 px-6 m-2 rounded-full self-center"
             >
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Calendar size={20} color="black" />
-                <Text className="ml-2 text-lg font-bold text-primary-foreground">
-                  Book now
+                <Text className="text-primary-foreground text-lg font-bold ml-2">
+                  Book Now
+                </Text>
+              </View>
+            </CustomButton>
+            <CustomButton
+              onPress={() => {}}
+              buttonStyles="bg-black py-4 px-6 m-2 rounded-full self-center"
+            >
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Phone size={20} color="white" />
+                <Text className="text-white text-lg font-bold ml-2">
+                  Contact Us
                 </Text>
               </View>
             </CustomButton>
           </View>
-
+          
           {/* Hero Section */}
           <Hero />
 

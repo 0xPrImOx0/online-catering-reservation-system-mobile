@@ -15,14 +15,14 @@ export default function MenuSearchBar({
 
   return (
     <View className="flex-row items-center px-4 pt-4 pb-2">
-      <View className="flex-row items-center flex-1 px-3 py-2 mr-2 rounded-lg bg-muted">
+      <View className="flex-row items-center justify-center flex-1 gap-2 px-3 mr-2 rounded-lg bg-muted">
         <Search
-          size={16}
+          size={20}
           color={isDarkColorScheme ? "#999" : "#666"}
-          className="mr-2"
+          className="flex-1"
         />
         <TextInput
-          className="flex-1 text-base text-foreground"
+          className="flex-1 py-4 text-foreground"
           placeholder="Search menus..."
           value={query}
           onChangeText={setQuery}
@@ -30,10 +30,10 @@ export default function MenuSearchBar({
         />
       </View>
       <TouchableOpacity
-        className="items-center justify-center w-10 h-10 border rounded-lg border-border"
+        className="items-center justify-center p-4 border rounded-lg border-border"
         onPress={() => setFilterModalVisible(true)}
       >
-        <Filter size={20} color={isDarkColorScheme ? "#fff" : "#333"} />
+        <Filter size={16} color={isDarkColorScheme ? "#fff" : "#333"} />
       </TouchableOpacity>
     </View>
   );

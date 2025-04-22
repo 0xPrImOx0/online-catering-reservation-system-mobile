@@ -5,6 +5,7 @@ export type ServingSize = 6 | 10 | 15 | 20;
 
 // Define the types
 export type CategoryProps =
+  | "All"
   | "Soup"
   | "Salad"
   | "Beef"
@@ -55,7 +56,7 @@ export interface PriceInfo {
 }
 
 export interface MenuItem {
-  _id:  string,
+  _id: string;
   name: string;
   category: CategoryProps;
   available: boolean;

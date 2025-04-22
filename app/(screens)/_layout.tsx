@@ -2,7 +2,7 @@ import { View, Text, Platform, TouchableOpacity } from "react-native";
 import React from "react";
 import { router, Stack } from "expo-router";
 import { useColorScheme } from "~/lib/useColorScheme";
-import { ChevronLeft, ChevronRight } from "lucide-react-native";
+import { ChevronLeft } from "lucide-react-native";
 
 export default function RootLayout() {
   const { isDarkColorScheme } = useColorScheme();

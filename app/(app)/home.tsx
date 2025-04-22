@@ -15,14 +15,15 @@ import {
   MapPin,
   Star,
   UtensilsCrossed,
-  Phone
+  Phone,
 } from "lucide-react-native";
-import { categories } from "~/lib/menu-lists";
+import { categories, menuItems } from "~/lib/menu-lists";
 import clsx from "clsx";
 import { useState } from "react";
 import Hero from "~/components/home/Hero";
 import { cateringPackages } from "~/lib/packages-metadata";
 import { Card } from "~/components/ui/card";
+import { Link } from "expo-router";
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
@@ -63,10 +64,10 @@ export default function Home() {
         <View className="px-4">
           {/* Hero section with main heading and CTA */}
           <View className="mb-8">
-            <Text className="mt-4 text-4xl text-center font-bold leading-tight text-foreground">
+            <Text className="mt-4 text-4xl font-bold leading-tight text-center text-foreground">
               Seamless Catering,
             </Text>
-            <Text className="mt-1 mb-4 text-4xl text-center font-bold leading-tight text-foreground">
+            <Text className="mt-1 mb-4 text-4xl font-bold leading-tight text-center text-foreground">
               Unforgettable Events
             </Text>
             <Text className="mt-2 mb-6 text-lg text-center text-muted-foreground">
@@ -75,14 +76,14 @@ export default function Home() {
               clicks!
             </Text>
           </View>
-          <View className="mb-8 flex-row justify-center">
+          <View className="flex-row justify-center mb-8">
             <CustomButton
               onPress={() => {}}
               buttonStyles="bg-primary py-4 px-6 m-2 rounded-full self-center"
             >
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Calendar size={20} color="black" />
-                <Text className="text-primary-foreground text-lg font-bold ml-2">
+                <Text className="ml-2 text-lg font-bold text-primary-foreground">
                   Book Now
                 </Text>
               </View>
@@ -91,15 +92,15 @@ export default function Home() {
               onPress={() => {}}
               buttonStyles="bg-black py-4 px-6 m-2 rounded-full self-center"
             >
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Phone size={20} color="white" />
-                <Text className="text-white text-lg font-bold ml-2">
+                <Text className="ml-2 text-lg font-bold text-white">
                   Contact Us
                 </Text>
               </View>
             </CustomButton>
           </View>
-          
+
           {/* Hero Section */}
           <Hero />
 
@@ -264,18 +265,18 @@ export default function Home() {
               />
             </View>
 
-            <ScrollView
+            <FlatList
+              data={menuItems.slice(0, 6)}
+              keyExtractor={(item) => item._id}
               horizontal
               showsHorizontalScrollIndicator={false}
-              className="mb-2"
-            >
-              {appetizers.map((item, index) => (
+              renderItem={({ item }) => (
                 <View
-                  key={index}
-                  className="w-[150px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
+                  key={item._id}
+                  className="w-[200px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
                 >
                   <Image
-                    source={item.image}
+                    source={{ uri: item.imageUrl }}
                     className="h-[100px] w-full"
                     resizeMode="cover"
                   />
@@ -306,18 +307,20 @@ export default function Home() {
                         4.5
                       </Text>
                     </View>
-                    <Text className="mt-1 text-xs text-muted-foreground">
-                      {item.price}
+                    <Text className="mt-1 text-lg font-bold text-white">
+                      ₱{item.prices[0].price.toFixed(2)}
                     </Text>
                     <TouchableOpacity className="px-2 py-1 mt-2 rounded bg-primary">
-                      <Text className="text-xs text-center text-primary-foreground">
-                        View
-                      </Text>
+                      <Link href={`/menus/${item._id}`}>
+                        <Text className="text-xs text-center text-primary-foreground">
+                          View Details
+                        </Text>
+                      </Link>
                     </TouchableOpacity>
                   </View>
                 </View>
-              ))}
-            </ScrollView>
+              )}
+            />
           </View>
         </View>
       </ScrollView>

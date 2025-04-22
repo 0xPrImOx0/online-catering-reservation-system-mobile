@@ -1,6 +1,6 @@
 import { View, Text, Image, ScrollView, FlatList } from "react-native";
 import React from "react";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { menuItems } from "~/lib/menu-lists";
 import { Badge } from "~/components/ui/badge";
 import clsx from "clsx";

@@ -6,9 +6,9 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Platform } from "react-native";
-import { useColorScheme } from "~/lib/useColorScheme";
 import { PortalHost } from "@rn-primitives/portal";
-import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
+import { useColorScheme } from "~/libs/useColorScheme";
+import { setAndroidNavigationBar } from "~/libs/android-navigation-bar";
 
 export {
   // Catch any errors thrown by the Layout component.

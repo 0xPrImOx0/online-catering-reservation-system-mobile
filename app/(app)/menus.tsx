@@ -8,13 +8,13 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "~/components/ui/text";
-import { useColorScheme } from "~/lib/useColorScheme";
 import CustomButton from "components/CustomButton";
-import { categories, menuItems } from "~/lib/menu-lists";
 import MenuCard from "~/components/menus/MenuCard";
 import { Separator } from "~/components/ui/separator";
 import CategoryPill from "~/components/menus/CategoryPill";
 import MenuSearchBar from "~/components/menus/MenuSearchBar";
+import { categories, menuItems } from "~/libs/menu-lists";
+import { useColorScheme } from "~/libs/useColorScheme";
 
 export default function MenusPage() {
   const { isDarkColorScheme } = useColorScheme();

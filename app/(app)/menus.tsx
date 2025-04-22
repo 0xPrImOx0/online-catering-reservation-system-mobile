@@ -27,14 +27,39 @@ export default function MenusPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [query, setQuery] = useState("");
 
-  const filteredMenuItems = menuItems.filter((item) => {
-    const isInCategory =
-      selectedCategory === "All" || item.category === selectedCategory;
-    const isInSearch = item.name.toLowerCase().includes(query.toLowerCase());
-    return isInCategory && isInSearch;
-  });
-
   const [menus, setMenus] = useState<MenuItem[] | null>(null);
+
+  useEffect(() => {
+    const getMenus = async () => {
+      try {
+        const response = await api.get("/menus");
+        setMenus(response.data.data);
+      } catch (err: unknown) {
+        console.log("ERRRORRR", err);
+
+        if (axios.isAxiosError<{ error: string }>(err)) {
+          const message = err.response?.data.error || "Unexpected Error Occur";
+
+          console.error("ERROR FETCHING MENUS", message);
+        } else {
+          console.error("Something went wrong. Please try again.");
+        }
+      }
+    };
+
+    getMenus();
+  }, []);
+
+  const filteredMenuItems = menus
+    ? menus.filter((item) => {
+        const isInCategory =
+          selectedCategory === "All" || item.category === selectedCategory;
+        const isInSearch = item.name
+          .toLowerCase()
+          .includes(query.toLowerCase());
+        return isInCategory && isInSearch;
+      })
+    : [];
 
   // Callback to handle menu updates
   const handleMenuUpdated = (updatedMenu: MenuItem) => {
@@ -69,27 +94,6 @@ export default function MenusPage() {
     onMenuCreated: handleMenuCreated,
     onMenuDeleted: handleMenuDeleted,
   });
-
-  useEffect(() => {
-    const getMenus = async () => {
-      try {
-        const response = await api.get("/menus");
-        setMenus(response.data.data);
-      } catch (err: unknown) {
-        console.log("ERRRORRR", err);
-
-        if (axios.isAxiosError<{ error: string }>(err)) {
-          const message = err.response?.data.error || "Unexpected Error Occur";
-
-          console.error("ERROR FETCHING MENUS", message);
-        } else {
-          console.error("Something went wrong. Please try again.");
-        }
-      }
-    };
-
-    getMenus();
-  }, []);
 
   return (
     <View className="flex-1 bg-background">

@@ -6,8 +6,9 @@ let socket: Socket;
 
 export const initSocket = () => {
   // Direct connection to the backend, replace with your backend URL
-  socket = io("http://localhost:5500", {
+  socket = io("http://192.168.48.231:5500", {
     transports: ["websocket"], // Use websockets for real-time communication
+    withCredentials: true, // optional but matches your backend config
   });
 
   // Log successful connection

@@ -52,6 +52,7 @@ export default function MenusPage() {
       <FlatList
         contentContainerStyle={{ paddingHorizontal: 16 }}
         data={menuItems}
+        keyExtractor={(item) => item._id}
         renderItem={(item) => <MenuCard item={item.item} />}
       />
       {/* Filter Modal */}

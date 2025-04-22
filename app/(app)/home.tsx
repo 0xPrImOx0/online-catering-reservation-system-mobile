@@ -8,21 +8,21 @@ import {
 import { StatusBar } from "expo-status-bar";
 import CustomButton from "components/CustomButton";
 import { Text } from "~/components/ui/text";
-import { useColorScheme } from "~/lib/useColorScheme";
 import {
   Calendar,
   Clock,
   MapPin,
   Star,
   UtensilsCrossed,
-  Phone
+  Phone,
 } from "lucide-react-native";
-import { categories } from "~/lib/menu-lists";
 import clsx from "clsx";
 import { useState } from "react";
 import Hero from "~/components/home/Hero";
-import { cateringPackages } from "~/lib/packages-metadata";
 import { Card } from "~/components/ui/card";
+import { useColorScheme } from "~/libs/useColorScheme";
+import { cateringPackages } from "~/libs/packages-metadata";
+import { categories } from "~/libs/menu-lists";
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
@@ -80,7 +80,7 @@ export default function Home() {
               onPress={() => {}}
               buttonStyles="bg-primary py-4 px-6 m-2 rounded-full self-center"
             >
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Calendar size={20} color="black" />
                 <Text className="text-primary-foreground text-lg font-bold ml-2">
                   Book Now
@@ -91,7 +91,7 @@ export default function Home() {
               onPress={() => {}}
               buttonStyles="bg-black py-4 px-6 m-2 rounded-full self-center"
             >
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Phone size={20} color="white" />
                 <Text className="text-white text-lg font-bold ml-2">
                   Contact Us
@@ -99,7 +99,7 @@ export default function Home() {
               </View>
             </CustomButton>
           </View>
-          
+
           {/* Hero Section */}
           <Hero />
 

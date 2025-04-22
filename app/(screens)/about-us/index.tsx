@@ -1,7 +1,7 @@
 import { View, ScrollView, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "~/components/ui/text";
-import { useColorScheme } from "~/lib/useColorScheme";
+import { useColorScheme } from "~/libs/useColorScheme";
 import {
   Award,
   Clock,

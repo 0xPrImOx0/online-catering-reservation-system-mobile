@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, TextInput } from "react-native";
 import { Search, Filter } from "lucide-react-native";
-import { useColorScheme } from "~/lib/useColorScheme";
+import { useColorScheme } from "~/libs/useColorScheme";
 
 export default function MenuSearchBar({
   setFilterModalVisible,

@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { View, Switch } from "react-native"
-import { setAndroidNavigationBar } from "~/lib/android-navigation-bar"
-import { useColorScheme } from "~/lib/useColorScheme"
+import { View, Switch } from "react-native";
+import { setAndroidNavigationBar } from "~/libs/android-navigation-bar";
+import { useColorScheme } from "~/libs/useColorScheme";
 
 export function ThemeToggle() {
-  const { isDarkColorScheme, setColorScheme } = useColorScheme()
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
   function toggleColorScheme() {
-    const newTheme = isDarkColorScheme ? "light" : "dark"
-    setColorScheme(newTheme)
-    setAndroidNavigationBar(newTheme)
+    const newTheme = isDarkColorScheme ? "light" : "dark";
+    setColorScheme(newTheme);
+    setAndroidNavigationBar(newTheme);
   }
 
   return (
@@ -23,6 +23,5 @@ export function ThemeToggle() {
         ios_backgroundColor="#3e3e3e"
       />
     </View>
-  )
+  );
 }
-

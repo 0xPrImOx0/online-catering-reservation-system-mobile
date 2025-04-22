@@ -1,6 +1,5 @@
 import { View, Platform, TouchableOpacity, Modal } from "react-native";
 import { router, Tabs } from "expo-router";
-import { useColorScheme } from "~/lib/useColorScheme";
 import { Text } from "~/components/ui/text";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { Image } from "react-native";
@@ -19,6 +18,7 @@ import {
 import { useState } from "react";
 import { Separator } from "~/components/ui/separator";
 import AdditionalSettingsButtons from "~/components/AdditionalSettingsButtons";
+import { useColorScheme } from "~/libs/useColorScheme";
 
 export default function AppLayout() {
   const { isDarkColorScheme } = useColorScheme();

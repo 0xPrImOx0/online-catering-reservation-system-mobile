@@ -8,23 +8,23 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "~/components/ui/text";
-import { useColorScheme } from "~/lib/useColorScheme";
 import { Check, Users, Clock } from "lucide-react-native";
 import CustomButton from "components/CustomButton";
-import { cateringPackages, packages } from "~/lib/packages-metadata";
 import CategoryPill from "~/components/menus/CategoryPill";
+import { useColorScheme } from "~/libs/useColorScheme";
+import { cateringPackages, packages } from "~/libs/packages-metadata";
 
 export default function PackagesPage() {
   const { isDarkColorScheme } = useColorScheme();
   const [selectedType, setSelectedType] = useState("All");
-  const packageTypes = [
-    "All",
-    "Wedding",
-    "Corporate",
-    "Birthday",
-    "Anniversary",
-    "Custom",
-  ];
+  // const packageTypes = [
+  //   "All",
+  //   "Wedding",
+  //   "Corporate",
+  //   "Birthday",
+  //   "Anniversary",
+  //   "Custom",
+  // ];
 
   // const packages = [
   //   {

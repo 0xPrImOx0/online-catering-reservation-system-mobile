@@ -1,8 +1,8 @@
 import { View, Text, Platform, TouchableOpacity } from "react-native";
 import React from "react";
 import { router, Stack } from "expo-router";
-import { useColorScheme } from "~/lib/useColorScheme";
 import { ChevronLeft, ChevronRight } from "lucide-react-native";
+import { useColorScheme } from "~/libs/useColorScheme";
 
 export default function RootLayout() {
   const { isDarkColorScheme } = useColorScheme();
@@ -33,8 +33,14 @@ export default function RootLayout() {
       <Stack.Screen name="profile/index" options={{ title: "Profile Page" }} />
       <Stack.Screen name="contact-us/index" options={{ title: "Contact Us" }} />
       <Stack.Screen name="about-us/index" options={{ title: "About Us" }} />
-      <Stack.Screen name="menus/[menuId]/index" options={{ title: "Menu Showcase" }} />
-      <Stack.Screen name="packages/[packageId]/index" options={{ title: "Package Showcase" }} />
+      <Stack.Screen
+        name="menus/[menuId]/index"
+        options={{ title: "Menu Showcase" }}
+      />
+      <Stack.Screen
+        name="packages/[packageId]/index"
+        options={{ title: "Package Showcase" }}
+      />
     </Stack>
   );
 }

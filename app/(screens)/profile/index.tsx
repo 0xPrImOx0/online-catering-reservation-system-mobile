@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, ScrollView, Image, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "~/components/ui/text";
-import { useColorScheme } from "~/lib/useColorScheme";
+import { useColorScheme } from "~/libs/useColorScheme";
 import {
   Calendar,
   Clock,

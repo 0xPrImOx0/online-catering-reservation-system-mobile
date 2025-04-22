@@ -21,7 +21,7 @@ export default function AdditionalSettingsButtons({
     <>
       <TouchableOpacity
         onPress={() => {router.push(link); setShowInfoModal(false)}}
-        className="flex-row items-center justify-center w-full gap-4 p-4 rounded-lg"
+        className="flex-row w-full gap-4 p-4 rounded-lg"
       >
         <Icon color="white" size={24} />
         <Text className="text-lg font-bold text-white">{title}</Text>

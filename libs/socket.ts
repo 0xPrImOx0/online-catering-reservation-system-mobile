@@ -6,25 +6,27 @@ let socket: Socket;
 
 export const initSocket = () => {
   // Direct connection to the backend, replace with your backend URL
-  socket = io("http://192.168.48.231:5500", {
-    transports: ["websocket"], // Use websockets for real-time communication
-    withCredentials: true, // optional but matches your backend config
-  });
+  if (!socket) {
+    socket = io("http://192.168.100.64:5500", {
+      transports: ["websocket"], // Use websockets for real-time communication
+      withCredentials: true, // optional but matches your backend config
+    });
 
-  // Log successful connection
-  socket.on("connect", () => {
-    console.log("✅ Socket connected with ID:", socket.id);
-  });
+    // Log successful connection
+    socket.on("connect", () => {
+      console.log("✅ Socket connected with ID:", socket.id);
+    });
 
-  // Handle connection errors
-  socket.on("connect_error", (err) => {
-    console.error("❌ Socket connection error:", err);
-  });
+    // Handle connection errors
+    socket.on("connect_error", (err) => {
+      console.error("❌ Socket connection error:", err);
+    });
 
-  // Listen for the custom "connected" event from the backend
-  socket.on("connected", (data) => {
-    console.log("🟢 Server says:", data.message);
-  });
+    // Listen for the custom "connected" event from the backend
+    socket.on("connected", (data) => {
+      console.log("🟢 Server says:", data.message);
+    });
+  }
 };
 
 export const subscribeToMenuUpdates = (callback: (menu: MenuItem) => void) => {

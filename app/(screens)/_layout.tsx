@@ -1,7 +1,7 @@
 import { View, Text, Platform, TouchableOpacity } from "react-native";
 import React from "react";
 import { router, Stack } from "expo-router";
-import { ChevronLeft, ChevronRight } from "lucide-react-native";
+import { ChevronLeft } from "lucide-react-native";
 import { useColorScheme } from "~/libs/useColorScheme";
 
 export default function RootLayout() {

@@ -3387,6 +3387,7 @@ export const priceOptions = [
 ];
 
 export const categories: CategoryProps[] = [
+  "All",
   "Soup",
   "Salad",
   "Beef",

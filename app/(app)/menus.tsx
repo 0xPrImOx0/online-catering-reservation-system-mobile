@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
+  Image,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "~/components/ui/text";
@@ -25,6 +26,13 @@ export default function MenusPage() {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [query, setQuery] = useState("");
+
+  const filteredMenuItems = menuItems.filter((item) => {
+    const isInCategory =
+      selectedCategory === "All" || item.category === selectedCategory;
+    const isInSearch = item.name.toLowerCase().includes(query.toLowerCase());
+    return isInCategory && isInSearch;
+  });
 
   const [menus, setMenus] = useState<MenuItem[] | null>(null);
 
@@ -97,7 +105,7 @@ export default function MenusPage() {
         data={categories}
         horizontal
         showsHorizontalScrollIndicator={false}
-        className="px-4 py-3"
+        className="px-4 py-3 mb-3 max-h-14"
         contentContainerStyle={{ alignItems: "center", gap: 10 }}
         renderItem={({ item }) => (
           <CategoryPill
@@ -110,11 +118,24 @@ export default function MenusPage() {
       />
       <Separator className="mb-4 " />
       {/* Menu Items */}
-      <FlatList
-        contentContainerStyle={{ paddingHorizontal: 16 }}
-        data={menuItems}
-        renderItem={(item) => <MenuCard item={item.item} />}
-      />
+      {filteredMenuItems.length > 0 ? (
+        <FlatList
+          contentContainerStyle={{ paddingHorizontal: 16 }}
+          data={filteredMenuItems}
+          keyExtractor={(item) => item._id}
+          renderItem={(item) => <MenuCard item={item.item} />}
+        />
+      ) : (
+        <View className="items-center my-auto">
+          <Image
+            source={require("../../assets/catering-logo.png")}
+            className="w-60 h-60 mb-4"
+          />
+          <Text className="text-2xl font-medium text-center text-white">
+            No Menu Found
+          </Text>
+        </View>
+      )}
       {/* Filter Modal */}
       <Modal
         animationType="slide"

@@ -109,7 +109,7 @@ export default function MenusPage() {
         data={categories}
         horizontal
         showsHorizontalScrollIndicator={false}
-        className="px-4 py-3 mb-3 max-h-14"
+        className="max-h-16 mx-5 py-3"
         contentContainerStyle={{ alignItems: "center", gap: 10 }}
         renderItem={({ item }) => (
           <CategoryPill
@@ -150,7 +150,7 @@ export default function MenusPage() {
         <View className="justify-end flex-1 bg-black/50">
           <View className="bg-background rounded-t-3xl h-[70%]">
             <View className="flex-row items-center justify-between p-4 border-b border-border">
-              <Text className="text-lg font-bold text-foreground">
+              <Text className="text-xl font-bold text-foreground self-center">
                 Filter Menu
               </Text>
               <TouchableOpacity onPress={() => setFilterModalVisible(false)}>

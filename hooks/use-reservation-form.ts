@@ -1,5 +1,5 @@
-import { cateringPackages } from "~/libs/packages-metadata";
-import { MenuItem } from "~/types/menu-types";
+import { cateringPackages } from "~/lib/packages-metadata";
+import { CategoryProps, MenuItem } from "~/types/menu-types";
 import {
   EventType,
   PackageCategory,
@@ -241,7 +241,7 @@ export function useReservationForm() {
   const handleCheckboxChange = (
     checked: boolean | string,
     field: any,
-    category: PackageCategory,
+    category: CategoryProps,
     menu: MenuItem,
     count: number,
     price: number

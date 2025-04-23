@@ -18,7 +18,7 @@ import {
 import { useState } from "react";
 import { Separator } from "~/components/ui/separator";
 import AdditionalSettingsButtons from "~/components/AdditionalSettingsButtons";
-import { useColorScheme } from "~/libs/useColorScheme";
+import { useColorScheme } from "~/lib/useColorScheme";
 
 export default function AppLayout() {
   const { isDarkColorScheme } = useColorScheme();

@@ -11,8 +11,8 @@ import { Text } from "~/components/ui/text";
 import { Check, Users, Clock } from "lucide-react-native";
 import CustomButton from "components/CustomButton";
 import CategoryPill from "~/components/menus/CategoryPill";
-import { useColorScheme } from "~/libs/useColorScheme";
-import { cateringPackages, packages } from "~/libs/packages-metadata";
+import { useColorScheme } from "~/lib/useColorScheme";
+import { cateringPackages, packages } from "~/lib/packages-metadata";
 
 export default function PackagesPage() {
   const { isDarkColorScheme } = useColorScheme();

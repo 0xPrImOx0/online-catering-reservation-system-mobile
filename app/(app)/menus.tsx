@@ -14,11 +14,11 @@ import MenuCard from "~/components/menus/MenuCard";
 import { Separator } from "~/components/ui/separator";
 import CategoryPill from "~/components/menus/CategoryPill";
 import MenuSearchBar from "~/components/menus/MenuSearchBar";
-import { categories, menuItems } from "~/libs/menu-lists";
-import { useColorScheme } from "~/libs/useColorScheme";
+import { categories, menuItems } from "~/lib/menu-lists";
+import { useColorScheme } from "~/lib/useColorScheme";
 import useSocket from "~/hooks/use-socket";
 import { MenuItem } from "~/types/menu-types";
-import api from "~/libs/axiosInstance";
+import api from "~/lib/axiosInstance";
 import axios from "axios";
 
 export default function MenusPage() {

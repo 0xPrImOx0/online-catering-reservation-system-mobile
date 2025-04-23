@@ -16,15 +16,15 @@ import {
   UtensilsCrossed,
   Phone,
 } from "lucide-react-native";
-import { categories, menuItems } from "~/libs/menu-lists";
+import { categories, menuItems } from "~/lib/menu-lists";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import Hero from "~/components/home/Hero";
 import { Card } from "~/components/ui/card";
-import { useColorScheme } from "~/libs/useColorScheme";
+import { useColorScheme } from "~/lib/useColorScheme";
 import { CateringPackagesProps } from "~/types/package-types";
 import axios from "axios";
-import api from "~/libs/axiosInstance";
+import api from "~/lib/axiosInstance";
 import { Link } from "expo-router";
 
 export default function Home() {

@@ -1,6 +1,6 @@
 import { View, Text, Image, ScrollView } from "react-native";
 import React, { useState } from "react";
-import { options } from "~/libs/packages-metadata";
+import { options } from "~/lib/packages-metadata";
 import {
   Card,
   CardContent,

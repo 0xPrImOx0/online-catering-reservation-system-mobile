@@ -4,7 +4,7 @@ import { Check } from "lucide-react-native";
 import { Progress } from "~/components/ui/progress";
 import MultiStepForm from "~/components/book-now/MultiStepForm";
 import { FormStepType } from "~/types/package-types";
-import { eventPackageFormSteps } from "~/libs/packages-metadata";
+import { eventPackageFormSteps } from "~/lib/packages-metadata";
 import CustomerInformation from "~/components/book-now/CustomerInformation";
 import PackageSelection from "~/components/book-now/PackageSelection";
 import CategoryOptions from "~/components/book-now/CategoryOptions";
@@ -12,7 +12,8 @@ import EventDetails from "~/components/book-now/EventDetails";
 import SummaryBooking from "~/components/book-now/SummaryBooking";
 import { useReservationForm } from "~/hooks/use-reservation-form";
 import { router } from "expo-router";
-import { menuItems } from "~/libs/menu-lists";
+import { menuItems } from "~/lib/menu-lists";
+import { FormProvider } from "react-hook-form";
 
 export default function BookNow() {
   const {
@@ -25,7 +26,7 @@ export default function BookNow() {
 
   const { watch } = reservationForm;
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [nextPageCount, setNextPageCount] = useState(0);
@@ -162,7 +163,7 @@ export default function BookNow() {
   ];
 
   const formContent = (
-    <View {...reservationForm} className="bg-black">
+    <FormProvider {...reservationForm}>
       <MultiStepForm
         formSteps={multiFormSteps}
         onSubmit={handleSubmit}
@@ -180,7 +181,7 @@ export default function BookNow() {
       >
         {reservationFormComponents}
       </MultiStepForm>
-    </View>
+    </FormProvider>
   );
   return (
     <View className="bg-black">

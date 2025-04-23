@@ -1,7 +1,7 @@
 import { View, Text, Image, ScrollView, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { menuItems } from "~/libs/menu-lists";
+import { menuItems } from "~/lib/menu-lists";
 import { Badge } from "~/components/ui/badge";
 import clsx from "clsx";
 import { CategoryBadge } from "~/components/menus/MenuCategoryBadge";
@@ -9,7 +9,7 @@ import { Flame } from "lucide-react-native";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import TrayPriceCard from "~/components/menus/TrayPriceCard";
-import api from "~/libs/axiosInstance";
+import api from "~/lib/axiosInstance";
 import { MenuItem } from "~/types/menu-types";
 import axios from "axios";
 

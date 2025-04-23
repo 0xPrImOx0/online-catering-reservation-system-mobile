@@ -2,7 +2,7 @@ import { View, Text, Platform, TouchableOpacity } from "react-native";
 import React from "react";
 import { router, Stack } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
-import { useColorScheme } from "~/libs/useColorScheme";
+import { useColorScheme } from "~/lib/useColorScheme";
 
 export default function RootLayout() {
   const { isDarkColorScheme } = useColorScheme();
@@ -24,7 +24,7 @@ export default function RootLayout() {
           <TouchableOpacity
             onPress={() => router.back()}
             className="items-center justify-center w-10 h-10 rounded-full bg-border "
-          > 
+          >
             <ChevronLeft />
           </TouchableOpacity>
         ),

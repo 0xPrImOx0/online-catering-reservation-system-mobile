@@ -4,7 +4,10 @@ import { Check } from "lucide-react-native";
 import { Progress } from "~/components/ui/progress";
 import MultiStepForm from "~/components/book-now/MultiStepForm";
 import { FormStepType } from "~/types/package-types";
-import { eventPackageFormSteps } from "~/lib/packages-metadata";
+import {
+  cateringPackages,
+  eventPackageFormSteps,
+} from "~/lib/packages-metadata";
 import CustomerInformation from "~/components/book-now/CustomerInformation";
 import PackageSelection from "~/components/book-now/PackageSelection";
 import CategoryOptions from "~/components/book-now/CategoryOptions";
@@ -26,7 +29,7 @@ export default function BookNow() {
 
   const { watch } = reservationForm;
 
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [nextPageCount, setNextPageCount] = useState(0);
@@ -121,42 +124,45 @@ export default function BookNow() {
   //   }
   // }, [id, deconstructedId, setValue]);
 
-  // const serviceFee = watch("serviceFee");
-  // const selectedPackage = watch("selectedPackage");
-  // const deliveryFee = watch("deliveryFee");
-  // const selectedMenus = watch("selectedMenus");
-  // const guestCount = watch("guestCount") || 1;
+  const serviceFee = watch("serviceFee");
+  const selectedPackage = watch("selectedPackage");
+  const deliveryFee = watch("deliveryFee");
+  const selectedMenus = watch("selectedMenus");
+  const guestCount = watch("guestCount") || 1;
 
-  // useEffect(() => {
-  //   const isPackage = cateringPackages.find(
-  //     (pkg) => pkg._id === selectedPackage
-  //   );
-  //   const calculateTotal = () => {
-  //     let total = 0;
+  useEffect(() => {
+    const isPackage = cateringPackages.find(
+      (pkg) => pkg._id === selectedPackage
+    );
+    const calculateTotal = () => {
+      let total = 0;
 
-  //     // Iterate through each category (Soup, Beverage)
-  //     Object.values(selectedMenus).forEach((category) => {
-  //       // Iterate through each menu item in the category
-  //       Object.values(category).forEach((item) => {
-  //         total += item.quantity * item.pricePerPax;
-  //       });
-  //     });
-  //     setValue("totalPrice", total + serviceFee + deliveryFee);
-  //   };
-  //   if (isPackage) {
-  //     setValue(
-  //       "totalPrice",
-  //       isPackage.pricePerPax * guestCount +
-  //         isPackage.serviceCharge +
-  //         deliveryFee
-  //     );
-  //   }
-  //   calculateTotal();
-  // }, [selectedMenus, serviceFee, deliveryFee, guestCount]);
+      // Iterate through each category (Soup, Beverage)
+      Object.values(selectedMenus).forEach((category) => {
+        // Iterate through each menu item in the category
+        Object.values(category).forEach((item) => {
+          total += item.quantity * item.pricePerPax;
+        });
+      });
+      setValue("totalPrice", total + serviceFee + deliveryFee);
+    };
+    if (isPackage) {
+      setValue(
+        "totalPrice",
+        isPackage.pricePerPax * guestCount +
+          isPackage.serviceCharge +
+          deliveryFee
+      );
+    }
+    calculateTotal();
+  }, [selectedMenus, serviceFee, deliveryFee, guestCount]);
 
   const reservationFormComponents = [
     <CustomerInformation key={"customer-information"} />,
-    <PackageSelection key={"package-selection"} />, // showPackageSelection={showPackageSelection}
+    <PackageSelection
+      key={"package-selection"}
+      showPackageSelection={showPackageSelection}
+    />, // showPackageSelection={showPackageSelection}
     <CategoryOptions key={"category-options"} />, //validateStep={validateStep}
     <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,

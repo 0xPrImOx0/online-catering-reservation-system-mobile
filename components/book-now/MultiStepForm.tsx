@@ -37,22 +37,21 @@ export default function MultiStepForm({
   const checkSizing = isReservationForm ? 24 : 16;
 
   // Function to go to next form step
-  const nextStep = () => {
-    // if (formStep < formSteps.length - 1) {
-    //   setIsNextButtonDisabled(true);
-    //   // If validation function is provided, use it
-    //   if (onNextStep) {
-    //     const isValid = await onNextStep(formStep);
-    //     if (isValid) {
-    //       setFormStep(formStep + 1);
-    //     }
-    //   } else {
-    //     // Otherwise just go to next step
-    //   }
-    setFormStep(formStep + 1);
-
-    // }
-    // setIsNextButtonDisabled(false);
+  const nextStep = async () => {
+    if (formStep < formSteps.length - 1) {
+      setIsNextButtonDisabled(true);
+      // If validation function is provided, use it
+      if (onNextStep) {
+        const isValid = await onNextStep(formStep);
+        if (isValid) {
+          setFormStep(formStep + 1);
+        }
+      } else {
+        // Otherwise just go to next step
+        setFormStep(formStep + 1);
+      }
+    }
+    setIsNextButtonDisabled(false);
   };
 
   // Function to go to previous form step

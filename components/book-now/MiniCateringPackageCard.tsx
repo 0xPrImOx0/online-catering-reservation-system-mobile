@@ -11,6 +11,7 @@ import PackageDetailsDialog from "./PackageDetailsDialog";
 import { EyeIcon, User } from "lucide-react-native";
 import clsx from "clsx";
 import { View, Text } from "react-native";
+import { Link, router } from "expo-router";
 
 export default function MiniCateringPackageCard({
   pkg,
@@ -19,7 +20,6 @@ export default function MiniCateringPackageCard({
   pkg: CateringPackagesProps;
   field: any;
 }) {
-  const [open, setOpenChange] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
 
   // Safely read field.value in useEffect to determine if the package is selected
@@ -70,26 +70,17 @@ export default function MiniCateringPackageCard({
               </Text>
             </View>
 
-            <Button
-              variant={"link"}
-              size={"custom"}
-              onPress={() => setOpenChange(true)}
+            <Link
+              href={`/packages/${pkg._id}`}
             >
               <View className="flex-row items-center gap-1">
                 <EyeIcon color={"white"} />
                 <Text className="text-white">View Details</Text>
               </View>
-            </Button>
+            </Link>
           </CardFooter>
         </Card>
       </Button>
-
-      <PackageDetailsDialog
-        pkg={pkg}
-        open={open}
-        onOpenChange={setOpenChange}
-        isReservationForm
-      />
     </>
   );
 }

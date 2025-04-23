@@ -15,6 +15,7 @@ import axios from "axios";
 
 export default function MenuShowcasePage() {
   const { menuId } = useLocalSearchParams();
+  
   // const menu = menuItems.find((item) => item._id === menuId);
   const [menu, setMenu] = useState<MenuItem | null>(null);
 

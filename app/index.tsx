@@ -8,7 +8,7 @@ export default function SplashScreen() {
   const [user, setUser] = useState(false);
 
   if (!user) {
-    return <Redirect href="/menus" />;
+    return <Redirect href="/book-now" />;
   }
 
   return (

@@ -2,7 +2,6 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 import { AllergenProps, MenuItem } from "./menu-types";
 import { SetStateBoolean } from "./global-types";
 import { CateringPackagesProps, EventType, ServiceType } from "./package-types";
-import { FormStepType } from "@/components/shared/MultiStepForm";
 
 //Search Bar Types
 export type SearchInputProps = {
@@ -101,10 +100,14 @@ export type SelectedEventContainerProps = {
   cateringPackages: CateringPackagesProps[];
 };
 
-export type MultiStepFormProps = {
-  formSteps: FormStepType[];
+export type FormStepType = {
+  id: string;
   title: string;
   description: string;
+};
+
+export type MultiStepFormProps = {
+  formSteps: FormStepType[];
   children: ReactNode[];
   onSubmit: () => void;
   onNextStep?: (currentStep: number) => Promise<boolean>;

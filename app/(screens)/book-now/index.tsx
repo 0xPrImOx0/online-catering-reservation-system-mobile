@@ -74,7 +74,7 @@ export default function BookNow() {
 
   // Add a handleCancel function:
   const handleCancel = () => {
-    router.push("/home");
+    router.back();
   };
 
   // Handle form submission

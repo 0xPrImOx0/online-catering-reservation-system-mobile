@@ -94,8 +94,8 @@ export default function MultiStepForm({
           Complete the form below to book your event
         </Text>
       </View>
-      <View className="flex flex-col mb-2 space-y-2 sm:hidden">
-        <Text className="text-sm text-muted-foreground">
+      <View className="flex flex-col gap-2 mb-2 sm:hidden">
+        <Text className="text text-muted-foreground">
           Step {formStep + 1} of {formSteps.length}
         </Text>
         <View className="flex-row items-center gap-2 mt-1">
@@ -108,7 +108,7 @@ export default function MultiStepForm({
               {isSubmitComplete ? <Check className="w-4 h-4" /> : formStep + 1}
             </Text>
           </View>
-          <Text className="text-xl font-medium text-white">
+          <Text className="text-2xl font-medium text-white">
             {formSteps[formStep].title}
           </Text>
         </View>

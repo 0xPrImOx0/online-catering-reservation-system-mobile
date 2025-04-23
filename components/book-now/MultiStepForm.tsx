@@ -37,23 +37,22 @@ export default function MultiStepForm({
   const checkSizing = isReservationForm ? 24 : 16;
 
   // Function to go to next form step
-  const nextStep = async () => {
-    reservationRef.current?.scrollIntoView({ behavior: "smooth" });
-    if (formStep < formSteps.length - 1) {
-      setIsNextButtonDisabled(true);
-      // If validation function is provided, use it
-      if (onNextStep) {
-        const isValid = await onNextStep(formStep);
-        if (isValid) {
-          setFormStep(formStep + 1);
-        }
-      } else {
-        // Otherwise just go to next step
-        setFormStep(formStep + 1);
-      }
+  const nextStep = () => {
+    // if (formStep < formSteps.length - 1) {
+    //   setIsNextButtonDisabled(true);
+    //   // If validation function is provided, use it
+    //   if (onNextStep) {
+    //     const isValid = await onNextStep(formStep);
+    //     if (isValid) {
+    //       setFormStep(formStep + 1);
+    //     }
+    //   } else {
+    //     // Otherwise just go to next step
+    //   }
+    setFormStep(formStep + 1);
 
-      setIsNextButtonDisabled(false);
-    }
+    // }
+    // setIsNextButtonDisabled(false);
   };
 
   // Function to go to previous form step
@@ -155,10 +154,10 @@ export default function MultiStepForm({
                 >
                   <Text className="text-white">{cancelButtonText}</Text>
                 </Button>
-                <View className="flex gap-2">
+                <View className="flex-row gap-2">
                   {formStep > 0 && (
                     <Button variant="secondary" onPress={prevStep}>
-                      <Text>{previousButtonText}</Text>
+                      <Text className="text-white">{previousButtonText}</Text>
                     </Button>
                   )}
                   {formStep < formSteps.length - 1 ? (

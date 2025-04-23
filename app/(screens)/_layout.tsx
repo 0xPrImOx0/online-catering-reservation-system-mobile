@@ -24,13 +24,12 @@ export default function RootLayout() {
           <TouchableOpacity
             onPress={() => router.back()}
             className="items-center justify-center w-10 h-10 rounded-full bg-border "
-          >
+          > 
             <ChevronLeft />
           </TouchableOpacity>
         ),
       }}
     >
-      <Stack.Screen name="profile/index" options={{ title: "Profile Page" }} />
       <Stack.Screen name="contact-us/index" options={{ title: "Contact Us" }} />
       <Stack.Screen name="about-us/index" options={{ title: "About Us" }} />
       <Stack.Screen
@@ -41,6 +40,7 @@ export default function RootLayout() {
         name="packages/[packageId]/index"
         options={{ title: "Package Showcase" }}
       />
+      <Stack.Screen name="book-now/index" options={{ title: "Book Now" }} />
     </Stack>
   );
 }

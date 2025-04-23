@@ -19,26 +19,26 @@ export default function PackageSelection({
 }: {
   showPackageSelection: boolean;
 }) {
-  const { control, watch, setValue, getValues } =
-    useFormContext<ReservationValues>();
+  const { control, watch, setValue } = useFormContext<ReservationValues>();
   const packageSelection = watch("selectedPackage");
 
+  // Update form values when packageSelection changes
   useEffect(() => {
     const selectedPackage = cateringPackages.find(
       (pkg) => pkg._id === packageSelection
     );
     if (selectedPackage) {
-      // Update the form with the selected package details
       const selectedMenus = Object.fromEntries(
         selectedPackage.options.map((opt) => [opt.category, {}])
       );
-
       setValue("selectedMenus", selectedMenus);
       setValue("eventType", selectedPackage?.eventType ?? "No Event");
       setValue("reservationType", "event");
+    } else {
+      setValue("selectedMenus", {});
     }
-    setValue("selectedMenus", {});
-  }, [packageSelection]);
+  }, [packageSelection, setValue]);
+
   return (
     <ScrollView
       contentContainerClassName="pb-28"
@@ -50,35 +50,44 @@ export default function PackageSelection({
           name="cateringOptions"
           render={({ field }) => (
             <View className="gap-4">
-              {options.map((option) => (
-                <Button
-                  asChild
-                  onPress={() => field.onChange(option.value)}
-                  size={"custom"}
-                  variant={"ghost"}
-                  key={option.value}
-                >
-                  <Card
-                    className={clsx(
-                      "cursor-pointer border-2 transition-all",
+              {options.map((option) => {
+                // Local state for each option's selected status
+                const [isSelected, setIsSelected] = useState(false);
 
-                      { "border-green-500": field.value === option.value }
-                    )}
+                // Safely update isSelected based on field.value
+                useEffect(() => {
+                  setIsSelected(field.value === option.value);
+                }, [field.value, option.value]);
+
+                return (
+                  <Button
+                    asChild
+                    onPress={() => field.onChange(option.value)}
+                    size={"custom"}
+                    variant={"ghost"}
+                    key={option.value}
                   >
-                    <CardHeader className="p-0">
-                      <Image
-                        source={{ uri: option.imageUrl }}
-                        alt={option.label}
-                        className="object-cover w-full h-40 mb-2 rounded-t-lg"
-                      />
-                    </CardHeader>
-                    <CardContent className="mt-4 space-y-2">
-                      <CardTitle>{option.label}</CardTitle>
-                      <CardDescription>{option.description}</CardDescription>
-                    </CardContent>
-                  </Card>
-                </Button>
-              ))}
+                    <Card
+                      className={clsx(
+                        "cursor-pointer border-2",
+                        { "border-green-500": isSelected } // Use isSelected instead of field.value
+                      )}
+                    >
+                      <CardHeader className="p-0">
+                        <Image
+                          source={{ uri: option.imageUrl }}
+                          alt={option.label}
+                          className="object-cover w-full h-40 mb-2 rounded-t-lg"
+                        />
+                      </CardHeader>
+                      <CardContent className="mt-4 space-y-2">
+                        <CardTitle>{option.label}</CardTitle>
+                        <CardDescription>{option.description}</CardDescription>
+                      </CardContent>
+                    </Card>
+                  </Button>
+                );
+              })}
             </View>
           )}
         />

@@ -27,11 +27,6 @@ export default function MiniCateringPackageCard({
     setIsSelected(field.value === pkg._id);
   }, [field.value, pkg._id]);
 
-  // Memoize onPress handler
-  const handlePress = useCallback(() => {
-    field.onChange(pkg._id);
-  }, [field.onChange, pkg._id]);
-
   return (
     <>
       <Button
@@ -39,7 +34,7 @@ export default function MiniCateringPackageCard({
         size={"custom"}
         variant={"ghost"}
         key={pkg._id}
-        onPress={handlePress}
+        onPress={() => field.onChange(pkg._id)}
       >
         <Card
           className={clsx(
@@ -70,9 +65,7 @@ export default function MiniCateringPackageCard({
               </Text>
             </View>
 
-            <Link
-              href={`/packages/${pkg._id}`}
-            >
+            <Link href={`/packages/${pkg._id}`}>
               <View className="flex-row items-center gap-1">
                 <EyeIcon color={"white"} />
                 <Text className="text-white">View Details</Text>

@@ -49,8 +49,13 @@ export default function CategoryOptions() {
       }
     }
   }, [cateringOptions, selectedPackage]);
+
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      className="flex-1 h-full"
+      contentContainerClassName="pb-32"
+    >
       <Controller
         control={control}
         name="selectedMenus"
@@ -68,54 +73,58 @@ export default function CategoryOptions() {
           </View>
         )}
       />
-      <Controller
-        control={control}
-        name="selectedMenus"
-        render={({ field }) => (
-          <View>
-            <Label className="text-lg font-semibold">Menu Quantity</Label>
-            <View className="space-y-6">
-              {Object.keys(field.value).map((category) => (
-                <View key={category} className="pb-4 border-b">
-                  <h3 className="mb-2 font-medium text-gray-700 text-md">
-                    {category}
-                  </h3>
-                  <ul className="space-y-2">
-                    {Object.keys(field.value[category]).map((menu) => (
-                      <li
-                        key={menu}
-                        className="flex items-center justify-between space-x-4"
-                      >
-                        <span>{getMenuItemName(menu)}</span>
-                        <View className="flex space-x-2">
-                          <AddRemoveMenuQuantity
-                            value={field.value}
-                            category={category}
-                            menu={menu}
-                            onChange={field.onChange}
-                          />
-                          <SelectServingSize
-                            category={category}
-                            menu={menu}
-                            value={field.value}
-                            onChange={field.onChange}
-                          />
+      {Object.keys(selectedMenus).length > 0 && !selectedPackage && (
+        <Controller
+          control={control}
+          name="selectedMenus"
+          render={({ field }) => (
+            <View>
+              <Label className="text-lg font-semibold">Menu Quantity</Label>
+              <View className="space-y-6">
+                {Object.keys(field.value).map((category) => (
+                  <View key={category} className="pb-4 border-b">
+                    <Text className="mt-4 mb-2 text-xl font-medium text-foreground">
+                      {category}
+                    </Text>
+                    <View className="gap-2">
+                      {Object.keys(field.value[category]).map((menu) => (
+                        <View
+                          key={menu}
+                          className="flex-row items-center justify-between space-x-4"
+                        >
+                          <Text className="text-lg text-foreground">
+                            {getMenuItemName(menu)}
+                          </Text>
+                          <View className="flex-row gap-2">
+                            <AddRemoveMenuQuantity
+                              value={field.value}
+                              category={category}
+                              menu={menu}
+                              onChange={field.onChange}
+                            />
+                            <SelectServingSize
+                              category={category}
+                              menu={menu}
+                              value={field.value}
+                              onChange={field.onChange}
+                            />
+                          </View>
                         </View>
-                      </li>
-                    ))}
-                  </ul>
-                </View>
-              ))}
+                      ))}
+                    </View>
+                  </View>
+                ))}
+              </View>
             </View>
-          </View>
-        )}
-      />
+          )}
+        />
+      )}
 
       <Controller
         control={control}
         name="specialRequests"
         render={({ field }) => (
-          <View>
+          <View className="gap-2 mt-2">
             <Label>Special Requests</Label>
             <Textarea
               placeholder="Any special requests or dietary requirements?"
@@ -126,12 +135,12 @@ export default function CategoryOptions() {
       />
 
       {watch("totalPrice") > 0 && (
-        <View className="flex items-end justify-between">
+        <View className="flex-row items-end justify-between mt-8">
           <Label>{serviceFee && deliveryFee ? "Total" : "Partial"} Price</Label>
-          <span className="text-2xl text-green-500 underline underline-offset-4">
+          <Text className="text-3xl text-green-500 underline underline-offset-4">
             &#8369;{" "}
             {`${new Intl.NumberFormat("en-US").format(watch("totalPrice"))}.00`}
-          </span>
+          </Text>
         </View>
       )}
     </ScrollView>

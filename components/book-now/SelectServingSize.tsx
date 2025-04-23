@@ -46,7 +46,6 @@ export default function SelectServingSize({
       paxSelected: paxSelected,
       pricePerPax: priceMap[paxSelected],
     };
-    ;
     const updatedCategory: Record<string, MenuReservationDetails> = {
       ...currentCategory,
       [menu]: {
@@ -65,17 +64,13 @@ export default function SelectServingSize({
     setValue(`selectedMenus.${category}.${menu}.paxSelected`, newPax);
   };
 
-  useEffect(() => {
-    console.log(selectedMenus);
-  }, [selectedMenus]);
-
   return (
     <Select
       defaultValue={{ value: paxSelected, label: paxSelected }}
       onValueChange={(option) => handlePaxChange(option?.value as PaxArrayType)}
     >
       <SelectTrigger className="w-32">
-        <SelectValue placeholder="Serving Size" />
+        <SelectValue placeholder="Serving Size" className="text-white" />
       </SelectTrigger>
       <SelectContent>
         {paxArray.map((pax) => (

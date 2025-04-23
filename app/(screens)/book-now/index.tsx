@@ -29,7 +29,7 @@ export default function BookNow() {
 
   const { watch } = reservationForm;
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [nextPageCount, setNextPageCount] = useState(0);
@@ -129,7 +129,7 @@ export default function BookNow() {
   const deliveryFee = watch("deliveryFee");
   const selectedMenus = watch("selectedMenus");
   const guestCount = watch("guestCount") || 1;
-
+   
   useEffect(() => {
     const isPackage = cateringPackages.find(
       (pkg) => pkg._id === selectedPackage

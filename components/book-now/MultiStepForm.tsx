@@ -132,7 +132,7 @@ export default function MultiStepForm({
                 {formSteps[formStep].description}
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-0 pb-16 ">
+            <CardContent className="h-full px-0 pb-16">
               {children[formStep]}
             </CardContent>
           </Card>

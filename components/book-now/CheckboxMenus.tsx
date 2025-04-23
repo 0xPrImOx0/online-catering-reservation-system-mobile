@@ -68,7 +68,7 @@ export default function CheckboxMenus({
               />
               <View className="justify-between">
                 <Tooltip>
-                  <TooltipTrigger asChild>
+                  <TooltipTrigger>
                     <Button
                       size={"custom"}
                       variant={"link"}
@@ -104,9 +104,9 @@ export default function CheckboxMenus({
         </View>
         {Array.isArray(selectedMenus[category]) &&
           selectedMenus[category].length >= count && (
-            <p className="text-xs italic text-muted-foreground">
+            <Text className="text-xs italic text-muted-foreground">
               *You can only select up to {count} item/s for {category}.*
-            </p>
+            </Text>
           )}
       </View>
       <Separator className="my-4" />

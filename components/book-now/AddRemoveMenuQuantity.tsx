@@ -1,4 +1,7 @@
-import { View } from "react-native";
+import { Minus, Plus } from "lucide-react-native";
+import { useEffect, useState } from "react";
+import { TouchableOpacity } from "react-native";
+import { Text, View } from "react-native";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { useReservationForm } from "~/hooks/use-reservation-form";
@@ -15,43 +18,47 @@ export default function AddRemoveMenuQuantity({
   onChange: (value: any) => void;
 }) {
   const { handleReduceQuantity, handleAddQuantity } = useReservationForm();
+  const quantity = value[category]?.[menu]?.quantity ?? 0;
+  const [textValue, setTextValue] = useState(quantity.toString());
 
+  useEffect(() => {
+    setTextValue((value[category]?.[menu]?.quantity ?? 0).toString());
+  }, [value, category, menu]);
+  const handleChangeText = (text: string) => {
+    setTextValue(text); // Update local state for smooth typing
+    const newCount = parseInt(text, 10);
+    if (!isNaN(newCount) && newCount >= 0) {
+      onChange({
+        ...value,
+        [category]: {
+          ...value[category],
+          [menu]: {
+            ...value[category]?.[menu],
+            quantity: newCount,
+          },
+        },
+      });
+    }
+  };
   return (
-    <View className="flex items-center">
-      <Button
-        variant={"outline"}
-        // type="button"
+    <View className="flex-row items-center border rounded-md border-border">
+      <TouchableOpacity
         onPress={() => handleReduceQuantity(value, category, menu, onChange)}
-        className="flex items-center justify-center border-r-0 rounded-r-none w-9 h-9"
+        className="px-2"
       >
-        -
-      </Button>
+        <Minus size={20} color={"white"} />
+      </TouchableOpacity>
       <Input
-        // type="number"
-        // min="0"
-        value={value[category][menu]?.quantity || 0}
-        onChangeText={(e: string) => {
-          const newCount = parseInt(e, 10);
-          if (!isNaN(newCount) && newCount >= 0) {
-            onChange({
-              ...value,
-              [category]: {
-                ...value[category],
-                [menu]: newCount,
-              },
-            });
-          }
-        }}
-        className="z-10 w-12 p-0 text-center border rounded-none no-spinners"
+        value={textValue}
+        onChangeText={handleChangeText}
+        className="z-10 w-12 p-0 text-center border rounded-none border-y-0 text-foreground"
       />
-      <Button
-        variant={"outline"}
-        // type="button"
+      <TouchableOpacity
         onPress={() => handleAddQuantity(value, category, menu, onChange)}
-        className="flex items-center justify-center border-l-0 rounded-l-none w-9 h-9"
+        className="px-2"
       >
-        +
-      </Button>
+        <Plus size={20} color={"white"} className="z-0" />
+      </TouchableOpacity>
     </View>
   );
 }

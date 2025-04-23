@@ -181,11 +181,6 @@ export default function PackageShowcasePage() {
               </View>
             )}
           />
-          {/* <View className="gap-4">
-            {pkg.options.map((option, index) => (
-              
-            ))}
-          </View> */}
         </Card>
       </ScrollView>
     </View>

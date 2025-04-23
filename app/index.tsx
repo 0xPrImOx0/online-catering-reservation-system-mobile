@@ -8,7 +8,7 @@ export default function SplashScreen() {
   const [user, setUser] = useState(false);
 
   if (!user) {
-    return <Redirect href={`/packages/${"pkg-1"}`} />;
+    return <Redirect href={`/home`} />;
   }
 
   return (

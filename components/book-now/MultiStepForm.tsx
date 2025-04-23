@@ -142,7 +142,7 @@ export default function MultiStepForm({
           <View className="flex justify-between mt-2">
             {isSubmitComplete ? (
               <Button className="ml-auto" onPress={completeForm}>
-                <Text>{doneButtonText}</Text>
+                <Text suppressHighlighting>{doneButtonText}</Text>
               </Button>
             ) : (
               <View className="flex-row items-center justify-between ">
@@ -151,21 +151,25 @@ export default function MultiStepForm({
                   onPress={onCancel}
                   className="hover:bg-destructive hover:text-background"
                 >
-                  <Text className="text-white">{cancelButtonText}</Text>
+                  <Text className="text-white" suppressHighlighting>
+                    {cancelButtonText}
+                  </Text>
                 </Button>
                 <View className="flex-row gap-2">
                   {formStep > 0 && (
                     <Button variant="secondary" onPress={prevStep}>
-                      <Text className="text-white">{previousButtonText}</Text>
+                      <Text suppressHighlighting className="text-white">
+                        {previousButtonText}
+                      </Text>
                     </Button>
                   )}
                   {formStep < formSteps.length - 1 ? (
                     <Button onPress={nextStep} disabled={isNextButtonDisabled}>
-                      <Text>{nextButtonText}</Text>
+                      <Text suppressHighlighting>{nextButtonText}</Text>
                     </Button>
                   ) : (
                     <Button onPress={submitForm}>
-                      <Text>{submitButtonText}</Text>
+                      <Text suppressHighlighting>{submitButtonText}</Text>
                     </Button>
                   )}
                 </View>

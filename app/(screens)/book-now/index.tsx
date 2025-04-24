@@ -162,7 +162,7 @@ export default function BookNow() {
     <PackageSelection
       key={"package-selection"}
       showPackageSelection={showPackageSelection}
-    />, // showPackageSelection={showPackageSelection}
+    />,
     <CategoryOptions key={"category-options"} />, //validateStep={validateStep}
     <EventDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,

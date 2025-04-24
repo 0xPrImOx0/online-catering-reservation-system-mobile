@@ -81,8 +81,7 @@ const reservationSchema = z
     totalPrice: z.number(),
     specialRequests: z
       .string()
-      .max(500, "Special Requests must not exceed 500 characters")
-      .optional(),
+      .max(500, "Special Requests must not exceed 500 characters"),
     deliveryOption: z.enum(["Pickup", "Delivery"], {
       required_error: "Please select a Delivery Option",
     }),

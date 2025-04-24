@@ -11,6 +11,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import SelectServingSize from "./SelectServingSize";
 import { Textarea } from "../ui/textarea";
 import { cateringPackages } from "~/lib/packages-metadata";
+import { Input } from "../ui/input";
 
 export default function CategoryOptions() {
   const { control, getValues, setValue, watch, clearErrors } =
@@ -128,12 +129,12 @@ export default function CategoryOptions() {
             <Label>Special Requests</Label>
             <Textarea
               placeholder="Any special requests or dietary requirements?"
-              {...field}
+              value={field.value}
+              onChangeText={field.onChange}
             />
           </View>
         )}
       />
-
       {watch("totalPrice") > 0 && (
         <View className="flex-row items-end justify-between mt-8">
           <Label>{serviceFee && deliveryFee ? "Total" : "Partial"} Price</Label>

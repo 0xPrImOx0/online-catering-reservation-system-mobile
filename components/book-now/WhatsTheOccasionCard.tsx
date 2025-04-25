@@ -35,7 +35,7 @@ export default function WhatsTheOccasionCard({ control }: { control: any }) {
           <Label>
             What's the Occasion? <Text className="text-destructive">*</Text>{" "}
           </Label>
-          <View className="flex gap-4 space-x-0 space-y-0 max-sm:flex-col">
+          <View className="flex gap-4 max-sm:flex-col">
             {reservations.map((reservation) => (
               <Button
                 asChild

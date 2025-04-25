@@ -15,7 +15,7 @@ export default function EventType({ control }: { control: any }) {
       control={control}
       name="eventType"
       render={({ field }) => (
-        <View>
+        <View className="gap-2">
           <Label className="">
             <Text>
               Event Type <Text className="text-destructive">*</Text>{" "}
@@ -23,7 +23,10 @@ export default function EventType({ control }: { control: any }) {
           </Label>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <SelectTrigger>
-              <SelectValue placeholder="Enter your event type" />
+              <SelectValue
+                placeholder="Enter your event type"
+                className="text-foreground"
+              />
             </SelectTrigger>
             <SelectContent>
               {eventTypes.map((event) => (

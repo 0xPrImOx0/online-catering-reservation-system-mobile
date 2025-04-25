@@ -20,18 +20,16 @@ export default function DeliveryOption({ control }: { control: any }) {
       control={control}
       name="deliveryOption"
       render={({ field }) => (
-        <View>
-          <SelectLabel className="">
-            <Text>
-              Delivery Option <Text className="text-destructive">*</Text>{" "}
-            </Text>
-          </SelectLabel>
+        <View className="gap-2">
+          <Text className="text-foreground">
+            Delivery Option <Text className="text-destructive">*</Text>{" "}
+          </Text>
           <RadioGroup
             value={field.value}
             onValueChange={field.onChange}
-            className="grid grid-cols-2 pt-2"
+            className="flex-row pt-2"
           >
-            <View className="flex items-center space-x-2">
+            <View className="flex-row items-center flex-1 gap-3 space-x-2">
               <RadioGroupItem
                 value="Pickup"
                 id="pickup"
@@ -39,7 +37,7 @@ export default function DeliveryOption({ control }: { control: any }) {
               />
               <Label htmlFor="pickup">Pickup</Label>
             </View>
-            <View className="flex items-center space-x-2">
+            <View className="flex-row items-center flex-1 gap-3 space-x-2">
               <RadioGroupItem
                 value="Delivery"
                 id="delivery"

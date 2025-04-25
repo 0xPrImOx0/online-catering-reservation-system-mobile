@@ -53,8 +53,8 @@ export default function EventDetails() {
   const recommendedPax = getRecommendedPax();
 
   return (
-    <ScrollView className="space-y-4" showsVerticalScrollIndicator={false}>
-      <View className="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <ScrollView className="gap-4" contentContainerClassName="pb-32" showsVerticalScrollIndicator={false}>
+      <View className="gap-4">
         {cateringOptions === "custom" && (
           <WhatsTheOccasionCard control={control} />
         )}
@@ -67,7 +67,7 @@ export default function EventDetails() {
             control={control}
             name="guestCount"
             render={({ field, fieldState }) => (
-              <View>
+              <View className="gap-2">
                 <Label className="">
                   Number of Guests <Text className="text-destructive">*</Text>{" "}
                 </Label>
@@ -87,10 +87,12 @@ export default function EventDetails() {
                   value={field.value !== undefined ? String(field.value) : ""}
                 />
                 {fieldState.error ? (
-                  <Text>{fieldState.error.message}</Text>
+                  <Text className="text-destructive">
+                    {fieldState.error.message}
+                  </Text>
                 ) : (
                   recommendedPax > 0 && (
-                    <Text className="italic text-[0.8rem] font-medium text-muted-foreground">
+                    <Text className="italic text-[0.8rem] font-medium text-foreground">
                       *Recommended pax is {recommendedPax} persons
                     </Text>
                   )
@@ -104,7 +106,7 @@ export default function EventDetails() {
             control={control}
             name="venue"
             render={({ field }) => (
-              <View>
+              <View className="gap-2">
                 <Label className="">
                   Venue <Text className="text-destructive">*</Text>{" "}
                 </Label>
@@ -116,21 +118,21 @@ export default function EventDetails() {
       </View>
 
       {reservationType === "event" && (
-        <View className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
+        <View className="w-full gap-4 my-4">
           <Controller
             control={control}
             name="serviceType"
             render={({ field }) => (
-              <View>
+              <View className="gap-2">
                 <Label className="">
                   Service Type <Text className="text-destructive">*</Text>{" "}
                 </Label>
                 <RadioGroup
                   value={field.value}
                   onValueChange={field.onChange}
-                  className="grid grid-cols-2 pt-2"
+                  className="flex-row"
                 >
-                  <View className="flex items-center space-x-2">
+                  <View className="flex-row items-center flex-1 gap-2 ">
                     <RadioGroupItem
                       onPress={() => {
                         setValue("serviceFee", 0);
@@ -141,7 +143,7 @@ export default function EventDetails() {
                     />
                     <Label htmlFor="buffet">Buffet</Label>
                   </View>
-                  <View className="flex items-center space-x-2">
+                  <View className="flex-row items-center flex-1 gap-2">
                     <RadioGroupItem
                       value="Plated"
                       id="plated"
@@ -161,7 +163,7 @@ export default function EventDetails() {
               control={control}
               name="serviceHours"
               render={({ field }) => (
-                <View>
+                <View className="gap-2">
                   <Label className="">
                     Service Hours <Text className="text-destructive">*</Text>{" "}
                   </Label>
@@ -173,7 +175,10 @@ export default function EventDetails() {
                     }}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select service hours rendered" />
+                      <SelectValue
+                        placeholder="Select service hours rendered"
+                        className="text-foreground"
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       {hoursArray.map((hour) => (
@@ -207,9 +212,9 @@ export default function EventDetails() {
           <DeliveryDetails control={control} />
         )}
       </View>
-      <Separator />
+      <Separator className="my-4" />
 
-      <View className="flex items-end justify-between">
+      <View className="flex-row items-end justify-between">
         <Label>Total Bill</Label>
         <Text className="text-2xl text-green-500 underline underline-offset-4">
           &#8369;{" "}

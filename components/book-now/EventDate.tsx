@@ -7,7 +7,7 @@ import { Calendar } from "lucide-react-native";
 import { useState } from "react";
 
 export default function EventDate({ control }: { control: any }) {
-  const [showCalendar, setShowCalendar] = useState(true);
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const formatDate = (date: Date | undefined) => {
     if (!date || !(date instanceof Date) || isNaN(date.getTime())) {

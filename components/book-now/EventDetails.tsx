@@ -53,7 +53,11 @@ export default function EventDetails() {
   const recommendedPax = getRecommendedPax();
 
   return (
-    <ScrollView className="gap-4" contentContainerClassName="pb-32" showsVerticalScrollIndicator={false}>
+    <ScrollView
+      className="gap-4"
+      contentContainerClassName="pb-32"
+      showsVerticalScrollIndicator={false}
+    >
       <View className="gap-4">
         {cateringOptions === "custom" && (
           <WhatsTheOccasionCard control={control} />
@@ -110,7 +114,11 @@ export default function EventDetails() {
                 <Label className="">
                   Venue <Text className="text-destructive">*</Text>{" "}
                 </Label>
-                <Input placeholder="Enter your event venue" {...field} />
+                <Input
+                  placeholder="Enter your event venue"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                />
               </View>
             )}
           />
@@ -194,7 +202,9 @@ export default function EventDetails() {
           )}
         </View>
       )}
-      <PlatedWarning isPlated={serviceType === "Plated"} />
+      {serviceType === "Plated" && (
+        <PlatedWarning isPlated={serviceType === "Plated"} />
+      )}
       <Separator className="" />
       <View>
         <View className="mb-4">
@@ -203,13 +213,15 @@ export default function EventDetails() {
             Please provide details about the delivery location and any special
             instructions for the delivery team.
           </Text>
-          <DeliveryWarning
-            isDelivery={getValues("deliveryOption") === "Delivery"}
-          />
         </View>
         <DeliveryOption control={control} />
         {getValues("deliveryOption") === "Delivery" && (
-          <DeliveryDetails control={control} />
+          <>
+            <DeliveryWarning
+              isDelivery={getValues("deliveryOption") === "Delivery"}
+            />
+            <DeliveryDetails control={control} />
+          </>
         )}
       </View>
       <Separator className="my-4" />

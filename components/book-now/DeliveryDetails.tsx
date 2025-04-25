@@ -5,14 +5,18 @@ import { Textarea } from "~/components/ui/textarea";
 import { Label } from "../ui/label";
 export default function DeliveryDetails({ control }: { control: any }) {
   return (
-    <View className="mt-4 space-y-4">
+    <View className="gap-4 mt-4">
       <Controller
         control={control}
         name="deliveryAddress"
         render={({ field }) => (
-          <View>
+          <View className="gap-2">
             <Label className="">Delivery Address</Label>
-            <Input placeholder="Enter your delivery address" {...field} />
+            <Input
+              placeholder="Enter your delivery address"
+              value={field.value}
+              onChangeText={field.onChange}
+            />
           </View>
         )}
       />
@@ -20,11 +24,12 @@ export default function DeliveryDetails({ control }: { control: any }) {
         control={control}
         name="deliveryInstructions"
         render={({ field }) => (
-          <View>
+          <View className="gap-2">
             <Label className="">Special Delivery Instructions</Label>
             <Textarea
               placeholder="Provide any special instructions for the delivery team (e.g., landmarks, preferred time, etc.)"
-              {...field}
+              value={field.value}
+              onChangeText={field.onChange}
             />
           </View>
         )}

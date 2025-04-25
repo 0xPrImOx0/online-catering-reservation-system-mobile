@@ -14,9 +14,18 @@ import CategoryOptions from "~/components/book-now/CategoryOptions";
 import EventDetails from "~/components/book-now/EventDetails";
 import SummaryBooking from "~/components/book-now/SummaryBooking";
 import { useReservationForm } from "~/hooks/use-reservation-form";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { menuItems } from "~/lib/menu-lists";
 import { FormProvider } from "react-hook-form";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "~/components/ui/dialog";
+import { Button } from "~/components/ui/button";
 
 export default function BookNow() {
   const {
@@ -29,7 +38,7 @@ export default function BookNow() {
 
   const { watch } = reservationForm;
 
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [nextPageCount, setNextPageCount] = useState(0);
@@ -129,7 +138,7 @@ export default function BookNow() {
   const deliveryFee = watch("deliveryFee");
   const selectedMenus = watch("selectedMenus");
   const guestCount = watch("guestCount") || 1;
-   
+
   useEffect(() => {
     const isPackage = cateringPackages.find(
       (pkg) => pkg._id === selectedPackage
@@ -192,7 +201,7 @@ export default function BookNow() {
   return (
     <View className="bg-black">
       {formContent}
-      {/* <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Reservation Request Sent!</DialogTitle>
@@ -201,28 +210,30 @@ export default function BookNow() {
               within 1 hour to discuss the details and provide you with a quote.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex items-center justify-center py-4">
-            <div className="p-3 bg-green-500 rounded-full">
+          <View className="flex items-center justify-center py-4">
+            <View className="p-3 bg-green-500 rounded-full">
               <Check className="text-white size-10" />
-            </div>
-          </div>
+            </View>
+          </View>
           <DialogFooter>
             <Button
               variant={"ghost"}
-              onClick={() => setShowConfirmation(false)}
+              onPress={() => setShowConfirmation(false)}
             >
-              Close
+              <Text className="text-center text-white">Close</Text>
             </Button>
             <Button
               variant={"default"}
-              onClick={() => setShowConfirmation(false)}
+              onPress={() => setShowConfirmation(false)}
               asChild
             >
-              <Link href={"/"}>Go to home</Link>
+              <Link href={"/home"} onPress={() => setShowConfirmation(false)}>
+                Go to home
+              </Link>
             </Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog> */}
+      </Dialog>
     </View>
   );
 }

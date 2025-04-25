@@ -7,9 +7,9 @@ import { useState } from "react";
 export default function SplashScreen() {
   const [user, setUser] = useState(false);
 
-  if (!user) {
-    return <Redirect href={`/book-now`} />;
-  }
+  // if (!user) {
+  //   return <Redirect href={`/book-now`} />;
+  // }
 
   return (
     <View className="items-center justify-center flex-1 bg-black">

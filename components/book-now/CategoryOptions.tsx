@@ -14,8 +14,14 @@ import { cateringPackages } from "~/lib/packages-metadata";
 import { Input } from "../ui/input";
 
 export default function CategoryOptions() {
-  const { control, getValues, setValue, watch, clearErrors } =
-    useFormContext<ReservationValues>();
+  const {
+    control,
+    getValues,
+    setValue,
+    watch,
+    clearErrors,
+    formState: { errors },
+  } = useFormContext<ReservationValues>();
 
   const selectedMenus = watch("selectedMenus");
 
@@ -120,6 +126,11 @@ export default function CategoryOptions() {
           )}
         />
       )}
+      {errors.selectedMenus && (
+        <Text className="text-destructive">
+          {errors.selectedMenus.message?.toString()}
+        </Text>
+      )}
 
       <Controller
         control={control}
@@ -135,6 +146,7 @@ export default function CategoryOptions() {
           </View>
         )}
       />
+
       {watch("totalPrice") > 0 && (
         <View className="flex-row items-end justify-between mt-8">
           <Label>{serviceFee && deliveryFee ? "Total" : "Partial"} Price</Label>

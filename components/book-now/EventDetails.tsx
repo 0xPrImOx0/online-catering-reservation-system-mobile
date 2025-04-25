@@ -24,8 +24,13 @@ import { cateringPackages } from "~/lib/packages-metadata";
 import { ScrollView, Text, View } from "react-native";
 
 export default function EventDetails() {
-  const { control, getValues, watch, setValue } =
-    useFormContext<ReservationValues>();
+  const {
+    control,
+    getValues,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext<ReservationValues>();
   const reservationType = watch("reservationType");
   const cateringOptions = watch("cateringOptions");
   const selectedPackage = getValues("selectedPackage");
@@ -70,7 +75,7 @@ export default function EventDetails() {
           <Controller
             control={control}
             name="guestCount"
-            render={({ field, fieldState }) => (
+            render={({ field }) => (
               <View className="gap-2">
                 <Label className="">
                   Number of Guests <Text className="text-destructive">*</Text>{" "}
@@ -90,9 +95,9 @@ export default function EventDetails() {
                   }}
                   value={field.value !== undefined ? String(field.value) : ""}
                 />
-                {fieldState.error ? (
+                {errors.guestCount ? (
                   <Text className="text-destructive">
-                    {fieldState.error.message}
+                    {errors.guestCount.message}
                   </Text>
                 ) : (
                   recommendedPax > 0 && (
@@ -122,6 +127,11 @@ export default function EventDetails() {
               </View>
             )}
           />
+        )}
+        {errors.venue && (
+          <Text className="text-destructive">
+            {errors.venue.message?.toString()}
+          </Text>
         )}
       </View>
 

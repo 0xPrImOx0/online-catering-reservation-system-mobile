@@ -19,7 +19,12 @@ export default function PackageSelection({
 }: {
   showPackageSelection: boolean;
 }) {
-  const { control, watch, setValue } = useFormContext<ReservationValues>();
+  const {
+    control,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext<ReservationValues>();
   const packageSelection = watch("selectedPackage");
 
   // Update form values when packageSelection changes
@@ -92,6 +97,11 @@ export default function PackageSelection({
           )}
         />
       )}
+      {errors.cateringOptions && (
+        <Text className="text-destructive">
+          {errors.cateringOptions.message?.toString()}
+        </Text>
+      )}
 
       {showPackageSelection && (
         <Controller
@@ -109,6 +119,11 @@ export default function PackageSelection({
             </View>
           )}
         />
+      )}
+      {errors.selectedPackage && (
+        <Text className="text-destructive">
+          {errors.selectedPackage.message?.toString()}
+        </Text>
       )}
     </ScrollView>
   );

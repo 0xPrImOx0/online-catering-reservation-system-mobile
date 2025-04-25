@@ -1,18 +1,22 @@
-import { View, Text, Image } from "react-native";
-import { Redirect, router } from "expo-router";
+import { View, Text, Image, Platform } from "react-native";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Button } from "~/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Fold } from "react-native-animated-spinkit";
+import clsx from "clsx";
 
 export default function SplashScreen() {
   const [user, setUser] = useState(false);
 
-  // if (!user) {
-  //   return <Redirect href={`/book-now`} />;
-  // }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push("/home");
+    }, 1000); // Mock loading time of 2 seconds
+    return () => clearTimeout(timer);
+  }, [user]);
 
   return (
-    <View className="items-center justify-center flex-1 bg-black">
+    <View className="relative items-center justify-center flex-1 bg-background">
       <StatusBar style="light" />
       <Image
         source={require("../assets/catering-logo.png")}
@@ -23,13 +27,14 @@ export default function SplashScreen() {
       <Text className="mt-2 mb-10 text-lg text-gray-400">
         Premium Catering Services
       </Text>
-      <Button
-        variant="outline"
-        className="bg-white shadow shadow-foreground/5"
-        onPress={() => router.push("./(auth)/signIn")}
+      <View
+        className={clsx("absolute items-center gap-8", {
+          "bottom-10": Platform.OS === "ios",
+        })}
       >
-        <Text>Continue</Text>
-      </Button>
+        <Fold size={48} color="#FFF" />
+        <Text className="text-foreground">Initializing....</Text>
+      </View>
     </View>
   );
 }

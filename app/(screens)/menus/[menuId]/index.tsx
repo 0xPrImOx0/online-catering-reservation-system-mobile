@@ -15,7 +15,7 @@ import axios from "axios";
 
 export default function MenuShowcasePage() {
   const { menuId } = useLocalSearchParams();
-  
+
   // const menu = menuItems.find((item) => item._id === menuId);
   const [menu, setMenu] = useState<MenuItem | null>(null);
 
@@ -58,7 +58,7 @@ export default function MenuShowcasePage() {
                   "bg-emerald-600 dark:bg-emerald-500": menu.available,
                 })}
               >
-                <Text className="text-white ">
+                <Text className="text-foreground ">
                   {menu.available ? "Available" : "Unavailable"}
                 </Text>
               </Badge>
@@ -67,7 +67,7 @@ export default function MenuShowcasePage() {
               {menu.spicy && (
                 <Badge
                   variant="outline"
-                  className="flex items-center gap-1 text-white bg-red-500 border-red-500 dark:bg-red-600 dark:border-red-600"
+                  className="flex items-center gap-1 text-foreground bg-red-500 border-red-500 dark:bg-red-600 dark:border-red-600"
                 >
                   <Flame className="w-3 h-3" />
                   <Text>Spicy</Text>
@@ -94,7 +94,7 @@ export default function MenuShowcasePage() {
                 variant={"secondary"}
                 onPress={() => router.push("/book-now")}
               >
-                <Text className="text-white">Book Now </Text>
+                <Text className="text-foreground">Book Now </Text>
               </Button>
             </View>
           </View>
@@ -124,7 +124,7 @@ export default function MenuShowcasePage() {
                   contentContainerClassName="gap-3"
                   renderItem={({ item }) => (
                     <Badge key={item} variant="outline" className="font-medium">
-                      <Text className="text-white">{item}</Text>
+                      <Text className="text-foreground">{item}</Text>
                     </Badge>
                   )}
                 />
@@ -148,7 +148,7 @@ export default function MenuShowcasePage() {
                   contentContainerClassName="gap-3"
                   renderItem={({ item }) => (
                     <Badge key={item} variant="outline" className="font-medium">
-                      <Text className="text-white">{item}</Text>
+                      <Text className="text-foreground">{item}</Text>
                     </Badge>
                   )}
                 />
@@ -173,8 +173,8 @@ export default function MenuShowcasePage() {
                 contentContainerStyle={{ rowGap: 10 }}
                 renderItem={({ item: [key, value] }) => (
                   <Card key={key} className="justify-between flex-1 p-2">
-                    <Text className="text-white capitalize">{key}</Text>
-                    <Text className="font-bold text-white">{value}</Text>
+                    <Text className="text-foreground capitalize">{key}</Text>
+                    <Text className="font-bold text-foreground">{value}</Text>
                   </Card>
                 )}
               />
@@ -199,10 +199,10 @@ export default function MenuShowcasePage() {
             </Text>
             <View className="space-y-2">
               <Card className="flex-row items-center justify-between p-2 py-3 rounded">
-                <Text className="font-medium text-white">
+                <Text className="font-medium text-foreground">
                   Regular price per pax
                 </Text>
-                <Text className="font-bold text-white">
+                <Text className="font-bold text-foreground">
                   &#8369;{menu.regularPricePerPax.toFixed(2)}
                 </Text>
               </Card>

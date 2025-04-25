@@ -23,7 +23,9 @@ export default function SplashScreen() {
         className="w-[150px] h-[150px]"
         resizeMode="contain"
       />
-      <Text className="mt-5 text-4xl font-bold text-white">Food Sentinel</Text>
+      <Text className="mt-5 text-4xl font-bold text-foreground">
+        Food Sentinel
+      </Text>
       <Text className="mt-2 mb-10 text-lg text-gray-400">
         Premium Catering Services
       </Text>

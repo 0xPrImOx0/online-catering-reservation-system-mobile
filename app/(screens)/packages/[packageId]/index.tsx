@@ -37,7 +37,7 @@ export default function PackageShowcasePage() {
                   }
                 `}
             >
-              <Text className="text-white">
+              <Text className="text-foreground">
                 {pkg.available ? "Available" : "Unavailable"}
               </Text>
             </Badge>

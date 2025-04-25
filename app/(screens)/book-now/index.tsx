@@ -212,7 +212,7 @@ export default function BookNow() {
           </DialogHeader>
           <View className="flex items-center justify-center py-4">
             <View className="p-3 bg-green-500 rounded-full">
-              <Check className="text-white size-10" />
+              <Check className="text-foreground size-10" />
             </View>
           </View>
           <DialogFooter>
@@ -220,7 +220,7 @@ export default function BookNow() {
               variant={"ghost"}
               onPress={() => setShowConfirmation(false)}
             >
-              <Text className="text-center text-white">Close</Text>
+              <Text className="text-center text-foreground">Close</Text>
             </Button>
             <Button
               variant={"default"}

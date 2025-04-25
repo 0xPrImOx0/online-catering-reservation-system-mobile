@@ -66,7 +66,9 @@ export default function AboutUs() {
             resizeMode="cover"
           />
           <View className="absolute inset-0 items-center justify-center bg-black/40">
-            <Text className="text-2xl font-bold text-white">Our Story</Text>
+            <Text className="text-2xl font-bold text-foreground">
+              Our Story
+            </Text>
           </View>
         </View>
 

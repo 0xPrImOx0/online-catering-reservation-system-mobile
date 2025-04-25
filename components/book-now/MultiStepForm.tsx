@@ -86,7 +86,7 @@ export default function MultiStepForm({
   return (
     <View className="h-full px-4 bg-black">
       <View className="items-center justify-center pt-3 mb-4">
-        <Text className="mb-2 text-3xl font-bold text-center text-white">
+        <Text className="mb-2 text-3xl font-bold text-center text-foreground">
           Reserve Your Catering Service
         </Text>
         <Text className="text-muted-foreground">
@@ -103,11 +103,11 @@ export default function MultiStepForm({
               isSubmitComplete && "bg-primary text-primary-foreground"
             }`}
           >
-            <Text className="text-white">
+            <Text className="text-foreground">
               {isSubmitComplete ? <Check className="w-4 h-4" /> : formStep + 1}
             </Text>
           </View>
-          <Text className="text-2xl font-medium text-white">
+          <Text className="text-2xl font-medium text-foreground">
             {formSteps[formStep].title}
           </Text>
         </View>
@@ -151,14 +151,14 @@ export default function MultiStepForm({
                   onPress={onCancel}
                   className="hover:bg-destructive hover:text-background"
                 >
-                  <Text className="text-white" suppressHighlighting>
+                  <Text className="text-foreground" suppressHighlighting>
                     {cancelButtonText}
                   </Text>
                 </Button>
                 <View className="flex-row gap-2">
                   {formStep > 0 && (
                     <Button variant="secondary" onPress={prevStep}>
-                      <Text suppressHighlighting className="text-white">
+                      <Text suppressHighlighting className="text-foreground">
                         {previousButtonText}
                       </Text>
                     </Button>

@@ -20,7 +20,6 @@ export default function ImageDialog({
   isImageDialogOpen,
   setIsImageDialogOpen,
 }: ImageDialogProps) {
-
   return (
     <Dialog
       open={isImageDialogOpen}
@@ -48,7 +47,7 @@ export default function ImageDialog({
                     height={725}
                     alt={item.name}
                   />
-                  <DialogClose className="absolute flex items-center justify-center w-10 h-10 text-white transition-colors rounded-full top-4 right-4 bg-black/70 backdrop-blur-sm hover:bg-black">
+                  <DialogClose className="absolute flex items-center justify-center w-10 h-10 text-foreground transition-colors rounded-full top-4 right-4 bg-black/70 backdrop-blur-sm hover:bg-black">
                     <X className="w-5 h-5" />
                   </DialogClose>
                 </View>

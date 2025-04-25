@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import { View, Image, ActivityIndicator } from 'react-native';
-import { router } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { Text } from "~/components/ui/text"
+import React, { useEffect } from "react";
+import { View, Image, ActivityIndicator } from "react-native";
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { Text } from "~/components/ui/text";
 
 export default function SplashScreen() {
   // Effect to navigate to sign up screen after a delay
   useEffect(() => {
     // Set a timeout to navigate to the sign up screen after 2 seconds
     const timer = setTimeout(() => {
-      router.replace('/(auth)/signUp');
+      router.replace("/(auth)/signUp");
     }, 2000);
 
     // Clean up the timer when component unmounts
@@ -19,19 +19,19 @@ export default function SplashScreen() {
   return (
     <View className="flex-1 bg-black justify-center items-center">
       <StatusBar style="light" />
-      
+
       {/* Logo image */}
-      <Image 
-        source={require('../../assets/catering-logo.png')} 
+      <Image
+        source={require("../../assets/catering-logo.png")}
         className="w-40 h-40"
         resizeMode="contain"
       />
-      
+
       {/* App name */}
-      <Text className="text-white text-3xl font-bold mt-4 mb-8">
+      <Text className="text-foreground text-3xl font-bold mt-4 mb-8">
         Food Sentinel
       </Text>
-      
+
       {/* Loading indicator */}
       <ActivityIndicator size="large" color="white" />
     </View>

@@ -70,7 +70,7 @@ export default function SelectServingSize({
       onValueChange={(option) => handlePaxChange(option?.value as PaxArrayType)}
     >
       <SelectTrigger className="w-32">
-        <SelectValue placeholder="Serving Size" className="text-white" />
+        <SelectValue placeholder="Serving Size" className="text-foreground" />
       </SelectTrigger>
       <SelectContent>
         {paxArray.map((pax) => (

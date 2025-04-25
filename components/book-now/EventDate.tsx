@@ -36,7 +36,7 @@ export default function EventDate({ control }: { control: any }) {
               value={formatDate(field.value)}
               editable={false}
               className="border-0"
-              placeholderClassName="text-white"
+              placeholderClassName="text-foreground"
             />
             <Calendar
               color={"white"}

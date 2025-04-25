@@ -72,15 +72,18 @@ export default function CheckboxMenus({
                     <Button
                       size={"custom"}
                       variant={"link"}
-                      className={clsx("font-medium items-start max-w-fit -mt-1", {
-                        "text-green-500": field.value[category]?.[menu._id],
-                      })}
+                      className={clsx(
+                        "font-medium items-start max-w-fit -mt-1",
+                        {
+                          "text-green-500": field.value[category]?.[menu._id],
+                        }
+                      )}
                       onPress={() => {
                         setActiveMenu(menu._id);
                         setIsImageDialogOpen(true);
                       }}
                     >
-                      <Text className="text-white">{menu.name}</Text>
+                      <Text className="text-foreground">{menu.name}</Text>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>View Image</TooltipContent>

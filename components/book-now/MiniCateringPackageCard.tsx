@@ -68,7 +68,7 @@ export default function MiniCateringPackageCard({
             <Link href={`/packages/${pkg._id}`}>
               <View className="flex-row items-center gap-1">
                 <EyeIcon color={"white"} />
-                <Text className="text-white">View Details</Text>
+                <Text className="text-foreground">View Details</Text>
               </View>
             </Link>
           </CardFooter>

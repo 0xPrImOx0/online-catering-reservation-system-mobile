@@ -50,7 +50,7 @@ export default function PackageDetailsDialog({
             <Button
               variant="ghost"
               size="icon"
-              className="absolute text-white rounded-fViewl top-4 right-4 bg-black/50 hover:bg-black/70"
+              className="absolute text-foreground rounded-fViewl top-4 right-4 bg-black/50 hover:bg-black/70"
               onPress={() => onOpenChange(false)}
             >
               <Text>

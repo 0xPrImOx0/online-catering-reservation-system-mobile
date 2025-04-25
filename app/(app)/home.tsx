@@ -114,7 +114,7 @@ export default function Home() {
             >
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Phone size={20} color="white" />
-                <Text className="ml-2 text-lg font-bold text-white">
+                <Text className="ml-2 text-lg font-bold text-foreground">
                   Contact Us
                 </Text>
               </View>
@@ -327,7 +327,7 @@ export default function Home() {
                         4.5
                       </Text>
                     </View>
-                    <Text className="mt-1 text-lg font-bold text-white">
+                    <Text className="mt-1 text-lg font-bold text-foreground">
                       ₱{item.prices[0].price.toFixed(2)}
                     </Text>
                     <TouchableOpacity className="px-2 py-1 mt-2 rounded bg-primary">

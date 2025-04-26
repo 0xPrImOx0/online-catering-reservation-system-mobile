@@ -1,5 +1,3 @@
-"use client"
-
 import { useColorScheme as useNativewindColorScheme } from "nativewind"
 import { useEffect } from "react"
 

@@ -1,8 +1,8 @@
 "use client";
 
 import { View, Switch } from "react-native";
-import { setAndroidNavigationBar } from "~/libs/android-navigation-bar";
-import { useColorScheme } from "~/libs/useColorScheme";
+import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
+import { useColorScheme } from "~/lib/useColorScheme";
 
 export function ThemeToggle() {
   const { isDarkColorScheme, setColorScheme } = useColorScheme();

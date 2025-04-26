@@ -8,7 +8,7 @@ import {
   unsubscribeFromMenuCreated,
   unsubscribeFromMenuUpdates,
   unsubscribeFromMenuDeleted,
-} from "~/libs/socket";
+} from "~/lib/socket";
 import { useEffect } from "react";
 
 const useSocket = ({

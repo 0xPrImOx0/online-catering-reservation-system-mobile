@@ -6,14 +6,14 @@
 //   success: ({ text1, text2 }: ToastConfigParams<{}>) => (
 //     <View className="w-[90%] flex-row items-center bg-emerald-500 rounded-xl p-4 shadow-xl backdrop-blur-lg">
 //       <View className="w-10 h-10 items-center justify-center bg-emerald-400/50 rounded-xl mr-3 border border-emerald-400/20">
-//         <Text className="text-white text-xl">✓</Text>
+//         <Text className="text-foreground text-xl">✓</Text>
 //       </View>
 //       <View className="flex-1">
-//         <Text className="text-white font-medium text-base tracking-wide">
+//         <Text className="text-foreground font-medium text-base tracking-wide">
 //           {text1}
 //         </Text>
 //         {text2 && (
-//           <Text className="text-white/80 mt-0.5 text-sm font-light">
+//           <Text className="text-foreground/80 mt-0.5 text-sm font-light">
 //             {text2}
 //           </Text>
 //         )}
@@ -24,14 +24,14 @@
 //   error: ({ text1, text2 }: ToastConfigParams<{}>) => (
 //     <View className="w-[90%] flex-row items-center bg-rose-500 rounded-xl p-4 shadow-xl backdrop-blur-lg">
 //       <View className="w-10 h-10 items-center justify-center bg-rose-400/50 rounded-xl mr-3 border border-rose-400/20">
-//         <Text className="text-white text-xl">✕</Text>
+//         <Text className="text-foreground text-xl">✕</Text>
 //       </View>
 //       <View className="flex-1">
-//         <Text className="text-white font-medium text-base tracking-wide">
+//         <Text className="text-foreground font-medium text-base tracking-wide">
 //           {text1}
 //         </Text>
 //         {text2 && (
-//           <Text className="text-white/80 mt-0.5 text-sm font-light">
+//           <Text className="text-foreground/80 mt-0.5 text-sm font-light">
 //             {text2}
 //           </Text>
 //         )}

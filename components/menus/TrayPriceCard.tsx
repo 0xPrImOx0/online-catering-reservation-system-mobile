@@ -36,7 +36,7 @@ export default function TrayPriceCard({
       className="flex-row items-center justify-between p-2 rounded-md"
     >
       <View className="">
-        <Text className="font-medium text-white">
+        <Text className="font-medium text-foreground">
           {`${minimumPax} - ${maximumPax}`} pax
         </Text>
         <Text className="text-sm text-muted-foreground">

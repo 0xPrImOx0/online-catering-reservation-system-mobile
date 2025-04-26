@@ -1,4 +1,4 @@
-import { getCategoryIcon } from "~/libs/menu-category-badges";
+import { getCategoryIcon } from "~/lib/menu-category-badges";
 import { CategoryBadgeProps } from "~/types/menu-types";
 import { Badge } from "../ui/badge";
 import { Text } from "../ui/text";

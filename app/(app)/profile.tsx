@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, ScrollView, Image, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "~/components/ui/text";
-import { useColorScheme } from "~/libs/useColorScheme";
+import { useColorScheme } from "~/lib/useColorScheme";
 import {
   Calendar,
   Clock,
@@ -373,7 +373,7 @@ export default function Profile() {
               </Text>
               <TouchableOpacity className="flex-row items-center justify-center p-3 mb-3 rounded bg-destructive">
                 <LogOut size={16} color="#fff" className="mr-2" />
-                <Text className="text-sm font-medium text-white">Sign Out</Text>
+                <Text className="text-sm font-medium text-foreground">Sign Out</Text>
               </TouchableOpacity>
 
               <TouchableOpacity className="items-center p-3">

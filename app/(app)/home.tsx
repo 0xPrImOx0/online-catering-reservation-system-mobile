@@ -16,15 +16,15 @@ import {
   UtensilsCrossed,
   Phone,
 } from "lucide-react-native";
-import { categories, menuItems } from "~/libs/menu-lists";
+import { categories, menuItems } from "~/lib/menu-lists";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import Hero from "~/components/home/Hero";
 import { Card } from "~/components/ui/card";
-import { useColorScheme } from "~/libs/useColorScheme";
+import { useColorScheme } from "~/lib/useColorScheme";
 import { CateringPackagesProps } from "~/types/package-types";
 import axios from "axios";
-import api from "~/libs/axiosInstance";
+import api from "~/lib/axiosInstance";
 import { Link } from "expo-router";
 
 export default function Home() {
@@ -114,7 +114,7 @@ export default function Home() {
             >
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Phone size={20} color="white" />
-                <Text className="ml-2 text-lg font-bold text-white">
+                <Text className="ml-2 text-lg font-bold text-foreground">
                   Contact Us
                 </Text>
               </View>
@@ -327,7 +327,7 @@ export default function Home() {
                         4.5
                       </Text>
                     </View>
-                    <Text className="mt-1 text-lg font-bold text-white">
+                    <Text className="mt-1 text-lg font-bold text-foreground">
                       ₱{item.prices[0].price.toFixed(2)}
                     </Text>
                     <TouchableOpacity className="px-2 py-1 mt-2 rounded bg-primary">

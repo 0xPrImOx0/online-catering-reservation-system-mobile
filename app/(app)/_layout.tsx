@@ -18,7 +18,7 @@ import {
 import { useState } from "react";
 import { Separator } from "~/components/ui/separator";
 import AdditionalSettingsButtons from "~/components/AdditionalSettingsButtons";
-import { useColorScheme } from "~/libs/useColorScheme";
+import { useColorScheme } from "~/lib/useColorScheme";
 
 export default function AppLayout() {
   const { isDarkColorScheme } = useColorScheme();
@@ -129,11 +129,11 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="book-now"
+          name="profile"
           options={{
-            title: "Book Now",
+            title: "Profile",
             tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-              <Calendar size={size} color={color} />
+              <User size={size} color={color} />
             ),
           }}
         />
@@ -160,12 +160,6 @@ export default function AppLayout() {
                 link={"/contact-us"}
                 icon={Phone}
                 title="Contact Us"
-                setShowInfoModal={setShowInfoModal}
-              />
-              <AdditionalSettingsButtons
-                link={"/profile"}
-                icon={UserCircle}
-                title="Go to Profile Page"
                 setShowInfoModal={setShowInfoModal}
               />
               <AdditionalSettingsButtons

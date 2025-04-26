@@ -11,83 +11,12 @@ import { Text } from "~/components/ui/text";
 import { Check, Users, Clock } from "lucide-react-native";
 import CustomButton from "components/CustomButton";
 import CategoryPill from "~/components/menus/CategoryPill";
-import { useColorScheme } from "~/libs/useColorScheme";
-import { cateringPackages, packages } from "~/libs/packages-metadata";
+import { useColorScheme } from "~/lib/useColorScheme";
+import { cateringPackages, packages } from "~/lib/packages-metadata";
 
 export default function PackagesPage() {
   const { isDarkColorScheme } = useColorScheme();
   const [selectedType, setSelectedType] = useState("All");
-  // const packageTypes = [
-  //   "All",
-  //   "Wedding",
-  //   "Corporate",
-  //   "Birthday",
-  //   "Anniversary",
-  //   "Custom",
-  // ];
-
-  // const packages = [
-  //   {
-  //     id: 1,
-  //     name: "Premium Wedding Package",
-  //     type: "Wedding",
-  //     price: 2499,
-  //     priceUnit: "per event",
-  //     image: "https://placeholder.com/400x200?text=Wedding+Package",
-  //     description: "Complete catering solution for your special day",
-  //     guests: "50-200",
-  //     duration: "6 hours",
-  //     features: [
-  //       "Full-service catering",
-  //       "Customizable menu options",
-  //       "Professional staff",
-  //       "Setup and cleanup",
-  //       "Premium dinnerware",
-  //       "Beverage service",
-  //     ],
-  //     popular: true,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Corporate Lunch",
-  //     type: "Corporate",
-  //     price: 25,
-  //     priceUnit: "per person",
-  //     image: "https://placeholder.com/400x200?text=Corporate+Package",
-  //     description: "Professional catering for business meetings and events",
-  //     guests: "10-100",
-  //     duration: "3 hours",
-  //     features: [
-  //       "Buffet-style service",
-  //       "Healthy menu options",
-  //       "Disposable eco-friendly dinnerware",
-  //       "Beverage service",
-  //       "On-time delivery",
-  //       "Setup included",
-  //     ],
-  //     popular: false,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Birthday Celebration",
-  //     type: "Birthday",
-  //     price: 599,
-  //     priceUnit: "per event",
-  //     image: "https://placeholder.com/400x200?text=Birthday+Package",
-  //     description: "Make your birthday special with our catering package",
-  //     guests: "20-50",
-  //     duration: "4 hours",
-  //     features: [
-  //       "Themed food options",
-  //       "Birthday cake included",
-  //       "Decorative food displays",
-  //       "Staff for service",
-  //       "Setup and cleanup",
-  //       "Customizable menu",
-  //     ],
-  //     popular: false,
-  //   },
-  // ]
 
   return (
     <View className="flex-1 bg-background">

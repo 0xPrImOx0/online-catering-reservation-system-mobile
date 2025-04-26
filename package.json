@@ -13,11 +13,20 @@
     "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "@react-native-community/datetimepicker": "8.2.0",
     "@react-navigation/drawer": "^7.1.1",
     "@react-navigation/native": "^7.0.0",
     "@rn-primitives/avatar": "~1.1.0",
+    "@rn-primitives/checkbox": "^1.1.0",
+    "@rn-primitives/dialog": "^1.1.0",
+    "@rn-primitives/label": "^1.1.0",
     "@rn-primitives/portal": "~1.1.0",
     "@rn-primitives/progress": "~1.1.0",
+<<<<<<< HEAD
+=======
+    "@rn-primitives/radio-group": "^1.1.0",
+>>>>>>> 593890f17d083bdfa339c0c91163757a0212a69c
     "@rn-primitives/select": "^1.1.0",
     "@rn-primitives/separator": "^1.1.0",
     "@rn-primitives/slot": "~1.1.0",
@@ -35,10 +44,13 @@
     "expo-status-bar": "~2.0.1",
     "expo-system-ui": "~4.0.7",
     "lucide-react-native": "^0.378.0",
+    "mongodb": "^6.16.0",
     "nativewind": "^4.1.23",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-hook-form": "^7.56.1",
     "react-native": "0.76.9",
+    "react-native-animated-spinkit": "^1.5.2",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-reanimated": "~3.16.1",
@@ -51,10 +63,12 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "3.3.5",
     "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.24.3",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
+    "@types/mongodb": "^4.0.6",
     "@types/react": "~18.3.12",
     "typescript": "^5.3.3"
   },

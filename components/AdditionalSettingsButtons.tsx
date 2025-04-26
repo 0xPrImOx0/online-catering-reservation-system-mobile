@@ -20,11 +20,14 @@ export default function AdditionalSettingsButtons({
   return (
     <>
       <TouchableOpacity
-        onPress={() => {router.push(link); setShowInfoModal(false)}}
+        onPress={() => {
+          router.push(link);
+          setShowInfoModal(false);
+        }}
         className="flex-row w-full gap-4 p-4 rounded-lg"
       >
         <Icon color="white" size={24} />
-        <Text className="text-lg font-bold text-white">{title}</Text>
+        <Text className="text-lg font-bold text-foreground">{title}</Text>
       </TouchableOpacity>
       <Separator />
     </>

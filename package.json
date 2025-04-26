@@ -23,10 +23,7 @@
     "@rn-primitives/label": "^1.1.0",
     "@rn-primitives/portal": "~1.1.0",
     "@rn-primitives/progress": "~1.1.0",
-<<<<<<< HEAD
-=======
     "@rn-primitives/radio-group": "^1.1.0",
->>>>>>> 593890f17d083bdfa339c0c91163757a0212a69c
     "@rn-primitives/select": "^1.1.0",
     "@rn-primitives/separator": "^1.1.0",
     "@rn-primitives/slot": "~1.1.0",

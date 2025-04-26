@@ -7,7 +7,7 @@ let socket: Socket;
 export const initSocket = () => {
   // Direct connection to the backend, replace with your backend URL
   if (!socket) {
-    socket = io("http://192.168.100.64:5500", {
+    socket = io(process.env.EXPO_PUBLIC_API_BASE_URL, {
       transports: ["websocket"], // Use websockets for real-time communication
       withCredentials: true, // optional but matches your backend config
     });

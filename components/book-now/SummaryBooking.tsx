@@ -1,6 +1,5 @@
 "use client";
 import { Card, CardContent } from "~/components/ui/card";
-import { Badge } from "~/components/ui/badge";
 import type { ReservationValues } from "~/hooks/use-reservation-form";
 import { menuItems } from "~/lib/menu-lists";
 import {

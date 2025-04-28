@@ -29,7 +29,7 @@ const reservationSchema = z
       .email("Please enter a valid email address"),
     contactNumber: z
       .string({ required_error: "Please provide your Contact Number" })
-      .regex(/^\d{10}$/, "Contact Number must have exactly 10 digits"),
+      .regex(/^\d{11}$/, "Contact Number must have exactly 11 digits"),
     reservationType: z.enum(["event", "personal"]),
     eventType: z.enum(reservationEventTypes as [EventType, ...EventType[]], {
       required_error: "Please select an Event Type",

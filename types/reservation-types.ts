@@ -1,5 +1,5 @@
 import { useReservationForm } from "~/hooks/use-reservation-form";
-import { PackageCategory, ServiceType } from "./package-types";
+import { ServiceType } from "./package-types";
 
 //Reservation Related Types
 export type reservationType = {
@@ -41,7 +41,9 @@ export interface MenuReservationDetails {
   pricePerPax: number;
 }
 
-export type SelectedMenus = Record<string, MenuReservationDetails>;
+export type SelectedMenu = Record<string, MenuReservationDetails>;
+
+export type SelectedMenus = Record<string, SelectedMenu>;
 
 export interface ReservationItem {
   fullName: string;

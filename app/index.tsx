@@ -10,13 +10,13 @@ export default function SplashScreen() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/home");
+      router.push("/packages");
     }, 1000); // Mock loading time of 2 seconds
     return () => clearTimeout(timer);
   }, [user]);
 
   return (
-    <View className="relative items-center justify-center flex-1 bg-background">
+    <View className="relative flex-1 justify-center items-center bg-background">
       <StatusBar style="light" />
       <Image
         source={require("../assets/catering-logo.png")}

@@ -22,12 +22,10 @@ export default function RootLayout() {
         },
         headerLeft: () => (
           <TouchableOpacity
-            onPress={() => router.replace("/menus")}
-            className="items-center justify-center w-10 h-10 rounded-full"
+            onPress={() => router.back()}
+            className="justify-center items-center w-10 h-10 rounded-full"
           >
-            <Text>
-              <ChevronLeft color={"white"} />
-            </Text>
+            <ChevronLeft color={"white"} />
           </TouchableOpacity>
         ),
       }}

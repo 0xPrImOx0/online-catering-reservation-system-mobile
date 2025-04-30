@@ -4,6 +4,7 @@ import { CategoryProps } from "./menu-types";
 
 // Define types for our packages
 export type PackageCategory =
+  | "All"
   | "Soup"
   | "Salad"
   | "Beef"
@@ -171,7 +172,7 @@ export const hoursArray: string[] = [
   "6 hours",
   "8 hours",
   "10 hours",
-]
+];
 
 export const serviceTypes: ServiceType[] = ["Buffet", "Plated"];
 

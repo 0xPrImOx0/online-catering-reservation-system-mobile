@@ -5,10 +5,14 @@ import { Label } from "../ui/label";
 import AddRemoveMenuQuantity from "./AddRemoveMenuQuantity";
 import { defaultCategoryAndCount } from "~/lib/menu-select";
 import { PackageOption } from "~/types/package-types";
-import { ReservationValues, useReservationForm } from "~/hooks/use-reservation-form";
+import {
+  ReservationValues,
+  useReservationForm,
+} from "~/hooks/use-reservation-form";
 import { Controller, useFormContext } from "react-hook-form";
 import SelectServingSize from "./SelectServingSize";
 import { Textarea } from "../ui/textarea";
+import CategoryOptionsBadge from "./CategoryOptionsBadge";
 
 export default function CategoryOptions() {
   const {
@@ -59,6 +63,19 @@ export default function CategoryOptions() {
       className="flex-1 h-full"
       contentContainerClassName="pb-32"
     >
+      {selectedPackage && (
+        <View>
+          <Text className="mb-6 text-foreground">
+            Available Categories for{" "}
+            <Text className="font-medium">{currentPackage}</Text>
+          </Text>
+
+          <CategoryOptionsBadge
+            categoryAndCount={categoryAndCount}
+            selectedMenus={selectedMenus}
+          />
+        </View>
+      )}
       <Controller
         control={control}
         name="selectedMenus"

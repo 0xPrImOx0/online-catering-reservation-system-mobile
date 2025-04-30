@@ -27,7 +27,7 @@ export default function ImageDialog({
         setIsImageDialogOpen(open);
       }}
     >
-      <DialogContent className="p-0 overflow-hidden bg-transparent border-0 shadow-none">
+      <DialogContent className="overflow-hidden p-0 bg-transparent border-0 shadow-none">
         <DialogHeader className="sr-only">
           <DialogTitle>{item.name}</DialogTitle>
           {"shortDescription" in item ? (
@@ -43,11 +43,12 @@ export default function ImageDialog({
                 <View className="relative z-10">
                   <Image
                     source={{ uri: item.imageUrl }}
-                    width={1500}
-                    height={725}
                     alt={item.name}
+                    width={350}
+                    height={600}
+                    className=""
                   />
-                  <DialogClose className="absolute flex items-center justify-center w-10 h-10 text-foreground transition-colors rounded-full top-4 right-4 bg-black/70 backdrop-blur-sm hover:bg-black">
+                  <DialogClose className="flex absolute top-4 right-4 justify-center items-center w-10 h-10 rounded-full backdrop-blur-sm transition-colors text-foreground bg-black/70 hover:bg-black">
                     <X className="w-5 h-5" />
                   </DialogClose>
                 </View>

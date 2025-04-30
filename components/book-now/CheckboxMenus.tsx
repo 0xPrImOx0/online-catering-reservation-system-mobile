@@ -23,19 +23,27 @@ export default function CheckboxMenus({
   selectedMenus,
 }: {
   category: CategoryProps;
-  field?: any;
+  field: any;
   count: number;
   selectedMenus: SelectedMenus;
 }) {
-  const { handleCheckboxChange } = useReservationForm();
+  const { handleCheckboxChange, getMenuItem } = useReservationForm();
   // Function to get dishes by category
   const getMenusByCategory = (category: CategoryProps) => {
     return menuItems.filter((menu: MenuItem) => menu.category === category);
   };
 
   const getMenuItemPrice = (menuId: string) => {
-    const menu = menuItems.find((item) => item._id === menuId);
-    return menu ? menu.regularPricePerPax : 0;
+    const menu = getMenuItem(menuId);
+    return menu ? menu.prices[0].price : 0;
+  };
+
+  const isDisabled = (field: any, id: string) => {
+    return (
+      field.value[category] &&
+      Object.keys(field.value[category]).length >= count &&
+      !field.value[category][id]
+    );
   };
 
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
@@ -46,14 +54,11 @@ export default function CheckboxMenus({
         <Label className="mb-3 text-base font-medium">{category} Options</Label>
         <View className="gap-3">
           {getMenusByCategory(category).map((menu) => (
-            <View key={menu._id} className="flex-row items-start gap-3">
+            <View key={menu._id} className="flex-row gap-3 items-start">
               <Checkbox
                 id={menu._id}
                 checked={!!field.value[category]?.[menu._id]} // ✅ check if menu is selected (count > 0)
-                disabled={
-                  !field.value[category]?.[menu._id] && // ✅ allow unchecking
-                  field.value[category]?.length >= count
-                }
+                disabled={isDisabled(field, menu._id)}
                 onCheckedChange={(checked) =>
                   handleCheckboxChange(
                     checked,
@@ -72,12 +77,13 @@ export default function CheckboxMenus({
                     <Button
                       size={"custom"}
                       variant={"link"}
-                      className={clsx(
-                        "font-medium items-start max-w-fit -mt-1",
-                        {
-                          "text-green-500": field.value[category]?.[menu._id],
-                        }
-                      )}
+                      className={clsx("font-medium max-w-fit -mt-1", {
+                        "text-green-500": field.value[category]?.[menu._id],
+                        "text-muted-foreground line-through": isDisabled(
+                          field,
+                          menu._id
+                        ),
+                      })}
                       onPress={() => {
                         setActiveMenu(menu._id);
                         setIsImageDialogOpen(true);

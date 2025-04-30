@@ -38,12 +38,10 @@ export default function BookNow() {
   } = useReservationForm();
 
   const { id } = useLocalSearchParams();
-  const deconstructedId = id && id[0];
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(2);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [nextPageCount, setNextPageCount] = useState(0);
   const { watch, setValue } = reservationForm;
 
   const cateringOptions = watch("cateringOptions");
@@ -69,19 +67,14 @@ export default function BookNow() {
   // Handle next step validation
   const handleNextStep = async (currentStep: number) => {
     const isValid = await validateStep(currentStep);
-    if (isValid) {
-      if (nextPageCount < 2) {
-        setCurrentStep(currentStep + 2);
-      } else {
-        setCurrentStep(currentStep + 1);
-      }
-      setNextPageCount((prev) => prev + 1);
+    if (isValid && dynamicNextBtn === "Next") {
+      setCurrentStep(currentStep + 1);
     }
     return isValid;
   };
 
   const handlePreviousStep = (currentStep: number) => {
-    if (currentStep > 0) {
+    if (currentStep > 0 && dynamicPreviousBtn === "Previous") {
       setCurrentStep(currentStep - 1);
       return true;
     }
@@ -109,12 +102,10 @@ export default function BookNow() {
   };
 
   useEffect(() => {
-    const isMenu = getMenuItem(deconstructedId);
-    const isPackage = cateringPackages.some(
-      (pkg) => pkg._id === deconstructedId
-    );
+    const isMenu = getMenuItem(id as string);
+    const isPackage = cateringPackages.some((pkg) => pkg._id === id);
 
-    if (deconstructedId) {
+    if (id) {
       if (isMenu) {
         const prev = watch("selectedMenus") || {};
         setValue("cateringOptions", "custom");
@@ -122,7 +113,7 @@ export default function BookNow() {
           ...prev,
           [isMenu.category]: {
             ...(prev?.[isMenu.category] || {}),
-            [deconstructedId]: {
+            [id as string]: {
               quantity: 1,
               paxSelected: "4-6 pax",
               pricePerPax: isMenu.prices[0].price,
@@ -132,12 +123,12 @@ export default function BookNow() {
       }
       if (isPackage) {
         setValue("cateringOptions", "event");
-        setValue("selectedPackage", deconstructedId);
+        setValue("selectedPackage", id as string);
         setShowPackageSelection(true);
         return;
       }
     }
-  }, [id, deconstructedId]);
+  }, [id, id]);
 
   const reservationFormComponents = [
     <CustomerInformation key={"customer-information"} />,

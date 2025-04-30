@@ -21,28 +21,8 @@ export default function PackageSelection({
 }) {
   const {
     control,
-    watch,
-    setValue,
     formState: { errors },
   } = useFormContext<ReservationValues>();
-  const packageSelection = watch("selectedPackage");
-
-  // Update form values when packageSelection changes
-  useEffect(() => {
-    const selectedPackage = cateringPackages.find(
-      (pkg) => pkg._id === packageSelection
-    );
-    if (selectedPackage) {
-      const selectedMenus = Object.fromEntries(
-        selectedPackage.options.map((opt) => [opt.category, {}])
-      );
-      setValue("selectedMenus", selectedMenus);
-      setValue("eventType", selectedPackage?.eventType ?? "No Event");
-      setValue("reservationType", "event");
-    } else {
-      setValue("selectedMenus", {});
-    }
-  }, [packageSelection, setValue]);
 
   return (
     <ScrollView
@@ -74,7 +54,7 @@ export default function PackageSelection({
                   >
                     <Card
                       className={clsx(
-                        "cursor-pointer border-2",
+                        "border-2 cursor-pointer",
                         { "border-green-500": isSelected } // Use isSelected instead of field.value
                       )}
                     >
@@ -82,7 +62,7 @@ export default function PackageSelection({
                         <Image
                           source={{ uri: option.imageUrl }}
                           alt={option.label}
-                          className="object-cover w-full h-40 mb-2 rounded-t-lg"
+                          className="object-cover mb-2 w-full h-40 rounded-t-lg"
                         />
                       </CardHeader>
                       <CardContent className="mt-4 space-y-2">

@@ -2,30 +2,6 @@ import { useReservationForm } from "~/hooks/use-reservation-form";
 import { ServiceType } from "./package-types";
 
 //Reservation Related Types
-export type reservationType = {
-  id: string;
-  customer: {
-    name: string;
-    email: string;
-    phone: string;
-    isRegistered: boolean;
-  };
-  eventDate: Date | string | number;
-  totalPrice: number;
-  status: string;
-  createdDate: Date | null;
-  guests: number;
-  address: string;
-  specialInstructions: string;
-  items: { name: string; quantity: number; price: number }[];
-  payment: {
-    status: string;
-    date: Date | null;
-    amount: number;
-  };
-  isUrgent: boolean;
-};
-
 export type PaxArrayType = "4-6 pax" | "8-10 pax" | "13-15 pax" | "18-20 pax";
 
 export const paxArray: PaxArrayType[] = [
@@ -34,6 +10,31 @@ export const paxArray: PaxArrayType[] = [
   "13-15 pax",
   "18-20 pax",
 ];
+
+export type ReservationStatusType =
+  | "All"
+  | "Pending"
+  | "Confirmed"
+  | "Completed"
+  | "Cancelled";
+
+export const reservationStatusArray: ReservationStatusType[] = [
+  "Pending",
+  "Confirmed",
+  "Completed",
+  "Cancelled",
+];
+
+export type HoursArrayTypes =
+  | "4 hours"
+  | "4.5 hours"
+  | "5 hours"
+  | "5.5 hours"
+  | "6 hours"
+  | "6.5 hours"
+  | "8 hours"
+  | "8.5 hours"
+  | "10 hours";
 
 export interface MenuReservationDetails {
   quantity: number;
@@ -51,14 +52,15 @@ export interface ReservationItem {
   contactNumber: string;
   reservationType: "event" | "personal";
   eventType: string;
-  eventDate: Date;
-  eventTime: string;
+  reservationDate: Date;
+  reservationTime: string;
+  period: "A.M." | "P.M.";
   guestCount: number;
   venue: string;
   cateringOptions: "event" | "custom";
   serviceType: ServiceType;
   serviceFee: number;
-  serviceHours?: string;
+  serviceHours?: HoursArrayTypes;
   selectedPackage: string;
   selectedMenus: SelectedMenus;
   totalPrice: number;
@@ -67,10 +69,13 @@ export interface ReservationItem {
   deliveryFee: number;
   deliveryAddress?: string;
   deliveryInstructions?: string;
+  status: ReservationStatusType;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export type ReservationTableProps = {
-  reservations: reservationType[];
+  reservations: ReservationItem[];
   dashboard?: boolean;
 };
 

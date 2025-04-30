@@ -17,7 +17,7 @@ export default function PackageShowcasePage() {
     return <Text>Package Not Found!</Text>; // Handle the case where the package is not found
   }
   return (
-    <View className="h-full pt-4 bg-background">
+    <View className="pt-4 h-full bg-background">
       <View className="sticky top-0 z-10 bg-background border-t-slate-400">
         {/* Image with fixed height */}
         <View className="relative w-full h-[200px]">
@@ -47,7 +47,7 @@ export default function PackageShowcasePage() {
         <View className="p-4 border-b bg-background border-border">
           <Text className="text-2xl font-bold text-foreground">{pkg.name}</Text>
           <Text className="mt-2 text-muted-foreground">{pkg.description}</Text>
-          <View className="flex-row items-center justify-between px-3 py-2 mt-4 rounded-md bg-primary text-primary-foreground">
+          <View className="flex-row justify-between items-center px-3 py-2 mt-4 rounded-md bg-primary text-primary-foreground">
             <Text className="text-lg font-bold">
               {/* {isPlated
                   ? `&#8369; ${pkg.pricePerPaxWithServiceCharge.toFixed(
@@ -62,7 +62,7 @@ export default function PackageShowcasePage() {
                 </Text>
               )} */}
             <Button asChild variant={"secondary"}>
-              <Link href={`/book-now`} className="text-foreground">
+              <Link href={`/book-now/${packageId}`} className="text-foreground">
                 Book Now
               </Link>
             </Button>
@@ -72,7 +72,7 @@ export default function PackageShowcasePage() {
       {/* Scrollable Content Section */}
       <ScrollView
         contentContainerClassName=" gap-6 pb-12"
-        className="flex-1 h-full p-4 pb-0 "
+        className="flex-1 p-4 pb-0 h-full"
       >
         <View className="gap-4">
           <Card className="p-4">
@@ -127,7 +127,7 @@ export default function PackageShowcasePage() {
           <View className="gap-2">
             {/* Show rice trays for buffet and plated packages */}
             {pkg.packageType === "Event" && (
-              <View className="flex items-center col-span-1 gap-2">
+              <View className="flex col-span-1 gap-2 items-center">
                 <Text className="font-medium">
                   <CheckCircle2Icon className="w-4 h-4 text-green-500" />
                   {Math.ceil(pkg.minimumPax / 2)} trays of steamed rice (good
@@ -136,7 +136,7 @@ export default function PackageShowcasePage() {
               </View>
             )}
             {pkg.inclusions.map((inclusion, index) => (
-              <View key={index} className="flex-row items-center gap-3 mb-1">
+              <View key={index} className="flex-row gap-3 items-center mb-1">
                 <CheckCircle2Icon className="w-4 h-4" color={"green"} />
                 <Text className="text-justify text-foreground">
                   {inclusion.includes}
@@ -166,10 +166,10 @@ export default function PackageShowcasePage() {
                     .map((menu) => (
                       <View
                         key={menu.name}
-                        className="flex-row items-center gap-2"
+                        className="flex-row gap-2 items-center"
                       >
                         <CheckCircle2Icon className="w-4 h-4" color={"green"} />
-                        <Text className=" text-foreground">{menu.name}</Text>
+                        <Text className="text-foreground">{menu.name}</Text>
                       </View>
                     ))}
                   <View className="mt-2 mb-5 text-muted-foreground">

@@ -3,15 +3,12 @@ import React, { useEffect, useState } from "react";
 import CheckboxMenus from "./CheckboxMenus";
 import { Label } from "../ui/label";
 import AddRemoveMenuQuantity from "./AddRemoveMenuQuantity";
-import { menuItems } from "~/lib/menu-lists";
 import { defaultCategoryAndCount } from "~/lib/menu-select";
 import { PackageOption } from "~/types/package-types";
-import { ReservationValues } from "~/hooks/use-reservation-form";
+import { ReservationValues, useReservationForm } from "~/hooks/use-reservation-form";
 import { Controller, useFormContext } from "react-hook-form";
 import SelectServingSize from "./SelectServingSize";
 import { Textarea } from "../ui/textarea";
-import { cateringPackages } from "~/lib/packages-metadata";
-import { Input } from "../ui/input";
 
 export default function CategoryOptions() {
   const {
@@ -23,10 +20,12 @@ export default function CategoryOptions() {
     formState: { errors },
   } = useFormContext<ReservationValues>();
 
+  const { getMenuItem, getPackageItem } = useReservationForm();
+
   const selectedMenus = watch("selectedMenus");
 
   const cateringOptions = watch("cateringOptions");
-  const selectedPackage = getValues("selectedPackage");
+  const selectedPackage = watch("selectedPackage");
   const serviceFee = watch("serviceFee");
   const deliveryFee = watch("deliveryFee");
 
@@ -34,22 +33,19 @@ export default function CategoryOptions() {
   const [categoryAndCount, setCategoryAndCount] = useState<PackageOption[]>(
     defaultCategoryAndCount
   );
-  const getMenuItemName = (menuId: string) => {
-    const menu = menuItems.find((item) => item._id === menuId);
-    return menu ? menu.name : "";
-  };
+
   useEffect(() => {
-    if (cateringOptions === "custom") {
+    if (cateringOptions === "custom" && !!selectedPackage) {
       setCurrentPackage("");
       setValue("selectedPackage", "");
+      setValue("selectedMenus", {});
       clearErrors("selectedMenus");
       setCategoryAndCount(defaultCategoryAndCount);
       return;
     }
     if (selectedPackage) {
-      const selectedPackageData = cateringPackages.find(
-        (pkg) => pkg._id === selectedPackage
-      );
+      const selectedPackageData = getPackageItem(selectedPackage);
+
       if (selectedPackageData) {
         setCurrentPackage(selectedPackageData.name);
         setCategoryAndCount(selectedPackageData.options);
@@ -97,10 +93,10 @@ export default function CategoryOptions() {
                       {Object.keys(field.value[category]).map((menu) => (
                         <View
                           key={menu}
-                          className="flex-row items-center justify-between space-x-4"
+                          className="flex-row justify-between items-center space-x-4"
                         >
                           <Text className="text-lg text-foreground">
-                            {getMenuItemName(menu)}
+                            {getMenuItem(menu)?.name}
                           </Text>
                           <View className="flex-row gap-2">
                             <AddRemoveMenuQuantity
@@ -148,7 +144,7 @@ export default function CategoryOptions() {
       />
 
       {watch("totalPrice") > 0 && (
-        <View className="flex-row items-end justify-between mt-8">
+        <View className="flex-row justify-between items-end mt-8">
           <Label>{serviceFee && deliveryFee ? "Total" : "Partial"} Price</Label>
           <Text className="text-3xl text-green-500 underline underline-offset-4">
             &#8369;{" "}

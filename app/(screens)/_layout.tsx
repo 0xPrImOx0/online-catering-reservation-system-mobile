@@ -40,7 +40,7 @@ export default function RootLayout() {
         name="packages/[packageId]/index"
         options={{ title: "Package Showcase" }}
       />
-      <Stack.Screen name="book-now/index" options={{ title: "Book Now" }} />
+      <Stack.Screen name="book-now/[id]" options={{ title: "Book Now" }} />
     </Stack>
   );
 }

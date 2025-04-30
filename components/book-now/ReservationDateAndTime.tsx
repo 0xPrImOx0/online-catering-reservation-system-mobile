@@ -6,7 +6,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Calendar } from "lucide-react-native";
 import { useState } from "react";
 
-export default function EventDate({ control }: { control: any }) {
+export default function ReservationDateAndTime({ control }: { control: any }) {
   const [showCalendar, setShowCalendar] = useState(false);
 
   const formatDate = (date: Date | undefined) => {
@@ -24,13 +24,13 @@ export default function EventDate({ control }: { control: any }) {
       control={control}
       name="eventDate"
       render={({ field }) => (
-        <View className="w-full gap-2">
+        <View className="gap-2 w-full">
           <Label className="">
             <Text>
               Date <Text className="text-destructive">*</Text>
             </Text>
           </Label>
-          <View className="flex-row items-center justify-between pr-2 border rounded-md border-border">
+          <View className="flex-row justify-between items-center pr-2 rounded-md border border-border">
             <Input
               {...field}
               value={formatDate(field.value)}
@@ -43,7 +43,7 @@ export default function EventDate({ control }: { control: any }) {
               onPress={() => setShowCalendar((prev) => !prev)}
             />
           </View>
-          <View className="items-center ">
+          <View className="items-center">
             {showCalendar && (
               <DateTimePicker
                 value={

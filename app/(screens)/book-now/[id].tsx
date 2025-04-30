@@ -11,10 +11,10 @@ import {
 import CustomerInformation from "~/components/book-now/CustomerInformation";
 import PackageSelection from "~/components/book-now/PackageSelection";
 import CategoryOptions from "~/components/book-now/CategoryOptions";
-import EventDetails from "~/components/book-now/EventDetails";
+import ReservationDetails from "~/components/book-now/ReservationDetails";
 import SummaryBooking from "~/components/book-now/SummaryBooking";
 import { useReservationForm } from "~/hooks/use-reservation-form";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { menuItems } from "~/lib/menu-lists";
 import { FormProvider } from "react-hook-form";
 import {
@@ -34,18 +34,20 @@ export default function BookNow() {
     onSubmit,
     showPackageSelection,
     setShowPackageSelection,
+    getMenuItem,
   } = useReservationForm();
 
-  const { watch } = reservationForm;
+  const { id } = useLocalSearchParams();
+  const deconstructedId = id && id[0];
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [nextPageCount, setNextPageCount] = useState(0);
+  const { watch, setValue } = reservationForm;
 
-  const { setValue } = reservationForm;
-  // const deconstructedId = id && id[0];
   const cateringOptions = watch("cateringOptions");
+
   const dynamicPreviousBtn =
     showPackageSelection && currentStep === 1
       ? "Change Catering Options"
@@ -68,11 +70,12 @@ export default function BookNow() {
   const handleNextStep = async (currentStep: number) => {
     const isValid = await validateStep(currentStep);
     if (isValid) {
-      // if (pathname === `/book-now/${id}` && nextPageCount < 2) {
-      //   setCurrentStep(currentStep + 2);
-      // } else {
-      setCurrentStep(currentStep + 1);
-      // setNextPageCount((prev) => prev + 1);
+      if (nextPageCount < 2) {
+        setCurrentStep(currentStep + 2);
+      } else {
+        setCurrentStep(currentStep + 1);
+      }
+      setNextPageCount((prev) => prev + 1);
     }
     return isValid;
   };
@@ -105,66 +108,36 @@ export default function BookNow() {
     setIsSubmitComplete(false);
   };
 
-  // useEffect(() => {
-  //   const isMenu = menuItems.find((pkg) => pkg._id === deconstructedId);
-  //   const isPackage = cateringPackages.some(
-  //     (pkg) => pkg._id === deconstructedId
-  //   );
-  //   if (deconstructedId) {
-  //     if (isMenu) {
-  //       setValue("cateringOptions", "custom");
-  //       setValue("selectedMenus", {
-  //         [isMenu.category]: {
-  //           [deconstructedId]: {
-  //             quantity: 1,
-  //             paxSelected: "4-6 pax",
-  //             pricePerPax: isMenu.prices[0].price,
-  //           },
-  //         },
-  //       });
-  //       return;
-  //     }
-  //     if (isPackage) {
-  //       setValue("cateringOptions", "event");
-  //       setValue("selectedPackage", deconstructedId);
-  //       setShowPackageSelection(true);
-  //       return;
-  //     }
-  //   }
-  // }, [id, deconstructedId, setValue]);
-
-  const serviceFee = watch("serviceFee");
-  const selectedPackage = watch("selectedPackage");
-  const deliveryFee = watch("deliveryFee");
-  const selectedMenus = watch("selectedMenus");
-  const guestCount = watch("guestCount") || 1;
-
   useEffect(() => {
-    const isPackage = cateringPackages.find(
-      (pkg) => pkg._id === selectedPackage
+    const isMenu = getMenuItem(deconstructedId);
+    const isPackage = cateringPackages.some(
+      (pkg) => pkg._id === deconstructedId
     );
-    const calculateTotal = () => {
-      let total = 0;
 
-      // Iterate through each category (Soup, Beverage)
-      Object.values(selectedMenus).forEach((category) => {
-        // Iterate through each menu item in the category
-        Object.values(category).forEach((item) => {
-          total += item.quantity * item.pricePerPax;
+    if (deconstructedId) {
+      if (isMenu) {
+        const prev = watch("selectedMenus") || {};
+        setValue("cateringOptions", "custom");
+        setValue("selectedMenus", {
+          ...prev,
+          [isMenu.category]: {
+            ...(prev?.[isMenu.category] || {}),
+            [deconstructedId]: {
+              quantity: 1,
+              paxSelected: "4-6 pax",
+              pricePerPax: isMenu.prices[0].price,
+            },
+          },
         });
-      });
-      setValue("totalPrice", total + serviceFee + deliveryFee);
-    };
-    if (isPackage) {
-      setValue(
-        "totalPrice",
-        isPackage.pricePerPax * guestCount +
-          isPackage.serviceCharge +
-          deliveryFee
-      );
+      }
+      if (isPackage) {
+        setValue("cateringOptions", "event");
+        setValue("selectedPackage", deconstructedId);
+        setShowPackageSelection(true);
+        return;
+      }
     }
-    calculateTotal();
-  }, [selectedMenus, serviceFee, deliveryFee, guestCount]);
+  }, [id, deconstructedId]);
 
   const reservationFormComponents = [
     <CustomerInformation key={"customer-information"} />,
@@ -173,7 +146,7 @@ export default function BookNow() {
       showPackageSelection={showPackageSelection}
     />,
     <CategoryOptions key={"category-options"} />, //validateStep={validateStep}
-    <EventDetails key={"event-details"} />,
+    <ReservationDetails key={"event-details"} />,
     <SummaryBooking key={"summary-booking"} />,
   ];
 
@@ -210,7 +183,7 @@ export default function BookNow() {
               within 1 hour to discuss the details and provide you with a quote.
             </DialogDescription>
           </DialogHeader>
-          <View className="flex items-center justify-center py-4">
+          <View className="flex justify-center items-center py-4">
             <View className="p-3 bg-green-500 rounded-full">
               <Check className="text-foreground size-10" />
             </View>

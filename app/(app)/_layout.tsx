@@ -8,9 +8,7 @@ import {
   Package,
   Calendar,
   Soup,
-  Settings,
   User,
-  UserCircle,
   Phone,
   Ellipsis,
   HelpCircle,
@@ -23,6 +21,7 @@ import { useColorScheme } from "~/lib/useColorScheme";
 export default function AppLayout() {
   const { isDarkColorScheme } = useColorScheme();
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const id = "no-id";
 
   return (
     <>
@@ -54,7 +53,7 @@ export default function AppLayout() {
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => router.push("/profile")}
-              className="ml-4 "
+              className="ml-4"
             >
               <Avatar className="w-10 h-10" alt={"Profile Picture"}>
                 <Image
@@ -71,19 +70,19 @@ export default function AppLayout() {
             </TouchableOpacity>
           ),
           headerRight: () => (
-            <View className="flex-row items-center gap-2 mr-4">
-              <TouchableOpacity className="items-center justify-center w-10 h-10 bg-gray-700 rounded-full">
+            <View className="flex-row gap-2 items-center mr-4">
+              <TouchableOpacity className="justify-center items-center w-10 h-10 bg-gray-700 rounded-full">
                 <Calendar
                   size={20}
                   color={isDarkColorScheme ? "white" : "black"}
                   onPress={() => {
-                    router.push("/book-now");
+                    router.push(`/book-now/${id}`);
                   }}
                 />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setShowInfoModal(true)}
-                className="items-center justify-center w-10 h-10 bg-gray-700 rounded-full"
+                className="justify-center items-center w-10 h-10 bg-gray-700 rounded-full"
               >
                 <Ellipsis
                   size={20}
@@ -144,9 +143,9 @@ export default function AppLayout() {
         visible={showInfoModal}
         onRequestClose={() => setShowInfoModal(false)}
       >
-        <View className="justify-end flex-1 bg-black/50">
+        <View className="flex-1 justify-end bg-black/50">
           <View className="bg-background rounded-t-3xl h-[35%]">
-            <View className="flex-row items-center justify-between p-4">
+            <View className="flex-row justify-between items-center p-4">
               <Text className="text-lg font-bold text-foreground">
                 Additional Settings
               </Text>

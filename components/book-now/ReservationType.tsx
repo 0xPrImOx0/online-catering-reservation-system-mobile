@@ -9,7 +9,7 @@ import {
 } from "~/components/ui/select";
 import { eventTypes } from "~/types/package-types";
 import { Label } from "../ui/label";
-export default function EventType({ control }: { control: any }) {
+export default function ReservationType({ control }: { control: any }) {
   return (
     <Controller
       control={control}

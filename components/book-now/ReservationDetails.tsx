@@ -15,7 +15,7 @@ import {
 import { Controller, useFormContext } from "react-hook-form";
 import { Separator } from "~/components/ui/separator";
 import WhatsTheOccasionCard from "./WhatsTheOccasionCard";
-import EventType from "./ReservationType";
+import ReservationType from "./ReservationType";
 import EventDate from "./ReservationDateAndTime";
 import DeliveryDetails from "./DeliveryDetails";
 import DeliveryOption from "./DeliveryOption";
@@ -87,9 +87,8 @@ export default function ReservationDetails() {
           <WhatsTheOccasionCard control={control} />
         )}
         {reservationType === "event" && eventType !== "No Event" && (
-          <EventType control={control} />
+          <ReservationType control={control} />
         )}
-        <EventDate control={control} />
         {reservationType === "event" && (
           <Controller
             control={control}
@@ -254,13 +253,18 @@ export default function ReservationDetails() {
             isDelivery={getValues("deliveryOption") === "Delivery"}
           />
         </View>
-        <ReservationDateAndTime control={control} />
         <DeliveryOption control={control} />
+        <ReservationDateAndTime
+          control={control}
+          deliveryOption={deliveryOption}
+        />
         {deliveryOption === "Delivery" && <DeliveryDetails control={control} />}
       </View>
       <Separator className="my-4" />
       <View className="mb-4">
-        <Text className="text-lg font-semibold">Payment Details</Text>
+        <Text className="text-lg font-semibold text-foreground">
+          Payment Details
+        </Text>
         <Text className="mb-4 text-sm text-muted-foreground">
           Please scan the GCash QR code below to complete your payment and enter
           the reference number from your transaction.
@@ -273,7 +277,7 @@ export default function ReservationDetails() {
             control={control}
             name="paymentReference"
             render={({ field }) => (
-              <View className="w-full">
+              <View className="mt-8 w-full">
                 <Label>
                   GCash Reference Number{" "}
                   <Text className="text-destructive">*</Text>{" "}
@@ -281,10 +285,11 @@ export default function ReservationDetails() {
                 <Input
                   placeholder="Enter payment reference number"
                   {...field}
+                  onChangeText={field.onChange}
                 />
                 {errors.paymentReference && (
                   <Text className="text-destructive">
-                    {errors.paymentReference.message?.toString()}
+                    {errors.paymentReference.message}
                   </Text>
                 )}
               </View>

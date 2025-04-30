@@ -186,6 +186,7 @@ const reservationSchema = z
 
 export type ReservationValues = z.infer<typeof reservationSchema>;
 
+
 const defaultValues: ReservationValues = {
   fullName: "",
   email: "",
@@ -340,7 +341,6 @@ export function useReservationForm() {
             "reservationTime",
             "guestCount",
             "serviceType",
-            "serviceHours",
             "paymentReference",
           ];
         }

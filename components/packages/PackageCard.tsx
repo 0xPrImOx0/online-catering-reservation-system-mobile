@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Check, Users, Clock } from "lucide-react-native";
 import CustomButton from "components/CustomButton";
 import React from "react";
@@ -11,8 +11,7 @@ export default function PackageCard({ item }: { item: CateringPackagesProps }) {
   const { isDarkColorScheme } = useColorScheme();
 
   return (
-    <Link
-      href={`/packages/${item._id}`}
+    <View
       key={item._id}
       className="overflow-hidden flex-1 mb-6 rounded-lg border border-border bg-card"
     >
@@ -63,13 +62,16 @@ export default function PackageCard({ item }: { item: CateringPackagesProps }) {
           <Text className="text-sm text-muted-foreground">per pax</Text>
         </View>
         <View className="items-end w-full">
-          <Button size={"custom"} className="z-50 p-2">
+          <TouchableOpacity
+            onPress={() => router.push(`/packages/${item._id}`)}
+            className="bg-primary px-3 py-1.5 rounded"
+          >
             <Text className="text-sm font-medium text-primary-foreground">
               View Details
             </Text>
-          </Button>
+          </TouchableOpacity>
         </View>
       </View>
-    </Link>
+    </View>
   );
 }

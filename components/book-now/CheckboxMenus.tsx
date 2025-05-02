@@ -28,7 +28,6 @@ export default function CheckboxMenus({
 }) {
   const { handleCheckboxChange, getMenuItem, getAllMenus } =
     useReservationForm();
-  // Function to get dishes by category
   // getMenusByCategory is now used inside useEffect
   const getMenusByCategory = async (category: CategoryProps) => {
     const menuItems = await getAllMenus();

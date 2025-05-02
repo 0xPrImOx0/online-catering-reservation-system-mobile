@@ -55,7 +55,6 @@ export default function CategoryOptions() {
       }
     }
     loadMenuItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedMenus]);
 
   const cateringOptions = watch("cateringOptions");

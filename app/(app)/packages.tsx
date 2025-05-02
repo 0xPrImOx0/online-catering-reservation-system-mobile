@@ -8,6 +8,7 @@ import PackageCard from "~/components/packages/PackageCard";
 import api from "~/lib/axiosInstance";
 import axios from "axios";
 import { CateringPackagesProps } from "~/types/package-types";
+import useSocketPackages from "~/hooks/use-socket-packages";
 
 export default function PackagesPage() {
   const { isDarkColorScheme } = useColorScheme();
@@ -36,6 +37,40 @@ export default function PackagesPage() {
 
     getPackages();
   }, []);
+
+  // Callback to handle package updates
+  const handlePackageUpdated = (updatedPackage: CateringPackagesProps) => {
+    console.log("🔄 Received updated menu from socket:", updatedPackage);
+    setCateringPackages((prevPackages) => {
+      if (prevPackages === null) return [updatedPackage];
+      return prevPackages.map((pkg) =>
+        pkg._id === updatedPackage._id ? updatedPackage : pkg
+      );
+    });
+  };
+
+  const handlePackageCreated = (createdPackage: CateringPackagesProps) => {
+    console.log("🆕 New menu created from socket:", createdPackage);
+    setCateringPackages((prevPackages) => {
+      if (prevPackages === null) return [createdPackage];
+      return [...prevPackages, createdPackage];
+    });
+  };
+
+  const handlePackageDeleted = (deletedPackage: CateringPackagesProps) => {
+    console.log("❌ Menu deleted from socket:", deletedPackage);
+    setCateringPackages(
+      (prevPackages) =>
+        prevPackages?.filter((pkg) => pkg._id !== deletedPackage._id) || null
+    );
+  };
+
+  // Use the socket hook to listen for updates
+  useSocketPackages({
+    onPackageUpdated: handlePackageUpdated,
+    onPackageCreated: handlePackageCreated,
+    onPackageDeleted: handlePackageDeleted,
+  });
 
   const filterPackages = (type: string) => {
     if (!cateringPackages) return [];

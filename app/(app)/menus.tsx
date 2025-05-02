@@ -14,12 +14,12 @@ import MenuCard from "~/components/menus/MenuCard";
 import { Separator } from "~/components/ui/separator";
 import CategoryPill from "~/components/menus/CategoryPill";
 import MenuSearchBar from "~/components/menus/MenuSearchBar";
-import { categories, menuItems } from "~/lib/menu-lists";
+import { categories } from "~/lib/menu-lists";
 import { useColorScheme } from "~/lib/useColorScheme";
-import useSocket from "~/hooks/use-socket";
 import { MenuItem } from "~/types/menu-types";
 import api from "~/lib/axiosInstance";
 import axios from "axios";
+import useSocketMenus from "~/hooks/use-socket-menus";
 
 export default function MenusPage() {
   const { isDarkColorScheme } = useColorScheme();
@@ -89,7 +89,7 @@ export default function MenusPage() {
   };
 
   // Use the socket hook to listen for updates
-  useSocket({
+  useSocketMenus({
     onMenuUpdated: handleMenuUpdated,
     onMenuCreated: handleMenuCreated,
     onMenuDeleted: handleMenuDeleted,

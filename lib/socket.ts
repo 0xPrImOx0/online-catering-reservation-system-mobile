@@ -6,9 +6,11 @@ import { CateringPackagesProps } from "~/types/package-types";
 let socket: Socket;
 
 export const initSocket = () => {
-  if (typeof window !== "undefined" && !socket) {
-    socket = io("http://localhost:5500", {
-      withCredentials: true,
+  // Direct connection to the backend, replace with your backend URL
+  if (!socket) {
+    socket = io(process.env.EXPO_PUBLIC_API_BASE_URL, {
+      transports: ["websocket"], // Use websockets for real-time communication
+      withCredentials: true, // optional but matches your backend config
     });
 
     // ✅ Log successful connection

@@ -1,28 +1,27 @@
 // utils/socket.ts
 import { io, Socket } from "socket.io-client";
 import { MenuItem } from "~/types/menu-types";
+import { CateringPackagesProps } from "~/types/package-types";
 
 let socket: Socket;
 
 export const initSocket = () => {
-  // Direct connection to the backend, replace with your backend URL
-  if (!socket) {
-    socket = io(process.env.EXPO_PUBLIC_API_BASE_URL, {
-      transports: ["websocket"], // Use websockets for real-time communication
-      withCredentials: true, // optional but matches your backend config
+  if (typeof window !== "undefined" && !socket) {
+    socket = io("http://localhost:5500", {
+      withCredentials: true,
     });
 
-    // Log successful connection
+    // ✅ Log successful connection
     socket.on("connect", () => {
       console.log("✅ Socket connected with ID:", socket.id);
     });
 
-    // Handle connection errors
+    // Optional: handle connection errors
     socket.on("connect_error", (err) => {
       console.error("❌ Socket connection error:", err);
     });
 
-    // Listen for the custom "connected" event from the backend
+    // Optional: listen for the custom welcome event from backend
     socket.on("connected", (data) => {
       console.log("🟢 Server says:", data.message);
     });
@@ -43,7 +42,31 @@ export const subscribeToMenuCreated = (callback: (menu: MenuItem) => void) => {
 
 export const subscribeToMenuDeleted = (callback: (menu: MenuItem) => void) => {
   if (socket) {
-    socket.on("menuDeleted", callback); // Listen for menu deletion event
+    socket.on("menuDeleted", callback); // Listen for menu delete event
+  }
+};
+
+export const subscribeToPackageUpdates = (
+  callback: (pkg: CateringPackagesProps) => void
+) => {
+  if (socket) {
+    socket.on("packageUpdated", callback); // Listen for package update event
+  }
+};
+
+export const subscribeToPackageCreated = (
+  callback: (pkg: CateringPackagesProps) => void
+) => {
+  if (socket) {
+    socket.on("packageCreated", callback); // Listen for package created event
+  }
+};
+
+export const subscribeToPackageDeleted = (
+  callback: (pkg: CateringPackagesProps) => void
+) => {
+  if (socket) {
+    socket.on("packageDeleted", callback); // Listen for package delete event
   }
 };
 
@@ -62,5 +85,23 @@ export const unsubscribeFromMenuCreated = () => {
 export const unsubscribeFromMenuDeleted = () => {
   if (socket) {
     socket.off("menuDeleted"); // Stop listening for menu deleted
+  }
+};
+
+export const unsubscribeFromPackageUpdates = () => {
+  if (socket) {
+    socket.off("packageUpdated"); // Stop listening for package updates
+  }
+};
+
+export const unsubscribeFromPackageCreated = () => {
+  if (socket) {
+    socket.off("packageCreated"); // Stop listening for package created
+  }
+};
+
+export const unsubscribeFromPackageDeleted = () => {
+  if (socket) {
+    socket.off("packageDeleted"); // Stop listening for package deleted
   }
 };

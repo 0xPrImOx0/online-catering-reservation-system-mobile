@@ -19,8 +19,18 @@ import {
   SelectedMenus,
 } from "~/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import api from "~/lib/axiosInstance";
+import axios from "axios";
+import {
+  initSocket,
+  subscribeToMenuUpdates,
+  subscribeToMenuDeleted,
+  unsubscribeFromMenuUpdates,
+  unsubscribeFromMenuDeleted,
+} from "~/lib/socket";
+
 import * as z from "zod";
 
 // Reservation Schema for Zod
@@ -186,7 +196,6 @@ const reservationSchema = z
 
 export type ReservationValues = z.infer<typeof reservationSchema>;
 
-
 const defaultValues: ReservationValues = {
   fullName: "",
   email: "",
@@ -296,9 +305,38 @@ export function useReservationForm() {
   };
 
   //Find all menus (will transfer to the socket later on)
-  const getMenuItem = (menuId: string) => {
-    const menu = menuItems.find((item) => item._id === menuId);
-    return menu;
+  // Socket-based dynamic menu fetcher
+
+  const getAllMenus = async () => {
+    try {
+      const response = await api.get(`/menus`);
+      return response.data.data;
+    } catch (err) {
+      if (axios.isAxiosError<{ error: string }>(err)) {
+        const message =
+          err.response?.data.error || "Unexpected error occurred.";
+        console.error("ERROR FETCHING MENU", message);
+      } else {
+        console.error("Something went wrong. Please try again.");
+      }
+      return null;
+    }
+  };
+
+  const getMenuItem = async (menuId: string) => {
+    try {
+      const response = await api.get(`/menus/${menuId}`);
+      return response.data.data;
+    } catch (err) {
+      if (axios.isAxiosError<{ error: string }>(err)) {
+        const message =
+          err.response?.data.error || "Unexpected error occurred.";
+        console.error("ERROR FETCHING MENU", message);
+      } else {
+        console.error("Something went wrong. Please try again.");
+      }
+      return null;
+    }
   };
 
   ///Find all packages (will transfer to socket later on)
@@ -477,5 +515,6 @@ export function useReservationForm() {
     setShowPackageSelection,
     handleReduceQuantity,
     handleAddQuantity,
+    getAllMenus,
   };
 }

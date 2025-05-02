@@ -17,16 +17,46 @@ import CategoryOptionsBadge from "./CategoryOptionsBadge";
 export default function CategoryOptions() {
   const {
     control,
-    getValues,
     setValue,
     watch,
     clearErrors,
     formState: { errors },
   } = useFormContext<ReservationValues>();
 
-  const { getMenuItem, getPackageItem } = useReservationForm();
+  const { getMenuItem, getPackageItem } =
+    useReservationForm();
 
   const selectedMenus = watch("selectedMenus");
+
+  // State to hold loaded menu items
+  const [menuItemsMap, setMenuItemsMap] = useState<{ [key: string]: any }>({});
+
+  // Preload all menu items used in selectedMenus
+  useEffect(() => {
+    async function loadMenuItems() {
+      const menuIds: string[] = [];
+      Object.values(selectedMenus || {}).forEach((category: any) => {
+        Object.keys(category || {}).forEach((menuId) => {
+          if (!menuIds.includes(menuId)) menuIds.push(menuId);
+        });
+      });
+      // Only fetch missing ones
+      const missing = menuIds.filter((id) => !menuItemsMap[id]);
+      if (missing.length === 0) return;
+      const newItems: { [key: string]: any } = {};
+      await Promise.all(
+        missing.map(async (id) => {
+          const item = await getMenuItem(id);
+          if (item) newItems[id] = item;
+        })
+      );
+      if (Object.keys(newItems).length > 0) {
+        setMenuItemsMap((prev) => ({ ...prev, ...newItems }));
+      }
+    }
+    loadMenuItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedMenus]);
 
   const cateringOptions = watch("cateringOptions");
   const selectedPackage = watch("selectedPackage");
@@ -107,24 +137,24 @@ export default function CategoryOptions() {
                       {category}
                     </Text>
                     <View className="gap-2">
-                      {Object.keys(field.value[category]).map((menu) => (
+                      {Object.keys(field.value[category]).map((menuId) => (
                         <View
-                          key={menu}
+                          key={menuId}
                           className="flex-row justify-between items-center space-x-4"
                         >
                           <Text className="text-lg text-foreground">
-                            {getMenuItem(menu)?.name}
+                            {menuItemsMap[menuId]?.name || "Loading..."}
                           </Text>
                           <View className="flex-row gap-2">
                             <AddRemoveMenuQuantity
                               value={field.value}
                               category={category}
-                              menu={menu}
+                              menu={menuId}
                               onChange={field.onChange}
                             />
                             <SelectServingSize
                               category={category}
-                              menu={menu}
+                              menu={menuId}
                               value={field.value}
                               onChange={field.onChange}
                             />

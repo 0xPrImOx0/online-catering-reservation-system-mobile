@@ -1,6 +1,5 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
-import { CategoryProps } from "~/types/menu-types";
 
 export default function CategoryPill({
   item,

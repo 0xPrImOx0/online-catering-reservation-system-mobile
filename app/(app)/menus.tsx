@@ -109,7 +109,7 @@ export default function MenusPage() {
         data={categories}
         horizontal
         showsHorizontalScrollIndicator={false}
-        className="max-h-16 mx-5 py-3"
+        className="py-3 mx-5 max-h-16"
         contentContainerStyle={{ alignItems: "center", gap: 10 }}
         renderItem={({ item }) => (
           <CategoryPill
@@ -120,7 +120,7 @@ export default function MenusPage() {
         )}
         keyExtractor={(item) => item}
       />
-      <Separator className="mb-4 " />
+      <Separator className="mb-4" />
       {/* Menu Items */}
       {filteredMenuItems.length > 0 ? (
         <FlatList
@@ -133,7 +133,7 @@ export default function MenusPage() {
         <View className="items-center my-auto">
           <Image
             source={require("../../assets/catering-logo.png")}
-            className="w-60 h-60 mb-4"
+            className="mb-4 w-60 h-60"
           />
           <Text className="text-2xl font-medium text-center text-foreground">
             No Menu Found
@@ -147,10 +147,10 @@ export default function MenusPage() {
         visible={filterModalVisible}
         onRequestClose={() => setFilterModalVisible(false)}
       >
-        <View className="justify-end flex-1 bg-black/50">
+        <View className="flex-1 justify-end bg-black/50">
           <View className="bg-background rounded-t-3xl h-[70%]">
-            <View className="flex-row items-center justify-between p-4 border-b border-border">
-              <Text className="text-xl font-bold text-foreground self-center">
+            <View className="flex-row justify-between items-center p-4 border-b border-border">
+              <Text className="self-center text-xl font-bold text-foreground">
                 Filter Menu
               </Text>
               <TouchableOpacity onPress={() => setFilterModalVisible(false)}>
@@ -170,7 +170,7 @@ export default function MenusPage() {
                 "Nut-Free",
               ].map((item) => (
                 <View key={item} className="flex-row items-center mb-2">
-                  <View className="w-5 h-5 mr-2 border rounded border-border" />
+                  <View className="mr-2 w-5 h-5 rounded border border-border" />
                   <Text className="text-sm text-foreground">{item}</Text>
                 </View>
               ))}
@@ -181,7 +181,7 @@ export default function MenusPage() {
               {["Under $10", "$10 - $20", "$20 - $30", "Over $30"].map(
                 (item) => (
                   <View key={item} className="flex-row items-center mb-2">
-                    <View className="w-5 h-5 mr-2 border rounded border-border" />
+                    <View className="mr-2 w-5 h-5 rounded border border-border" />
                     <Text className="text-sm text-foreground">{item}</Text>
                   </View>
                 )

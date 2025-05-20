@@ -34,7 +34,13 @@
     "@rn-primitives/slot": "~1.1.0",
     "@rn-primitives/tooltip": "~1.1.0",
     "@rn-primitives/types": "~1.1.0",
+<<<<<<< Updated upstream
     "axios": "^1.9.0",
+=======
+    "ajv": "^8.17.1",
+    "ajv-keywords": "^5.1.0",
+    "axios": "^1.8.4",
+>>>>>>> Stashed changes
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^4.1.0",
@@ -50,10 +56,10 @@
     "lucide-react-native": "^0.378.0",
     "mongodb": "^6.16.0",
     "nativewind": "^4.1.23",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.56.1",
-    "react-native": "0.76.9",
+    "react-native": "^0.76.9",
     "react-native-animated-spinkit": "^1.5.2",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-linear-gradient": "^2.8.3",
@@ -62,8 +68,12 @@
     "react-native-screens": "^4.4.0",
     "react-native-svg": "^15.8.0",
     "react-native-vector-icons": "^10.2.0",
+<<<<<<< Updated upstream
     "react-native-web": "~0.19.13",
     "react-spinkit": "^3.0.0",
+=======
+    "react-native-web": "^0.19.13",
+>>>>>>> Stashed changes
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "3.3.5",

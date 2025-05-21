@@ -23,8 +23,7 @@ export default function CategoryOptions() {
     formState: { errors },
   } = useFormContext<ReservationValues>();
 
-  const { getMenuItem, getPackageItem } =
-    useReservationForm();
+  const { getMenuItem, getPackageItem } = useReservationForm();
 
   const selectedMenus = watch("selectedMenus");
 

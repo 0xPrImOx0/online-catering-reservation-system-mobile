@@ -14,6 +14,8 @@ import { MultiStepFormProps } from "~/types/component-types";
 
 export default function MultiStepForm({
   formSteps,
+  title,
+  description,
   children,
   onSubmit,
   onNextStep,
@@ -29,6 +31,7 @@ export default function MultiStepForm({
   cancelButtonText = "Cancel",
   isReservationForm = false,
   setShowPackageSelection, // Default steps for demonstration
+  isCategoryError = false,
 }: MultiStepFormProps) {
   const [formStep, setFormStep] = useState<number>(initialStep || 0);
   const [isNextButtonDisabled, setIsNextButtonDisabled] =

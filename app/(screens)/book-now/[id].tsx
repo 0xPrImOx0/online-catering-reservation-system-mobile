@@ -1,7 +1,6 @@
 import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Check } from "lucide-react-native";
-import { Progress } from "~/components/ui/progress";
 import MultiStepForm from "~/components/book-now/MultiStepForm";
 import { FormStepType } from "~/types/package-types";
 import {
@@ -15,7 +14,6 @@ import ReservationDetails from "~/components/book-now/ReservationDetails";
 import SummaryBooking from "~/components/book-now/SummaryBooking";
 import { useReservationForm } from "~/hooks/use-reservation-form";
 import { Link, router, useLocalSearchParams } from "expo-router";
-import { menuItems } from "~/lib/menu-lists";
 import { FormProvider } from "react-hook-form";
 import {
   Dialog,
@@ -35,27 +33,58 @@ export default function BookNow() {
     showPackageSelection,
     setShowPackageSelection,
     getMenuItem,
+    cateringOptions,
+    setCateringOptions,
+    isCategoryError,
+    setIsCategoryError,
   } = useReservationForm();
 
   const { id } = useLocalSearchParams();
 
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { watch, setValue } = reservationForm;
 
-  const cateringOptions = watch("cateringOptions");
+  //  useEffect(() => {
+  //    if (customer) {
+  //      const { fullName, email, contactNumber } = customer;
 
-  const dynamicPreviousBtn =
+  //      // if fullname, email, and contactNumber do have values then step should direct to step 2
+  //      if (fullName && email && contactNumber) setCurrentStep(1);
+  //      return;
+  //    }
+
+  //    return setCurrentStep(0);
+  //  }, [customer]);
+
+  const [previousBtn, setPreviousBtn] = useState<string>(
     showPackageSelection && currentStep === 1
       ? "Change Catering Options"
-      : "Previous";
-  const dynamicNextBtn =
-    cateringOptions === "custom" || currentStep !== 1
+      : "Previous"
+  );
+  const [nextBtn, setNextBtn] = useState<string>(
+    cateringOptions === "menus" || currentStep !== 1
       ? "Next"
       : !showPackageSelection
       ? "Choose a Package"
-      : "Next";
+      : "Next"
+  );
+
+  useEffect(() => {
+    setPreviousBtn(
+      showPackageSelection && currentStep === 1
+        ? "Change Catering Options"
+        : "Previous"
+    );
+    setNextBtn(
+      cateringOptions === "menus" || currentStep !== 1
+        ? "Next"
+        : !showPackageSelection
+        ? "Choose a Package"
+        : "Next"
+    );
+  }, [showPackageSelection, currentStep, cateringOptions]);
 
   // Convert our form steps to the format expected by MultiStepForm
   const multiFormSteps: FormStepType[] = eventPackageFormSteps.map((step) => ({
@@ -66,87 +95,117 @@ export default function BookNow() {
 
   // Handle next step validation
   const handleNextStep = async (currentStep: number) => {
-    const isValid = await validateStep(currentStep);
-    if (isValid && dynamicNextBtn === "Next") {
-      setCurrentStep(currentStep + 1);
+    if (!isCategoryError) {
+      const isValid = await validateStep(currentStep);
+
+      if (isValid && nextBtn === "Next") {
+        setCurrentStep(currentStep + 1);
+      }
+      return isValid;
     }
-    return isValid;
+    return false;
   };
 
   const handlePreviousStep = (currentStep: number) => {
-    if (currentStep > 0 && dynamicPreviousBtn === "Previous") {
+    if (currentStep > 0 && previousBtn === "Previous") {
       setCurrentStep(currentStep - 1);
       return true;
     }
     return false;
   };
-
   // Add a handleCancel function:
   const handleCancel = () => {
-    router.back();
+    router.push("/");
   };
 
   // Handle form submission
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const data = reservationForm.getValues();
+    const isSuccess = await onSubmit(data);
+
+    if (!isSuccess) {
+      //  toast.error("Submission Failed");
+      return;
+    }
+
+    setIsSubmitComplete(true);
     setShowConfirmation(true);
-    reservationForm.handleSubmit((data) => {
-      onSubmit(data);
-      setIsSubmitComplete(true);
-    })();
   };
 
   // Handle form completion (close dialog and reset)
   const handleComplete = () => {
     setCurrentStep(0);
     setIsSubmitComplete(false);
+    router.push("/");
   };
 
   useEffect(() => {
-    async function fetchMenuOrPackage() {
+    console.log("ERRRORS IN BOOKING", reservationForm.formState.errors);
+  });
+
+  useEffect(() => {
+    console.log("ORDER TYPESSS", watch("orderType"));
+  });
+
+  useEffect(() => {
+    if (currentStep !== 2 || cateringOptions === "menus") {
+      setIsCategoryError(false);
+    }
+  }, [currentStep, cateringOptions]);
+
+  useEffect(() => {
+    const fetchMenuOrPackage = async () => {
       const menu = await getMenuItem(id as string);
       const isPackage = cateringPackages.some((pkg) => pkg._id === id);
 
-      if (id) {
-        if (menu) {
-          const prev = watch("selectedMenus") || {};
-          setValue("cateringOptions", "custom");
-          setValue("selectedMenus", {
-            ...prev,
-            [menu.category]: {
-              ...(prev?.[menu.category] || {}),
-              [id as string]: {
-                quantity: 1,
-                paxSelected: "4-6 pax",
-                pricePerPax: menu.prices[0].price,
-              },
+      if (menu) {
+        const prev = watch("selectedMenus") || {};
+        setCateringOptions("menus");
+        setValue("selectedMenus", {
+          ...prev,
+          [menu.category]: {
+            ...(prev?.[menu.category] || {}),
+            [id as string]: {
+              quantity: 1,
+              paxSelected: "4-6 pax",
+              pricePerPax: menu.prices[0].price,
             },
-          });
-        }
-        if (isPackage) {
-          setValue("cateringOptions", "event");
-          setValue("selectedPackage", id as string);
-          setShowPackageSelection(true);
-          return;
-        }
+          },
+        });
       }
+      if (isPackage) {
+        setCateringOptions("packages");
+        setValue("selectedPackage", id as string);
+        setShowPackageSelection(true);
+        return;
+      }
+    };
+    if (id) {
+      fetchMenuOrPackage();
     }
-    fetchMenuOrPackage();
   }, [id]);
 
-  const reservationFormComponents = [
-    <CustomerInformation key={"customer-information"} />,
+  const reservationFormStepComponents = [
+    <CustomerInformation key={"customer-information"} />, // Already Fixed
     <PackageSelection
       key={"package-selection"}
       showPackageSelection={showPackageSelection}
+      cateringOptions={cateringOptions}
+      setCateringOptions={setCateringOptions}
     />,
-    <CategoryOptions key={"category-options"} />, //validateStep={validateStep}
-    <ReservationDetails key={"event-details"} />,
+    <CategoryOptions
+      key={"category-options"}
+      setIsCategoryError={setIsCategoryError}
+      cateringOptions={cateringOptions}
+    />,
+    <ReservationDetails key={"reservation-details"} />,
     <SummaryBooking key={"summary-booking"} />,
   ];
-
   const formContent = (
     <FormProvider {...reservationForm}>
       <MultiStepForm
+        title={"Reserve Your Catering Service"}
+        description={"Complete the form below to book your event"}
         formSteps={multiFormSteps}
         onSubmit={handleSubmit}
         onNextStep={handleNextStep}
@@ -154,14 +213,15 @@ export default function BookNow() {
         onComplete={handleComplete}
         onCancel={handleCancel}
         initialStep={currentStep}
-        nextButtonText={dynamicNextBtn}
-        previousButtonText={dynamicPreviousBtn}
+        nextButtonText={nextBtn}
+        previousButtonText={previousBtn}
         isSubmitComplete={isSubmitComplete}
-        doneButtonText="Close"
+        doneButtonText="Go to Home"
         isReservationForm
         setShowPackageSelection={setShowPackageSelection}
+        isCategoryError={isCategoryError}
       >
-        {reservationFormComponents}
+        {reservationFormStepComponents}
       </MultiStepForm>
     </FormProvider>
   );

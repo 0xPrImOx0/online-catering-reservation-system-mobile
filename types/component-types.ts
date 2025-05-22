@@ -108,6 +108,8 @@ export type FormStepType = {
 
 export type MultiStepFormProps = {
   formSteps: FormStepType[];
+  title: string;
+  description: string;
   children: ReactNode[];
   onSubmit: () => void;
   onNextStep?: (currentStep: number) => Promise<boolean>;
@@ -123,4 +125,5 @@ export type MultiStepFormProps = {
   cancelButtonText?: string;
   isReservationForm?: boolean;
   setShowPackageSelection?: Dispatch<SetStateAction<boolean>>;
+  isCategoryError?: boolean;
 };

@@ -41,7 +41,7 @@ export function CategoryBadge({
   return (
     <Badge
       variant="outline"
-      className={`flex-row items-center gap-1 ${getColorClasses()}`}
+      className={`flex-row gap-1 items-center ${getColorClasses()}`}
     >
       <IconComponent className={iconSize} />
       <Text className="text-background">{category}</Text>

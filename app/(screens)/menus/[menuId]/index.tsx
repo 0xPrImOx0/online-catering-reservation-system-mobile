@@ -22,12 +22,12 @@ import {
 
 export default function MenuShowcasePage() {
   const { menuId } = useLocalSearchParams();
-
-  // const menu = menuItems.find((item) => item._id === menuId);
   const [menu, setMenu] = useState<MenuItem | null>(null);
 
+  // Handle menu updates from the socket
   const handleMenuUpdated = useCallback(
     (updatedMenu: MenuItem) => {
+      // Only update if it's the menu we're currently viewing
       if (menu?._id === updatedMenu._id) {
         console.log("🔄 Received updated menu from socket:", updatedMenu);
         setMenu(updatedMenu);
@@ -36,23 +36,29 @@ export default function MenuShowcasePage() {
     [menu?._id]
   );
 
+  // Handle menu deletion from the socket
   const handleMenuDeleted = useCallback((deletedMenu: MenuItem) => {
     console.log("❌ Menu deleted from socket:", deletedMenu);
+    // Set menu to null if the deleted menu is the one we're viewing
     setMenu((prevMenu) =>
       prevMenu && prevMenu._id === deletedMenu._id ? null : prevMenu
     );
   }, []);
 
+  // Set up socket connections for real-time updates
   useEffect(() => {
     initSocket();
     subscribeToMenuUpdates(handleMenuUpdated);
     subscribeToMenuDeleted(handleMenuDeleted);
+    
+    // Clean up socket connections when component unmounts
     return () => {
       unsubscribeFromMenuUpdates();
       unsubscribeFromMenuDeleted();
     };
   }, [handleMenuUpdated, handleMenuDeleted]);
 
+  // Fetch menu data from API on component mount
   useEffect(() => {
     const getMenu = async () => {
       try {
@@ -70,11 +76,11 @@ export default function MenuShowcasePage() {
     };
 
     getMenu();
-  }, []);
+  }, [menuId]); // Include menuId in dependency array
 
   if (!menu) {
     return (
-      <View className="flex-1 items-center justify-center bg-background">
+      <View className="flex-1 justify-center items-center bg-background">
         <Text className="text-muted-foreground">No Menu Found</Text>
       </View>
     );
@@ -83,21 +89,22 @@ export default function MenuShowcasePage() {
   return (
     <View className="flex-1 bg-background">
       <View>
-        <View className="relative w-full ">
+        <View className="relative w-full">
           <Image
             source={{ uri: menu.imageUrl }}
             alt={menu.name}
             className="object-cover object-center h-[240px]"
           />
+          
 
-          <View className="absolute flex-row gap-2 top-2 right-2">
+          <View className="absolute top-2 right-2 flex-row gap-2">
             <Badge
               variant={menu.available ? "default" : "destructive"}
               className={clsx("justify-center", {
                 "bg-emerald-600 dark:bg-emerald-500": menu.available,
               })}
             >
-              <Text className="text-white ">
+              <Text className="text-white">
                 {menu.available ? "Available" : "Unavailable"}
               </Text>
             </Badge>
@@ -106,7 +113,7 @@ export default function MenuShowcasePage() {
             {menu.spicy && (
               <Badge
                 variant="outline"
-                className="flex items-center gap-1 text-white bg-red-500 border-red-500 dark:bg-red-600 dark:border-red-600"
+                className="flex gap-1 items-center text-white bg-red-500 border-red-500 dark:bg-red-600 dark:border-red-600"
               >
                 <Flame className="w-3 h-3" />
                 <Text>Spicy</Text>
@@ -125,13 +132,13 @@ export default function MenuShowcasePage() {
               {menu.shortDescription}
             </Text>
           </View>
-          <View className="flex-row items-center justify-between px-3 py-2 mt-4 rounded-md bg-primary text-primary-foreground">
+          <View className="flex-row justify-between items-center px-3 py-2 mt-4 rounded-md bg-primary text-primary-foreground">
             <Text className="text-lg font-bold">
               &#8369;{menu.regularPricePerPax.toFixed(2)} per pax
             </Text>
             <Button
               variant={"secondary"}
-              onPress={() => router.push("/book-now")}
+              onPress={() => router.push(`/book-now/${menu._id}`)}
             >
               <Text className="text-white">Book Now </Text>
             </Button>
@@ -139,7 +146,7 @@ export default function MenuShowcasePage() {
         </View>
       </View>
 
-      <ScrollView className="p-4 overflow-y-auto">
+      <ScrollView className="overflow-y-auto p-4">
         <View>
           <Text className="mb-2 text-lg font-medium text-foreground">
             Description
@@ -211,7 +218,7 @@ export default function MenuShowcasePage() {
               numColumns={2}
               contentContainerStyle={{ rowGap: 10 }}
               renderItem={({ item: [key, value] }) => (
-                <Card key={key} className="justify-between flex-1 p-2">
+                <Card key={key} className="flex-1 justify-between p-2">
                   <Text className="text-white capitalize">{key}</Text>
                   <Text className="font-bold text-white">{value}</Text>
                 </Card>
@@ -237,7 +244,7 @@ export default function MenuShowcasePage() {
             Pricing
           </Text>
           <View className="space-y-2">
-            <Card className="flex-row items-center justify-between p-2 py-3 rounded">
+            <Card className="flex-row justify-between items-center p-2 py-3 rounded">
               <Text className="font-medium text-white">
                 Regular price per pax
               </Text>

@@ -71,17 +71,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [refresh]);
 
-  // Listen for 'refresh-customer' event and fetch the customer data again
-  useEffect(() => {
-    const handler = () => {
-      console.log("refresh-customer event received, fetching customer data...");
-      getCurrentCustomer();
-    };
-    window.addEventListener("refresh-customer", handler);
-
-    return () => window.removeEventListener("refresh-customer", handler);
-  }, []);
-
   return (
     <AuthContext.Provider
       value={{ customer, setCustomer, isLoading, errorMessage }}

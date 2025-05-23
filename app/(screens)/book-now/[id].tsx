@@ -24,6 +24,7 @@ import {
   DialogTitle,
 } from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
+import { useAuthContext } from "~/context/AuthContext";
 
 export default function BookNow() {
   const {
@@ -39,24 +40,26 @@ export default function BookNow() {
     setIsCategoryError,
   } = useReservationForm();
 
+  const { customer } = useAuthContext();
+
   const { id } = useLocalSearchParams();
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitComplete, setIsSubmitComplete] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { watch, setValue } = reservationForm;
 
-  //  useEffect(() => {
-  //    if (customer) {
-  //      const { fullName, email, contactNumber } = customer;
+  useEffect(() => {
+    if (customer) {
+      const { fullName, email, contactNumber } = customer;
 
-  //      // if fullname, email, and contactNumber do have values then step should direct to step 2
-  //      if (fullName && email && contactNumber) setCurrentStep(1);
-  //      return;
-  //    }
+      // if fullname, email, and contactNumber do have values then step should direct to step 2
+      if (fullName && email && contactNumber) setCurrentStep(1);
+      return;
+    }
 
-  //    return setCurrentStep(0);
-  //  }, [customer]);
+    return setCurrentStep(0);
+  }, [customer]);
 
   const [previousBtn, setPreviousBtn] = useState<string>(
     showPackageSelection && currentStep === 1
@@ -155,29 +158,31 @@ export default function BookNow() {
 
   useEffect(() => {
     const fetchMenuOrPackage = async () => {
-      const menu = await getMenuItem(id as string);
-      const isPackage = cateringPackages.some((pkg) => pkg._id === id);
+      if (id) {
+        const menu = await getMenuItem(id as string);
+        const isPackage = cateringPackages.some((pkg) => pkg._id === id);
 
-      if (menu) {
-        const prev = watch("selectedMenus") || {};
-        setCateringOptions("menus");
-        setValue("selectedMenus", {
-          ...prev,
-          [menu.category]: {
-            ...(prev?.[menu.category] || {}),
-            [id as string]: {
-              quantity: 1,
-              paxSelected: "4-6 pax",
-              pricePerPax: menu.prices[0].price,
+        if (menu) {
+          const prev = watch("selectedMenus") || {};
+          setCateringOptions("menus");
+          setValue("selectedMenus", {
+            ...prev,
+            [menu.category]: {
+              ...(prev?.[menu.category] || {}),
+              [id as string]: {
+                quantity: 1,
+                paxSelected: "4-6 pax",
+                pricePerPax: menu.prices[0].price,
+              },
             },
-          },
-        });
-      }
-      if (isPackage) {
-        setCateringOptions("packages");
-        setValue("selectedPackage", id as string);
-        setShowPackageSelection(true);
-        return;
+          });
+        }
+        if (isPackage) {
+          setCateringOptions("packages");
+          setValue("selectedPackage", id as string);
+          setShowPackageSelection(true);
+          return;
+        }
       }
     };
     if (id) {

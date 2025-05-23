@@ -11,7 +11,7 @@ export default function SplashScreen() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push("/home");
-    }, 1000); // Mock loading time of 2 seconds
+    }, 1000);
     return () => clearTimeout(timer);
   }, [user]);
 

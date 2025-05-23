@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { View, FlatList, Text, Platform } from "react-native";
+import { useState } from "react";
+import { View, FlatList, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "~/lib/useColorScheme";
 import CategoryPill from "~/components/menus/CategoryPill";

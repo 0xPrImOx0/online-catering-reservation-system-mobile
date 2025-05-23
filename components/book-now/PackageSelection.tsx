@@ -1,6 +1,5 @@
 import { View, Text, Image } from "react-native";
-import React, { useEffect, useState } from "react";
-import { cateringPackages, options } from "~/lib/packages-metadata";
+import { options } from "~/lib/packages-metadata";
 import {
   Card,
   CardContent,
@@ -10,13 +9,9 @@ import {
 } from "../ui/card";
 import clsx from "clsx";
 import { Controller, useFormContext } from "react-hook-form";
-import {
-  ReservationValues,
-  useReservationForm,
-} from "~/hooks/use-reservation-form";
+import { ReservationValues } from "~/hooks/use-reservation-form";
 import { Button } from "../ui/button";
 import MiniCateringPackageCard from "./MiniCateringPackageCard";
-import { cn } from "~/lib/utils";
 import { ScrollView } from "react-native";
 import usePackages from "~/hooks/socket/use-packages";
 import Loading from "../Loading";

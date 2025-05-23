@@ -20,6 +20,7 @@ export type ServiceType = "Buffet" | "Plated";
 
 export type EventType =
   | "Birthday"
+  | "Others"
   | "Wedding"
   | "Corporate"
   | "Graduation"
@@ -156,6 +157,7 @@ export const eventTypes: EventType[] = [
   "Wedding",
   "Corporate",
   "Graduation",
+  "Others",
 ];
 
 export const reservationEventTypes: EventType[] = [

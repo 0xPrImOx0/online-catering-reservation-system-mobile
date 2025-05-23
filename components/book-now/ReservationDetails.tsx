@@ -100,10 +100,17 @@ export default function ReservationDetails() {
             <View className="gap-2">
               <Label className="">
                 <Text>
-                  Event Type <Text className="text-destructive">*</Text>{" "}
+                  Event Type {field.value}{" "}
+                  <Text className="text-destructive">*</Text>
                 </Text>
               </Label>
-              <Select onValueChange={field.onChange}>
+              <Select
+                onValueChange={(option) => {
+                  const selectedValue = option ? option.value : "";
+                  field.onChange(selectedValue);
+                }}
+                defaultValue={{ value: field.value, label: field.value }}
+              >
                 <SelectTrigger>
                   <SelectValue
                     placeholder="Enter your event type"

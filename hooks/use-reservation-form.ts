@@ -5,7 +5,6 @@ import {
   MenuReservationDetails,
   paxArray,
   PaxArrayType,
-  CateringPackagesProps,
   reservationEventTypes,
   SelectedMenu,
   SelectedMenus,
@@ -127,17 +126,6 @@ const reservationSchema = z.object({
     .string()
     .max(300, "Delivery Instructions must not exceed 300 characters")
     .optional(),
-  // paymentReference: z
-  //   .string()
-  //   .min(1, "Payment Reference is required")
-  //   .max(100, "Payment Reference must not exceed 100 characters")
-  //   .optional(),
-  // status: z.enum(
-  //   reservationStatusArray as [
-  //     ReservationStatusType,
-  //     ...ReservationStatusType[]
-  //   ]
-  // ),
 });
 
 export type ReservationValues = z.infer<typeof reservationSchema>;
@@ -230,7 +218,7 @@ export function useReservationForm() {
     fullName: customer?.fullName || "",
     email: customer?.email || "",
     contactNumber: customer?.contactNumber || "",
-    eventType: "Others",
+    eventType: "Birthday",
     reservationDate: new Date(),
     reservationTime: "08:00 AM",
     guestCount: 20,

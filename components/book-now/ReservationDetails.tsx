@@ -26,6 +26,10 @@ import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { HoursArrayTypes } from "~/types/reservation-types";
 import ReservationDateAndTime from "./ReservationDateAndTime";
+import clsx from "clsx";
+import { Button } from "../ui/button";
+import { Card, CardDescription, CardTitle } from "../ui/card";
+import PlatedWarning from "./PlatedWarning";
 
 export default function ReservationDetails() {
   const {
@@ -73,7 +77,7 @@ export default function ReservationDetails() {
       setValue("serviceFee", pkg.serviceHours);
     }
   }, [serviceType, pkg, setValue]);
-
+ 
   const recommendedPax = getRecommendedPax();
 
   useEffect(() => {
@@ -176,37 +180,55 @@ export default function ReservationDetails() {
               <Label className="">
                 Service Type <Text className="text-destructive">*</Text>{" "}
               </Label>
-              <RadioGroup
-                value={field.value}
-                onValueChange={field.onChange}
-                className="flex-row"
-              >
-                <View className="flex-row flex-1 gap-2 items-center">
-                  <RadioGroupItem
-                    onPress={() => {
-                      setValue("serviceFee", 0);
-                      setValue("serviceHours", undefined);
-                    }}
-                    value="Buffet"
-                    id="buffet"
-                  />
-                  <Label htmlFor="buffet">Buffet</Label>
-                </View>
-                <View className="flex-row flex-1 gap-2 items-center">
-                  <RadioGroupItem
-                    value="Plated"
-                    id="plated"
-                    onPress={() => {
-                      setValue("serviceFee", 100 * 4);
-                      setValue("serviceHours", serviceHours);
-                    }}
-                  />
-                  <Label htmlFor="plated">Plated Service</Label>
-                </View>
-              </RadioGroup>
+              <View className="flex gap-4">
+                <Button
+                  asChild
+                  variant="outline"
+                  size="custom"
+                  className="flex-1 w-full"
+                  onPress={() => {
+                    setValue("serviceType", "Buffet");
+                    setValue("orderType", "Pickup");
+                    setValue("serviceFee", 0);
+                    setValue("serviceHours", undefined);
+                  }}
+                >
+                  <Card
+                    className={clsx("flex-1 w-full cursor-pointer  gap-2 p-4", {
+                      "border-green-500": field.value === "Buffet",
+                    })}
+                  >
+                    <CardTitle>Buffet</CardTitle>
+                    <CardDescription>No service fee applied</CardDescription>
+                  </Card>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="custom"
+                  className="flex-1 w-full"
+                  onPress={() => {
+                    setValue("serviceType", "Plated");
+                    setValue("serviceFee", 100 * 4);
+                    setValue("serviceHours", serviceHours);
+                  }}
+                >
+                  <Card
+                    className={clsx("flex-1 w-full cursor-pointer gap-2 p-4", {
+                      "border-green-500": field.value === "Plated",
+                    })}
+                  >
+                    <CardTitle>Plated Service</CardTitle>
+                    <CardDescription>
+                      Additional service fee of &#8369; {100 * 4} applied
+                    </CardDescription>
+                  </Card>
+                </Button>
+              </View>
             </View>
           )}
         />
+        {!pkg && serviceType === "Plated" && <PlatedWarning />}
         {serviceType === "Plated" && (
           <>
             <Controller

@@ -6,7 +6,7 @@ import { Card } from "~/components/ui/card";
 import { Link, useLocalSearchParams } from "expo-router";
 import { Button } from "~/components/ui/button";
 import { menuItems } from "~/lib/menu-lists";
-import usePackages from "~/hooks/use-socket-packages";
+import usePackages from "~/hooks/socket/use-packages";
 import Loading from "~/components/Loading";
 
 export default function PackageShowcasePage() {

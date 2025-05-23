@@ -5,7 +5,7 @@ import { useColorScheme } from "~/lib/useColorScheme";
 import CategoryPill from "~/components/menus/CategoryPill";
 import { packages } from "~/lib/packages-metadata";
 import PackageCard from "~/components/packages/PackageCard";
-import usePackages from "~/hooks/use-socket-packages";
+import usePackages from "~/hooks/socket/use-packages";
 import { cn } from "~/lib/utils";
 import { Fold } from "react-native-animated-spinkit";
 import Loading from "~/components/Loading";

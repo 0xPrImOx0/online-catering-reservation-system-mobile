@@ -10,29 +10,30 @@ import CustomButton from "components/CustomButton";
 import { Text } from "~/components/ui/text";
 import {
   Calendar,
-  Clock,
   MapPin,
   Star,
   UtensilsCrossed,
   Phone,
 } from "lucide-react-native";
-import { categories, menuItems } from "~/lib/menu-lists";
-import clsx from "clsx";
-import { useState } from "react";
 import Hero from "~/components/home/Hero";
 import { Card } from "~/components/ui/card";
 import { useColorScheme } from "~/lib/useColorScheme";
-import { CateringPackagesProps } from "~/types/package-types";
 import { Link } from "expo-router";
 import usePackages from "~/hooks/socket/use-packages";
 import PackageCard from "~/components/packages/PackageCard";
+import { Button } from "~/components/ui/button";
+import useMenus from "~/hooks/socket/use-menus";
+import { Separator } from "~/components/ui/separator";
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
-
-  const [popularMenuPill, setPopularMenuPill] = useState("Soup");
-
   const { featuredPackages } = usePackages();
+  const { menus } = useMenus();
+
+  // Filtering Featured menus using the highest ratings and only reflect 6 of them using slice
+  const featuredMenus = () => {
+    return menus.sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 6);
+  };
 
   return (
     <View className="flex-1 bg-background">
@@ -148,12 +149,12 @@ export default function Home() {
           </View>
 
           {/* Featured Packages */}
-          <View className="mb-8">
+          <View className="">
             <Text className="mb-4 text-3xl font-bold text-foreground">
               Featured Packages
             </Text>
             <FlatList
-            contentContainerClassName="gap-6"
+              contentContainerClassName="gap-6"
               horizontal
               showsHorizontalScrollIndicator={false}
               data={featuredPackages}
@@ -169,75 +170,77 @@ export default function Home() {
             <Text className="mb-4 text-3xl font-bold text-foreground">
               Popular Menu Items
             </Text>
-            <View className="mb-4">
-              <FlatList
-                horizontal
-                data={categories}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item) => item}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    className={clsx(
-                      "px-4 py-2 mr-2 border rounded-full border-primary",
-                      { "bg-primary": item === popularMenuPill }
-                    )}
-                    onPress={() => setPopularMenuPill(item)}
-                  >
-                    <Text
-                      className={clsx("text-sm", {
-                        "text-primary-foreground": item === popularMenuPill,
-                      })}
-                    >
-                      {item}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
 
             <FlatList
-              data={menuItems.slice(0, 6)}
+              data={featuredMenus()}
               keyExtractor={(item) => item._id}
               horizontal
               showsHorizontalScrollIndicator={false}
+              contentContainerClassName="gap-6"
               renderItem={({ item }) => (
                 <View
                   key={item._id}
-                  className="w-[200px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
+                  className="mt-2 w-[200px] rounded-lg bg-card border border-border overflow-hidden"
                 >
                   <Image
                     source={{ uri: item.imageUrl }}
                     className="h-[100px] w-full"
                     resizeMode="cover"
                   />
-                  <View className="p-2">
-                    <Text className="text-sm font-medium text-foreground">
+                  <View className="gap-4 p-2">
+                    <Text className="mt-2 text-xl font-bold text-foreground">
                       {item.name}
                     </Text>
-                    <View className="flex-row items-center mt-1">
-                      {[...Array(4)].map((_, i) => (
-                        <Star key={i} size={14} color="#F59E0B" />
-                      ))}
-                      <View className="relative ml-0.5">
-                        <Star size={14} color="#D1D5DB" />
-                        <View className="overflow-hidden absolute top-0 left-0 w-2 h-4">
-                          <Star size={14} color="#F59E0B" />
-                        </View>
+                    <View className="gap-2">
+                      <Separator />
+                      <View className="flex-row items-center mt-1">
+                        {[1, 2, 3, 4, 5].map((star) => {
+                          const rating = item.rating || 0;
+                          const filled = star <= Math.floor(rating);
+                          const hasHalfStar = !filled && star - 0.5 <= rating;
+
+                          if (hasHalfStar) {
+                            return (
+                              <View key={star} className="relative">
+                                <Star size={20} color="#D1D5DB" />
+                                <View
+                                  className="overflow-hidden absolute top-0 left-0"
+                                  style={{ width: "50%" }}
+                                >
+                                  <Star size={20} color="#F59E0B" />
+                                </View>
+                              </View>
+                            );
+                          }
+
+                          return (
+                            <Star
+                              key={star}
+                              size={20}
+                              color={filled ? "#F59E0B" : "#D1D5DB"}
+                            />
+                          );
+                        })}
+                        <Text className="ml-1 text-muted-foreground">
+                          {(item.rating || 0).toFixed(1)}
+                        </Text>
                       </View>
-                      <Text className="ml-1 text-xs text-muted-foreground">
-                        4.5
-                      </Text>
+                      <View>
+                        <Text className="text-xl font-bold text-foreground">
+                          ₱{item.prices[0].price.toFixed(2)}
+                        </Text>
+                        <Text className="font-medium text-muted-foreground">
+                          per 4 - 6 pax
+                        </Text>
+                      </View>
                     </View>
-                    <Text className="mt-1 text-lg font-bold text-foreground">
-                      ₱{item.prices[0].price.toFixed(2)}
-                    </Text>
-                    <TouchableOpacity className="px-2 py-1 mt-2 rounded bg-primary">
+                    <Button asChild size={"sm"}>
                       <Link href={`/menus/${item._id}`}>
-                        <Text className="text-xs text-center text-primary-foreground">
+                        <Text className="text-center text-primary-foreground">
                           View Details
                         </Text>
                       </Link>
-                    </TouchableOpacity>
+                    </Button>
                   </View>
                 </View>
               )}

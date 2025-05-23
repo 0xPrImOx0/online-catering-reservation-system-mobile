@@ -4,17 +4,22 @@ import { Badge } from "~/components/ui/badge";
 import { CheckCircle2Icon, X } from "lucide-react-native";
 import { Card } from "~/components/ui/card";
 import { Link, useLocalSearchParams } from "expo-router";
-import { cateringPackages } from "~/lib/packages-metadata";
 import { Button } from "~/components/ui/button";
 import { menuItems } from "~/lib/menu-lists";
+import usePackages from "~/hooks/use-socket-packages";
+import Loading from "~/components/Loading";
 
 export default function PackageShowcasePage() {
   const { packageId } = useLocalSearchParams();
+  const { cateringPackages, isLoading } = usePackages();
   const pkg = cateringPackages.find((item) => item._id === packageId);
   // const displayInclusions =
   //   platedInclusions.length > 0 ? platedInclusions : pkg.inclusions;
+  if (isLoading) {
+    return <Loading message="Loading Package" />;
+  }
   if (!pkg) {
-    return <Text>Package Not Found!</Text>; // Handle the case where the package is not found
+    return <Text>Package not found</Text>;
   }
   return (
     <View className="pt-4 h-full bg-background">

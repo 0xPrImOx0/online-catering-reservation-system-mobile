@@ -42,6 +42,9 @@ export const usePackages = () => {
   const [cateringPackages, setCateringPackages] = useState<
     CateringPackagesProps[]
   >([]);
+  const [featuredPackages, setFeaturedPackages] = useState<
+    CateringPackagesProps[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -85,8 +88,17 @@ export const usePackages = () => {
     }
   };
 
-  // Initialize data fetching
+  const fetchFeatured = async () => {
+    try {
+      const response = await api.get("/packages/featured");
+      setFeaturedPackages(response.data.data);
+    } catch (err: unknown) {
+      if (axios.isAxiosError<{ message: string }>(err)) alert(err.message);
+    }
+  };
+
   useEffect(() => {
+    fetchFeatured();
     fetchPackages();
   }, []);
 
@@ -99,6 +111,7 @@ export const usePackages = () => {
 
   return {
     cateringPackages,
+    featuredPackages,
     isLoading,
     error,
     refresh: fetchPackages,

@@ -18,62 +18,21 @@ import {
 } from "lucide-react-native";
 import { categories, menuItems } from "~/lib/menu-lists";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Hero from "~/components/home/Hero";
 import { Card } from "~/components/ui/card";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { CateringPackagesProps } from "~/types/package-types";
-import axios from "axios";
-import api from "~/lib/axiosInstance";
 import { Link } from "expo-router";
+import usePackages from "~/hooks/socket/use-packages";
+import PackageCard from "~/components/packages/PackageCard";
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
 
-  const packageImages = {
-    Essential: require("../../assets/images/essential.png"),
-    Classic: require("../../assets/images/classic.png"),
-    Elegant: require("../../assets/images/elegant.png"),
-    Luxurious: require("../../assets/images/luxurious.png"),
-  };
-
-  const appetizers = [
-    {
-      name: "Ensaladang Talong",
-      price: "₱203.00",
-      image: require("../../assets/images/eggplant.png"),
-    },
-    {
-      name: "Kinilaw na Tuna",
-      price: "₱436.00",
-      image: require("../../assets/images/kinilaw.png"),
-    },
-    {
-      name: "Ensaladang Mangga",
-      price: "₱232.00",
-      image: require("../../assets/images/mango.png"),
-    },
-  ];
-
   const [popularMenuPill, setPopularMenuPill] = useState("Soup");
 
-  const [cateringPackages, setCateringPackages] = useState<
-    Array<CateringPackagesProps>
-  >([]);
-
-  useEffect(() => {
-    const fetchFeatured = async () => {
-      try {
-        const response = await api.get("/packages/featured");
-        setCateringPackages(response.data.data);
-      } catch (err: unknown) {
-        if (axios.isAxiosError<{ message: string }>(err)) alert(err.message);
-        // toast.error(err.message);
-      }
-    };
-
-    fetchFeatured();
-  }, []);
+  const { featuredPackages } = usePackages();
 
   return (
     <View className="flex-1 bg-background">
@@ -126,18 +85,18 @@ export default function Home() {
 
           {/* Quick Actions */}
           <View className="flex-row justify-between mb-8">
-            <TouchableOpacity className="items-center justify-center flex-1 h-20 mr-2 border rounded-lg bg-card border-border">
+            <TouchableOpacity className="flex-1 justify-center items-center mr-2 h-20 rounded-lg border bg-card border-border">
               <UtensilsCrossed
                 size={24}
                 color={isDarkColorScheme ? "#fff" : "#333"}
               />
               <Text className="mt-2 text-sm text-foreground">Menus</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="items-center justify-center flex-1 h-20 mx-2 border rounded-lg bg-card border-border">
+            <TouchableOpacity className="flex-1 justify-center items-center mx-2 h-20 rounded-lg border bg-card border-border">
               <Calendar size={24} color={isDarkColorScheme ? "#fff" : "#333"} />
               <Text className="mt-2 text-sm text-foreground">Book Now</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="items-center justify-center flex-1 h-20 ml-2 border rounded-lg bg-card border-border">
+            <TouchableOpacity className="flex-1 justify-center items-center ml-2 h-20 rounded-lg border bg-card border-border">
               <MapPin size={24} color={isDarkColorScheme ? "#fff" : "#333"} />
               <Text className="mt-2 text-sm text-foreground">Find Us</Text>
             </TouchableOpacity>
@@ -167,20 +126,20 @@ export default function Home() {
             </Text>
           </CustomButton>
 
-          <View className="justify-between gap-4 mb-5 rounded-lg bg-card">
-            <Card className="justify-center gap-1 p-4 rounded-lg items- justify- border-border h-50 bg-card">
+          <View className="gap-4 justify-between mb-5 rounded-lg bg-card">
+            <Card className="gap-1 justify-center p-4 rounded-lg items- justify- border-border h-50 bg-card">
               <Text className="text-3xl text-foreground">5,000+</Text>
               <Text className="mt-.5 text-sm text-muted-foreground">
                 Events Successfully Catered
               </Text>
             </Card>
-            <Card className="justify-center gap-1 p-4 rounded-lg border-border flex- h-50 bg-card">
+            <Card className="gap-1 justify-center p-4 rounded-lg border-border flex- h-50 bg-card">
               <Text className="text-3xl text-foreground">{"< 1 m"}</Text>
               <Text className="mt-1 text-sm text-muted-foreground">
                 Instant Booking Confirmation
               </Text>
             </Card>
-            <Card className="justify-center flex-1 gap-1 p-4 rounded-lg border-border h-50 bg-card">
+            <Card className="flex-1 gap-1 justify-center p-4 rounded-lg border-border h-50 bg-card">
               <Text className="text-3xl text-foreground">95%</Text>
               <Text className="mt-1 text-sm text-muted-foreground">
                 Customer Satisfaction Rate
@@ -194,63 +153,14 @@ export default function Home() {
               Featured Packages
             </Text>
             <FlatList
+            contentContainerClassName="gap-6"
               horizontal
               showsHorizontalScrollIndicator={false}
-              data={cateringPackages.slice(0, 4)}
+              data={featuredPackages}
               renderItem={({ item }) => (
-                <View
-                  key={item._id}
-                  className="w-[250px] mr-4 rounded-lg bg-card border border-border overflow-hidden"
-                >
-                  <Image
-                    source={{ uri: item.imageUrl }}
-                    className="h-[120px] w-full"
-                    resizeMode="cover"
-                  />
-                  <View className="p-3">
-                    <Text className="text-base font-bold text-foreground">
-                      {item.name}
-                    </Text>
-                    <View className="flex-row items-center mt-1">
-                      {[...Array(4)].map((_, index) => (
-                        <Star key={index} size={16} color="#F59E0B" />
-                      ))}
-                      <View className="relative">
-                        <Star size={16} color="#D1D5DB" />
-                        <View
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: 8,
-                            height: 16,
-                            overflow: "hidden",
-                          }}
-                        >
-                          <Star size={16} color="#F59E0B" />
-                        </View>
-                      </View>
-                      <Text className="ml-1 text-xs text-muted-foreground">
-                        4.5
-                      </Text>
-                    </View>
-                    <Text className="mt-2 text-sm text-foreground">
-                      {item.description}
-                    </Text>
-                  </View>
-                  <View className="flex-row items-center justify-between px-3 pb-3">
-                    <Text className="text-base font-bold text-foreground">
-                      ₱{item.pricePerPax.toFixed(2)} / per pax
-                    </Text>
-                    <TouchableOpacity className="bg-primary px-3 py-1.5 rounded">
-                      <Text className="text-sm text-primary-foreground">
-                        View
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
+                <PackageCard key={item._id} item={item} isFeatured />
               )}
-              keyExtractor={(item) => item._id}
+              keyExtractor={(item) => item.name}
             />
           </View>
 
@@ -310,16 +220,7 @@ export default function Home() {
                       ))}
                       <View className="relative ml-0.5">
                         <Star size={14} color="#D1D5DB" />
-                        <View
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: 7,
-                            height: 14,
-                            overflow: "hidden",
-                          }}
-                        >
+                        <View className="overflow-hidden absolute top-0 left-0 w-2 h-4">
                           <Star size={14} color="#F59E0B" />
                         </View>
                       </View>

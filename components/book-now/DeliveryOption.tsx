@@ -18,7 +18,7 @@ export default function DeliveryOption({ control }: { control: any }) {
   return (
     <Controller
       control={control}
-      name="deliveryOption"
+      name="orderType"
       render={({ field }) => (
         <View className="gap-2">
           <Text className="text-foreground">
@@ -29,7 +29,7 @@ export default function DeliveryOption({ control }: { control: any }) {
             onValueChange={field.onChange}
             className="flex-row pt-2"
           >
-            <View className="flex-row items-center flex-1 gap-3 space-x-2">
+            <View className="flex-row flex-1 gap-3 items-center space-x-2">
               <RadioGroupItem
                 value="Pickup"
                 id="pickup"
@@ -37,7 +37,7 @@ export default function DeliveryOption({ control }: { control: any }) {
               />
               <Label htmlFor="pickup">Pickup</Label>
             </View>
-            <View className="flex-row items-center flex-1 gap-3 space-x-2">
+            <View className="flex-row flex-1 gap-3 items-center space-x-2">
               <RadioGroupItem
                 value="Delivery"
                 id="delivery"

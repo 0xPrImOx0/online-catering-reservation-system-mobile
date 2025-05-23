@@ -14,7 +14,7 @@ import {
   ReservationEventTypes,
 } from "~/types/reservation-types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ControllerRenderProps, useForm } from "react-hook-form";
 import api from "~/lib/axiosInstance";
 import axios from "axios";
@@ -549,8 +549,6 @@ export function useReservationForm() {
           "guestCount",
           "serviceType",
           "serviceHours",
-          "venue",
-          // "paymentReference",
         ];
       default:
         return [];

@@ -1,5 +1,5 @@
 import { useReservationForm } from "~/hooks/use-reservation-form";
-import { ServiceType } from "./package-types";
+import { EventType, InclusionsProps, PackageOption, PackageType, ReviewsProps, ServiceType } from "./package-types";
 
 //Reservation Related Types
 export type PaxArrayType = "4-6 pax" | "8-10 pax" | "13-15 pax" | "18-20 pax";
@@ -89,3 +89,35 @@ export interface SelectServingSizeProps {
   value: SelectedMenus;
   onChange: (value: SelectedMenus) => void;
 }
+
+export const reservationEventTypes = [
+  "Birthday",
+  "Wedding",
+  "Corporate",
+  "Graduation",
+  "Others",
+] as const;
+
+export interface CateringPackagesProps {
+  _id?: string;
+  name: string;
+  description: string;
+  available: boolean;
+  pricePerPax: number;
+  pricePerPaxWithServiceCharge: number;
+  minimumPax: number;
+  recommendedPax: number;
+  maximumPax: number;
+  options: PackageOption[];
+  inclusions: InclusionsProps[];
+  serviceHours: number;
+  serviceCharge: number;
+  eventType?: EventType;
+  packageType: PackageType;
+  imageUrl?: string;
+  rating?: number;
+  ratingCount?: number;
+  reviews?: ReviewsProps[];
+}
+
+export type ReservationEventTypes = (typeof reservationEventTypes)[number];

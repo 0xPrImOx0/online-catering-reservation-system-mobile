@@ -20,6 +20,7 @@ export type ServiceType = "Buffet" | "Plated";
 
 export type EventType =
   | "Birthday"
+  | "Others"
   | "Wedding"
   | "Corporate"
   | "Graduation"
@@ -46,7 +47,7 @@ export interface ReviewsProps {
 }
 
 export interface CateringPackagesProps {
-  _id: string;
+  _id?: string;
   name: string;
   description: string;
   available: boolean;
@@ -156,6 +157,7 @@ export const eventTypes: EventType[] = [
   "Wedding",
   "Corporate",
   "Graduation",
+  "Others",
 ];
 
 export const reservationEventTypes: EventType[] = [

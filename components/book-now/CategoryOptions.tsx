@@ -13,13 +13,21 @@ import { Controller, useFormContext } from "react-hook-form";
 import SelectServingSize from "./SelectServingSize";
 import { Textarea } from "../ui/textarea";
 import CategoryOptionsBadge from "./CategoryOptionsBadge";
+import { MenuItem } from "~/types/menu-types";
 
-export default function CategoryOptions() {
+export default function CategoryOptions({
+  setIsCategoryError,
+  cateringOptions,
+}: {
+  setIsCategoryError: (value: boolean) => void;
+  cateringOptions: string;
+}) {
   const {
     control,
     setValue,
     watch,
     clearErrors,
+    setError,
     formState: { errors },
   } = useFormContext<ReservationValues>();
 
@@ -28,21 +36,25 @@ export default function CategoryOptions() {
   const selectedMenus = watch("selectedMenus");
 
   // State to hold loaded menu items
-  const [menuItemsMap, setMenuItemsMap] = useState<{ [key: string]: any }>({});
+  const [menuItemsMap, setMenuItemsMap] = useState<Record<string, MenuItem>>(
+    {}
+  );
 
   // Preload all menu items used in selectedMenus
   useEffect(() => {
     async function loadMenuItems() {
       const menuIds: string[] = [];
-      Object.values(selectedMenus || {}).forEach((category: any) => {
-        Object.keys(category || {}).forEach((menuId) => {
-          if (!menuIds.includes(menuId)) menuIds.push(menuId);
-        });
-      });
+      Object.values(selectedMenus || {}).forEach(
+        (category: Record<string, unknown>) => {
+          Object.keys(category || {}).forEach((menuId) => {
+            if (!menuIds.includes(menuId)) menuIds.push(menuId);
+          });
+        }
+      );
       // Only fetch missing ones
       const missing = menuIds.filter((id) => !menuItemsMap[id]);
       if (missing.length === 0) return;
-      const newItems: { [key: string]: any } = {};
+      const newItems: Record<string, MenuItem> = {};
       await Promise.all(
         missing.map(async (id) => {
           const item = await getMenuItem(id);
@@ -56,18 +68,19 @@ export default function CategoryOptions() {
     loadMenuItems();
   }, [selectedMenus]);
 
-  const cateringOptions = watch("cateringOptions");
   const selectedPackage = watch("selectedPackage");
+
   const serviceFee = watch("serviceFee");
   const deliveryFee = watch("deliveryFee");
 
   const [currentPackage, setCurrentPackage] = useState<string>();
+
   const [categoryAndCount, setCategoryAndCount] = useState<PackageOption[]>(
     defaultCategoryAndCount
   );
 
   useEffect(() => {
-    if (cateringOptions === "custom" && !!selectedPackage) {
+    if (cateringOptions === "menus" && !!selectedPackage) {
       setCurrentPackage("");
       setValue("selectedPackage", "");
       setValue("selectedMenus", {});
@@ -76,14 +89,41 @@ export default function CategoryOptions() {
       return;
     }
     if (selectedPackage) {
-      const selectedPackageData = getPackageItem(selectedPackage);
+      async function fetchPackage() {
+        if (!selectedPackage) return;
 
-      if (selectedPackageData) {
-        setCurrentPackage(selectedPackageData.name);
-        setCategoryAndCount(selectedPackageData.options);
+        const selectedPackageData = await getPackageItem(selectedPackage);
+
+        if (selectedPackageData) {
+          setCurrentPackage(selectedPackageData.name);
+          setCategoryAndCount(selectedPackageData.options);
+        }
       }
+
+      fetchPackage();
     }
   }, [cateringOptions, selectedPackage]);
+
+  useEffect(() => {
+    if (cateringOptions === "packages" && selectedPackage) {
+      const hasIncompleteCategory = categoryAndCount.some(
+        ({ category, count }) =>
+          Object.keys(selectedMenus[category] || {}).length !== count
+      );
+
+      if (hasIncompleteCategory) {
+        setIsCategoryError(true);
+        setError("selectedMenus", {
+          type: "manual",
+          message:
+            "Please select the required number of items for each category.",
+        });
+      } else {
+        setIsCategoryError(false);
+        clearErrors("selectedMenus");
+      }
+    }
+  }, [selectedMenus, categoryAndCount]);
 
   return (
     <ScrollView
@@ -144,12 +184,6 @@ export default function CategoryOptions() {
                             {menuItemsMap[menuId]?.name || "Loading..."}
                           </Text>
                           <View className="flex-row gap-2">
-                            <AddRemoveMenuQuantity
-                              value={field.value}
-                              category={category}
-                              menu={menuId}
-                              onChange={field.onChange}
-                            />
                             <SelectServingSize
                               category={category}
                               menu={menuId}

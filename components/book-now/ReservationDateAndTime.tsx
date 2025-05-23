@@ -24,7 +24,7 @@ export default function ReservationDateAndTime({
   deliveryOption,
 }: {
   control: any;
-  deliveryOption: "Delivery" | "Pickup";
+  deliveryOption: "" | "Delivery" | "Pickup";
 }) {
   const toOrOf = deliveryOption === "Delivery" ? "of" : "to";
   const {
@@ -108,32 +108,6 @@ export default function ReservationDateAndTime({
                 {...field}
                 onChangeText={field.onChange}
               />
-            </View>
-          )}
-        />
-        <Controller
-          control={control}
-          name="period"
-          render={({ field }) => (
-            <View className="flex-1">
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger>
-                  <SelectValue
-                    placeholder="Select service hours rendered"
-                    className={clsx(
-                      "text-foreground",
-                      !field.value && "text-muted-foreground"
-                    )}
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  {["A.M.", "P.M."].map((period) => (
-                    <SelectItem key={period} label={period} value={period}>
-                      {period}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </View>
           )}
         />

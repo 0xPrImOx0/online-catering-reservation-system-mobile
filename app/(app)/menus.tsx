@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   View,
   ScrollView,
@@ -16,10 +16,8 @@ import CategoryPill from "~/components/menus/CategoryPill";
 import MenuSearchBar from "~/components/menus/MenuSearchBar";
 import { categories } from "~/lib/menu-lists";
 import { useColorScheme } from "~/lib/useColorScheme";
-import { MenuItem } from "~/types/menu-types";
-import api from "~/lib/axiosInstance";
-import axios from "axios";
-import useSocketMenus from "~/hooks/use-socket-menus";
+import useMenus from "~/hooks/socket/use-menus";
+import Loading from "~/components/Loading";
 
 export default function MenusPage() {
   const { isDarkColorScheme } = useColorScheme();
@@ -27,28 +25,7 @@ export default function MenusPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [query, setQuery] = useState("");
 
-  const [menus, setMenus] = useState<MenuItem[] | null>(null);
-
-  useEffect(() => {
-    const getMenus = async () => {
-      try {
-        const response = await api.get("/menus");
-        setMenus(response.data.data);
-      } catch (err: unknown) {
-        console.log("ERRRORRR", err);
-
-        if (axios.isAxiosError<{ error: string }>(err)) {
-          const message = err.response?.data.error || "Unexpected Error Occur";
-
-          console.error("ERROR FETCHING MENUS", message);
-        } else {
-          console.error("Something went wrong. Please try again.");
-        }
-      }
-    };
-
-    getMenus();
-  }, []);
+  const { menus, isLoading } = useMenus();
 
   const filteredMenuItems = menus
     ? menus.filter((item) => {
@@ -61,39 +38,9 @@ export default function MenusPage() {
       })
     : [];
 
-  // Callback to handle menu updates
-  const handleMenuUpdated = (updatedMenu: MenuItem) => {
-    console.log("🔄 Received updated menu from socket:", updatedMenu);
-    setMenus((prevMenus) => {
-      if (prevMenus === null) return [updatedMenu]; // If prevMenus is null, start a new array with the updated menu
-      return prevMenus.map((menu) =>
-        menu._id === updatedMenu._id ? updatedMenu : menu
-      );
-    });
-  };
-
-  const handleMenuCreated = (createdMenu: MenuItem) => {
-    console.log("🆕 New menu created from socket:", createdMenu);
-    setMenus((prevMenus) => {
-      if (prevMenus === null) return [createdMenu];
-      return [...prevMenus, createdMenu];
-    });
-  };
-
-  const handleMenuDeleted = (deletedMenu: MenuItem) => {
-    console.log("❌ Menu deleted from socket:", deletedMenu);
-    setMenus(
-      (prevMenus) =>
-        prevMenus?.filter((menu) => menu._id !== deletedMenu._id) || null
-    );
-  };
-
-  // Use the socket hook to listen for updates
-  useSocketMenus({
-    onMenuUpdated: handleMenuUpdated,
-    onMenuCreated: handleMenuCreated,
-    onMenuDeleted: handleMenuDeleted,
-  });
+  if (isLoading) {
+    return <Loading message="Loading menus..." />;
+  }
 
   return (
     <View className="flex-1 bg-background">

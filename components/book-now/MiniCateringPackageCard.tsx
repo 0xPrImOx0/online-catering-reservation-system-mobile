@@ -11,14 +11,16 @@ import PackageDetailsDialog from "./PackageDetailsDialog";
 import { EyeIcon, User } from "lucide-react-native";
 import clsx from "clsx";
 import { View, Text } from "react-native";
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
+import { ControllerRenderProps } from "react-hook-form";
+import { ReservationValues } from "~/hooks/use-reservation-form";
 
 export default function MiniCateringPackageCard({
   pkg,
   field,
 }: {
   pkg: CateringPackagesProps;
-  field: any;
+  field: ControllerRenderProps<ReservationValues, "selectedPackage">;
 }) {
   const [isSelected, setIsSelected] = useState(false);
 
@@ -38,7 +40,7 @@ export default function MiniCateringPackageCard({
       >
         <Card
           className={clsx(
-            "w-full p-4",
+            "p-4 w-full",
             { "border-green-600": isSelected } // Green border and background when selected
           )}
         >
@@ -46,12 +48,12 @@ export default function MiniCateringPackageCard({
           <CardDescription className="line-clamp-2">
             {pkg.description}
           </CardDescription>
-          <CardFooter className="flex items-center justify-between p-0 mt-5">
+          <CardFooter className="flex justify-between items-center p-0 mt-5">
             <View
               className={clsx(
-                "border flex-row rounded-md p-2 items-center gap-1",
+                "flex-row gap-1 items-center p-2 rounded-md border",
                 isSelected
-                  ? "text-foreground border-green-600"
+                  ? "border-green-600 text-foreground"
                   : "text-muted-foreground border-muted-foreground"
               )}
             >
@@ -66,7 +68,7 @@ export default function MiniCateringPackageCard({
             </View>
 
             <Link href={`/packages/${pkg._id}`}>
-              <View className="flex-row items-center gap-1">
+              <View className="flex-row gap-1 items-center">
                 <EyeIcon color={"white"} />
                 <Text className="text-foreground">View Details</Text>
               </View>

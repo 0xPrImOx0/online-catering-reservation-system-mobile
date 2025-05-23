@@ -4,84 +4,23 @@ import { Badge } from "~/components/ui/badge";
 import { CheckCircle2Icon, X } from "lucide-react-native";
 import { Card } from "~/components/ui/card";
 import { Link, useLocalSearchParams } from "expo-router";
-import { cateringPackages } from "~/lib/packages-metadata";
 import { Button } from "~/components/ui/button";
 import { menuItems } from "~/lib/menu-lists";
-import { CateringPackagesProps } from "~/types/package-types";
-import {
-  initSocket,
-  subscribeToPackageDeleted,
-  subscribeToPackageUpdates,
-  unsubscribeFromPackageDeleted,
-  unsubscribeFromPackageUpdates,
-} from "~/lib/socket";
-import api from "~/lib/axiosInstance";
-import axios from "axios";
+import usePackages from "~/hooks/socket/use-packages";
+import Loading from "~/components/Loading";
 
 export default function PackageShowcasePage() {
   const { packageId } = useLocalSearchParams();
-  const [cateringPackage, setCateringPackage] =
-    useState<CateringPackagesProps | null>(null);
-
-  const handlePackageUpdated = useCallback(
-    (updatedPackage: CateringPackagesProps) => {
-      if (cateringPackage?._id === updatedPackage._id) {
-        console.log("🔄 Received updated menu from socket:", updatedPackage);
-        setCateringPackage(updatedPackage);
-      }
-    },
-    [cateringPackage?._id]
-  );
-
-  const handlePackageDeleted = useCallback(
-    (deletedPackage: CateringPackagesProps) => {
-      console.log("❌ Menu deleted from socket:", deletedPackage);
-      setCateringPackage((prevPackage) =>
-        prevPackage && prevPackage._id === deletedPackage._id
-          ? null
-          : prevPackage
-      );
-    },
-    []
-  );
-
-  useEffect(() => {
-    initSocket();
-    subscribeToPackageUpdates(handlePackageUpdated);
-    subscribeToPackageDeleted(handlePackageDeleted);
-    return () => {
-      unsubscribeFromPackageUpdates();
-      unsubscribeFromPackageDeleted();
-    };
-  }, [handlePackageUpdated, handlePackageDeleted]);
-
-  useEffect(() => {
-    const getMenu = async () => {
-      try {
-        const response = await api.get(`/packages/${packageId}`);
-        setCateringPackage(response.data.data);
-      } catch (err) {
-        if (axios.isAxiosError<{ error: string }>(err)) {
-          const message =
-            err.response?.data.error || "Unexpected error occurred.";
-          console.error("ERROR FETCHING MENU", message);
-        } else {
-          console.error("Something went wrong. Please try again.");
-        }
-      }
-    };
-
-    getMenu();
-  }, []);
-
-  if (!cateringPackage) {
-    return (
-      <View className="flex-1 items-center justify-center bg-background">
-        <Text className="text-muted-foreground">No Menu Found</Text>
-      </View>
-    );
+  const { cateringPackages, isLoading } = usePackages();
+  const pkg = cateringPackages.find((item) => item._id === packageId);
+  // const displayInclusions =
+  //   platedInclusions.length > 0 ? platedInclusions : pkg.inclusions;
+  if (isLoading) {
+    return <Loading message="Loading Package" />;
   }
-
+  if (!pkg) {
+    return <Text>Package not found</Text>;
+  }
   return (
     <View className="pt-4 h-full bg-background">
       <View className="sticky top-0 z-10 bg-background border-t-slate-400">

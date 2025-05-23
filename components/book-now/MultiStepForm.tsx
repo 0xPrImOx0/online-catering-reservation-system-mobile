@@ -1,5 +1,5 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import { View, Text, ScrollView } from "react-native";
+import React, { useRef, useState } from "react";
 import { Check } from "lucide-react-native";
 import { Progress } from "~/components/ui/progress";
 import {
@@ -14,6 +14,8 @@ import { MultiStepFormProps } from "~/types/component-types";
 
 export default function MultiStepForm({
   formSteps,
+  title,
+  description,
   children,
   onSubmit,
   onNextStep,
@@ -29,10 +31,13 @@ export default function MultiStepForm({
   cancelButtonText = "Cancel",
   isReservationForm = false,
   setShowPackageSelection, // Default steps for demonstration
+  isCategoryError = false,
 }: MultiStepFormProps) {
   const [formStep, setFormStep] = useState<number>(initialStep || 0);
   const [isNextButtonDisabled, setIsNextButtonDisabled] =
     useState<boolean>(false);
+  const reservationRef = useRef(null);
+  const checkSizing = isReservationForm ? 24 : 16;
 
   // Function to go to next form step
   const nextStep = async () => {
@@ -92,16 +97,16 @@ export default function MultiStepForm({
     <View className="px-4 h-full bg-black">
       <View className="justify-center items-center pt-3 mb-4">
         <Text className="mb-2 text-3xl font-bold text-center text-foreground">
-          Reserve Your Catering Service
+          {title}
         </Text>
-        <Text className="text-muted-foreground">
-          Complete the form below to book your event
-        </Text>
+        <Text className="text-muted-foreground">{description}</Text>
       </View>
+
       <View className="flex flex-col gap-2 mb-2 sm:hidden">
         <Text className="text text-muted-foreground">
           Step {formStep + 1} of {formSteps.length}
         </Text>
+
         <View className="flex-row gap-2 items-center mt-1">
           <View
             className={`items-center justify-center w-10 h-10 text-center  border-2 rounded-full border-primary ${
@@ -109,9 +114,10 @@ export default function MultiStepForm({
             }`}
           >
             <Text className="text-foreground">
-              {isSubmitComplete ? <Check className="w-4 h-4" /> : formStep + 1}
+              {isSubmitComplete ? <Check className="w-4 h-4" /> : formStep + 1}{" "}
             </Text>
           </View>
+
           <Text className="text-2xl font-medium text-foreground">
             {formSteps[formStep].title}
           </Text>
@@ -133,10 +139,12 @@ export default function MultiStepForm({
               <CardTitle className="flex text-lg">
                 {!isSubmitComplete && formSteps[formStep].title}
               </CardTitle>
+
               <CardDescription>
                 {formSteps[formStep].description}
               </CardDescription>
             </CardHeader>
+
             <CardContent className="px-0 pb-16 h-full">
               {children[formStep]}
             </CardContent>
@@ -157,9 +165,10 @@ export default function MultiStepForm({
                   className="hover:bg-destructive hover:text-background"
                 >
                   <Text className="text-foreground" suppressHighlighting>
-                    {cancelButtonText}
+                    {cancelButtonText}{" "}
                   </Text>
                 </Button>
+
                 <View className="flex-row gap-2">
                   {formStep > 0 && (
                     <Button variant="secondary" onPress={prevStep}>
@@ -168,6 +177,7 @@ export default function MultiStepForm({
                       </Text>
                     </Button>
                   )}
+
                   {formStep < formSteps.length - 1 ? (
                     <Button onPress={nextStep} disabled={isNextButtonDisabled}>
                       <Text suppressHighlighting>{nextButtonText}</Text>

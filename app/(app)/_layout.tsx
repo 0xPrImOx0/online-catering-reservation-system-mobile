@@ -21,7 +21,6 @@ import { useColorScheme } from "~/lib/useColorScheme";
 export default function AppLayout() {
   const { isDarkColorScheme } = useColorScheme();
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const id = "no-id";
 
   return (
     <>
@@ -76,7 +75,7 @@ export default function AppLayout() {
                   size={20}
                   color={isDarkColorScheme ? "white" : "black"}
                   onPress={() => {
-                    router.push(`/book-now/${id}`);
+                    router.push(`/book-now/0`);
                   }}
                 />
               </TouchableOpacity>

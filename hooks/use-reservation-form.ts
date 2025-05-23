@@ -1,5 +1,3 @@
-import { cateringPackages } from "~/lib/packages-metadata";
-import { menuItems } from "~/lib/menu-lists";
 import { MenuItem } from "~/types/menu-types";
 import { hoursArray, PackageCategory } from "~/types/package-types";
 import {
@@ -21,6 +19,7 @@ import axios from "axios";
 
 import * as z from "zod";
 import { useAuthContext } from "~/context/AuthContext";
+import usePackages from "./socket/use-packages";
 
 // Helper to convert “hh:mm AM/PM” → minutes since midnight
 const timeToMinutes = (time: string) => {
@@ -147,9 +146,7 @@ export function useReservationForm() {
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [showPackageSelection, setShowPackageSelection] = useState(false);
   const [isCategoryError, setIsCategoryError] = useState(false);
-  const [cateringPackages, setCateringPackages] = useState<
-    CateringPackagesProps[] | null
-  >(null);
+  const { cateringPackages } = usePackages();
 
   const refinedSchema = reservationSchema.superRefine((data, ctx) => {
     if (
@@ -227,28 +224,6 @@ export function useReservationForm() {
       });
     }
   });
-
-  useEffect(() => {
-    const getCateringPackages = async () => {
-      try {
-        const response = await api.get("/packages");
-        setCateringPackages(response.data.data);
-      } catch (err: unknown) {
-        console.log("ERRRORRR", err);
-
-        if (axios.isAxiosError<{ error: string }>(err)) {
-          const message = err.response?.data.error || "Unexpected Error Occur";
-
-          console.error("ERROR FETCHING PACKAGES", message);
-        } else {
-          console.error("Something went wrong. Please try again.");
-        }
-      }
-    };
-
-    getCateringPackages();
-  }, []);
-
   const { customer } = useAuthContext();
 
   const defaultValues: ReservationValues = {
@@ -379,6 +354,7 @@ export function useReservationForm() {
       step !== 0
     ) {
       setShowPackageSelection(true);
+      return false
     }
     if (cateringOptions === "menus" && step === 1) {
       return true;

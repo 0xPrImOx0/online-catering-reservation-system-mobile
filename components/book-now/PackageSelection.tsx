@@ -18,6 +18,8 @@ import { Button } from "../ui/button";
 import MiniCateringPackageCard from "./MiniCateringPackageCard";
 import { cn } from "~/lib/utils";
 import { ScrollView } from "react-native";
+import usePackages from "~/hooks/socket/use-packages";
+import Loading from "../Loading";
 
 interface PackageSelectionProps {
   showPackageSelection: boolean;
@@ -37,7 +39,7 @@ export default function PackageSelection({
     formState: { errors },
   } = useFormContext<ReservationValues>();
 
-  const { cateringPackages } = useReservationForm();
+  const { cateringPackages, isLoading } = usePackages();
 
   return (
     <ScrollView
@@ -45,7 +47,7 @@ export default function PackageSelection({
       showsVerticalScrollIndicator={false}
     >
       {!showPackageSelection && (
-        <View className="gap-4">
+        <View className="gap-8">
           {options.map((option) => {
             return (
               <Button
@@ -85,22 +87,27 @@ export default function PackageSelection({
         </View>
       )}
 
-      {showPackageSelection && cateringPackages && (
-        <Controller
-          control={control}
-          name="selectedPackage"
-          render={({ field }) => (
-            <View className="gap-4">
-              {cateringPackages.map((pkg) => (
-                <MiniCateringPackageCard
-                  pkg={pkg}
-                  field={field}
-                  key={pkg._id}
-                />
-              ))}
-            </View>
-          )}
-        />
+      {isLoading ? (
+        <Loading message="Loading packages..." />
+      ) : (
+        showPackageSelection &&
+        cateringPackages && (
+          <Controller
+            control={control}
+            name="selectedPackage"
+            render={({ field }) => (
+              <View className="gap-4">
+                {cateringPackages.map((pkg) => (
+                  <MiniCateringPackageCard
+                    pkg={pkg}
+                    field={field}
+                    key={pkg._id}
+                  />
+                ))}
+              </View>
+            )}
+          />
+        )
       )}
 
       {errors.selectedPackage && (

@@ -118,7 +118,7 @@ export default function BookNow() {
   };
   // Add a handleCancel function:
   const handleCancel = () => {
-    router.push("/");
+    router.push("/home");
   };
 
   // Handle form submission
@@ -139,16 +139,8 @@ export default function BookNow() {
   const handleComplete = () => {
     setCurrentStep(0);
     setIsSubmitComplete(false);
-    router.push("/");
+    router.push("/home");
   };
-
-  useEffect(() => {
-    console.log("ERRRORS IN BOOKING", reservationForm.formState.errors);
-  });
-
-  useEffect(() => {
-    console.log("ORDER TYPESSS", watch("orderType"));
-  });
 
   useEffect(() => {
     if (currentStep !== 2 || cateringOptions === "menus") {
@@ -157,8 +149,8 @@ export default function BookNow() {
   }, [currentStep, cateringOptions]);
 
   useEffect(() => {
-    const fetchMenuOrPackage = async () => {
-      if (id) {
+    if (id && id !== "0") {
+      const fetchMenuOrPackage = async () => {
         const menu = await getMenuItem(id as string);
         const isPackage = cateringPackages.some((pkg) => pkg._id === id);
 
@@ -183,9 +175,7 @@ export default function BookNow() {
           setShowPackageSelection(true);
           return;
         }
-      }
-    };
-    if (id) {
+      };
       fetchMenuOrPackage();
     }
   }, [id]);

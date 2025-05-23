@@ -342,7 +342,7 @@ export function useReservationForm() {
       step !== 0
     ) {
       setShowPackageSelection(true);
-      return false
+      return false;
     }
     if (cateringOptions === "menus" && step === 1) {
       return true;

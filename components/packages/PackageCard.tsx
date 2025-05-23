@@ -79,7 +79,7 @@ export default function PackageCard({
             <Text className="text-sm font-medium text-center text-primary-foreground">
               View Details
             </Text>
-          </TouchableOpacity>
+          </Button>
         </View>
       </View>
     </View>

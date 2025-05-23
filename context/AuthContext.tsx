@@ -1,59 +1,62 @@
 import { CustomerProps } from "~/types/customer-types";
 import { createContext, useContext, useEffect, useState } from "react";
 import { IAuthContext } from "~/types/auth-types";
-import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "~/lib/axiosInstance";
+import axios from "axios";
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [customer, setCustomer] = useState<CustomerProps | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const storeTokens = async (accessToken: string, refreshToken: string) => {
+    await AsyncStorage.setItem("accessToken", accessToken);
+    await AsyncStorage.setItem("refreshToken", refreshToken);
+  };
+
+  const clearTokens = async () => {
+    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem("refreshToken");
+  };
 
   const getCurrentCustomer = async () => {
     setIsLoading(true);
     try {
       const res = await api.get("/auth/me");
-      // toast(<div className="p-4">{JSON.stringify(res, null, 2)}</div>);
       setCustomer(res.data.customer);
-    } catch (err: unknown) {
+    } catch (err) {
       if (!axios.isAxiosError(err) || err.response?.status !== 401) {
-        setErrorMessage("Unexpected error occur");
-        console.log(
-          "DEV ERROR IF NOT AXIOS ERROR IN GETTING ACCESS TOKEN | EXPIRED",
-          err
-        );
+        setErrorMessage("Unexpected error occurred");
+        console.log("Non-auth error:", err);
       }
 
-      // This will try to generate new access token using refresh token
+      // Try refresh token
       try {
-        console.log("Attempting to refresh the access token...");
-        await api.post("/auth/refresh");
+        const refreshToken = await AsyncStorage.getItem("refreshToken");
+        if (!refreshToken) throw new Error("No refresh token found");
+
+        const res = await api.post("/auth/refresh", { refreshToken });
+
+        const { accessToken, refreshToken: newRefresh } = res.data;
+        await storeTokens(accessToken, newRefresh);
 
         const retryRes = await api.get("/auth/me");
         setCustomer(retryRes.data.customer);
-      } catch (refreshErr: unknown) {
+      } catch (refreshErr) {
         setCustomer(null);
+        await clearTokens();
 
         if (axios.isAxiosError<{ error: string }>(refreshErr)) {
-          const message = refreshErr.response?.data.error;
-          console.log(
-            "DEV ERROR IF AXIOS ERROR IN REFESHING TOKEN",
-            refreshErr
-          );
           setErrorMessage(
-            `${refreshErr.message}: ${message || refreshErr.message}`
+            refreshErr.response?.data.error || "Token refresh failed"
           );
-          return;
+        } else {
+          setErrorMessage("Unknown error during token refresh");
         }
-
-        console.log(
-          "DEV ERROR IF NOTTT AXIOS ERROR IN REFESHING TOKEN",
-          refreshErr
-        );
-        setErrorMessage("Failed to get new access token: Not an AxiosError");
       }
     } finally {
       setIsLoading(false);
@@ -67,7 +70,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (refresh) {
       getCurrentCustomer();
-      setRefresh(false); // reset trigger
+      setRefresh(false);
     }
   }, [refresh]);
 

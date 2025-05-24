@@ -27,14 +27,13 @@ export default function SignInScreen() {
   });
   const { control } = form;
   const router = useRouter();
-  const [error, setError] = useState("");
-  const { customer } = useAuthContext();
+  const { customer, setCustomer } = useAuthContext();
   const [loading, setLoading] = useState(false);
-
   const handleSignIn = async (values: SignInFormValues) => {
     try {
       setLoading(true);
-      await api.post("/auth/sign-in", values);
+      const res = await api.post("/auth/sign-in", values);
+      setCustomer(res.data.customer);
       router.push("/home");
     } catch (error) {
       console.log("ERROR", error);
@@ -42,7 +41,7 @@ export default function SignInScreen() {
       setLoading(false);
     }
   };
-  
+
   return (
     <View className="flex-1 bg-black">
       <StatusBar style="light" />

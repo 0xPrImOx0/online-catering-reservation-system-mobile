@@ -30,5 +30,7 @@ export interface IAuthContext {
   setCustomer: (customer: CustomerProps | null) => void;
   isLoading: boolean;
   errorMessage: string;
+  logout: () => Promise<void>;
+  refresh: boolean;
 }
 

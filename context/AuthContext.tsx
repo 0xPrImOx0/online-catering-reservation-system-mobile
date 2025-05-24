@@ -64,10 +64,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  useEffect(() => {
-    getCurrentCustomer();
-    // console.log(customer);
-  }, [customer]);
+  const logout = async () => {
+    try {
+      // Optional: Call your backend logout endpoint if you have one
+      await api.post("/auth/sign-out");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    } finally {
+      // Clear local state and storage
+      setCustomer(null);
+      await clearTokens();
+      setErrorMessage("");
+    }
+  };
 
   useEffect(() => {
     if (refresh) {
@@ -76,9 +85,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [refresh]);
 
+  useEffect(() => {
+    getCurrentCustomer();
+  }, [customer]);
+
   return (
     <AuthContext.Provider
-      value={{ customer, setCustomer, isLoading, errorMessage }}
+      value={{
+        customer,
+        setCustomer,
+        isLoading,
+        errorMessage,
+        logout,
+        refresh,
+      }}
     >
       {children}
     </AuthContext.Provider>

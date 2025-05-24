@@ -18,10 +18,14 @@ import { useState } from "react";
 import { Separator } from "~/components/ui/separator";
 import AdditionalSettingsButtons from "~/components/AdditionalSettingsButtons";
 import { useColorScheme } from "~/lib/useColorScheme";
+import { useAuthContext } from "~/context/AuthContext";
+import { Skeleton } from "~/components/ui/skeleton";
 
 export default function AppLayout() {
   const { isDarkColorScheme } = useColorScheme();
   const [showInfoModal, setShowInfoModal] = useState(false);
+
+  const { customer } = useAuthContext();
 
   return (
     <>
@@ -56,15 +60,19 @@ export default function AppLayout() {
               className="ml-4"
             >
               <Avatar className="w-10 h-10" alt={"Profile Picture"}>
-                <Image
-                  source={{
-                    uri: "https://github.com/shadcn.png",
-                  }}
-                  className="w-full h-full rounded-full"
-                  alt="User Avatar"
-                />
+                {customer ? (
+                  <Image
+                    source={{
+                      uri: "https://github.com/shadcn.png",
+                    }}
+                    className="w-full h-full rounded-full"
+                    alt="User Avatar"
+                  />
+                ) : (
+                  <Skeleton />
+                )}
                 <AvatarFallback>
-                  <Text>RD</Text>
+                  <User color={"white"} />
                 </AvatarFallback>
               </Avatar>
             </TouchableOpacity>
@@ -169,8 +177,8 @@ export default function AppLayout() {
               />
               <AdditionalSettingsButtons
                 link={"/signIn"}
-                icon={User}
-                title="Sign In"
+                icon={customer ? User : LogOut}
+                title={customer ? "Sign Out" : "Sign In"}
                 setShowInfoModal={setShowInfoModal}
               />
             </View>

@@ -284,7 +284,7 @@ export function useReservationForm() {
       Object.values(selectedMenus).forEach((category) => {
         // Iterate through each menu item in the category
         Object.values(category).forEach((item) => {
-          total += item.quantity * item.pricePerPax;
+          total += item.pricePerPax;
         });
       });
       if (isPackage) {
@@ -485,9 +485,10 @@ export function useReservationForm() {
       console.log("ERRORRRR", err);
       if (axios.isAxiosError<{ error: string }>(err)) {
         const message = err.response?.data.error || "Unexpected Error Occur";
-        // toast.error(message);
+        console.log(message);
+        toast.error(message);
       } else {
-        // toast.error("Something went wrong. Please try again.");
+        toast.error("Something went wrong. Please try again.");
       }
     }
 
@@ -505,6 +506,7 @@ export function useReservationForm() {
       case 2:
         return ["selectedMenus"];
       case 3:
+        if (orderType === "Delivery") {
         return [
           "eventType",
           "deliveryAddress",
@@ -514,6 +516,16 @@ export function useReservationForm() {
           "serviceType",
           "serviceHours",
         ];
+      } else {
+        return [
+          "eventType",
+          "reservationDate",
+          "reservationTime",
+          "guestCount",
+          "serviceType",
+          "serviceHours",
+        ];
+      }
       default:
         return [];
     }

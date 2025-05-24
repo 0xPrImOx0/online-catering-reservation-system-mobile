@@ -57,7 +57,7 @@ export default function PackagesPage() {
           className="gap-3"
           columnWrapperClassName="gap-3"
           renderItem={({ item }) => <PackageCard item={item} />}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item) => item._id as string}
         />
       )}
     </View>

@@ -2,113 +2,125 @@
 import { Text } from "~/components/ui/text";
 import { useState } from "react";
 import { View, TextInput, TouchableOpacity, Image, Alert } from "react-native";
-import { Link, router } from "expo-router";
+import { Link, router, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import CustomButton from "../../components/CustomButton";
+import api from "~/lib/axiosInstance";
+import { useAuthContext } from "~/context/AuthContext";
+import { SignInFormValues } from "~/types/auth-types";
+import { Controller, Form, FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "~/hooks/use-auth-form";
+import { Label } from "~/components/ui/label";
+import { Button } from "~/components/ui/button";
+import { Card } from "~/components/ui/card";
+import { Input } from "~/components/ui/input";
 
 export default function SignInScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const form = useForm<SignInFormValues>({
+    resolver: zodResolver(loginSchema),
+    mode: "all",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  const { control } = form;
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const { customer } = useAuthContext();
   const [loading, setLoading] = useState(false);
 
-  const handleSignIn = () => {
-    setLoading(true);
-    // Implement sign in logic here
-    setTimeout(() => {
+  const handleSignIn = async (values: SignInFormValues) => {
+    try {
+      setLoading(true);
+      await api.post("/auth/sign-in", values);
+      router.push("/home");
+    } catch (error) {
+      console.log("ERROR", error);
+    } finally {
       setLoading(false);
-      // Navigate to the app's main screen after successful sign-in
-      router.replace("/(app)/home");
-    }, 1500);
+    }
   };
-
-  const handleGoogleSignIn = () => {
-    // Implement Google sign in
-    Alert.alert("Google Sign In", "Google sign in would be implemented here");
-  };
-
+  
   return (
     <View className="flex-1 bg-black">
       <StatusBar style="light" />
-      <View className="flex-1 justify-center px-6">
-        <View className="border-[1.5px] border-white rounded-2xl p-6">
-          <View className="mb-8">
-            <Text className="text-foreground text-4xl font-bold mb-2">
-              Sign in to your account
-            </Text>
-            <Text className="text-gray-400 text-xl">
-              Enter your email below to sign in to your account
-            </Text>
-          </View>
-
-          <View className="mb-4">
-            <Text className="text-foreground text-lg mb-2">Email</Text>
-            <TextInput
-              className="bg-black text-foreground border border-gray-700 rounded-xl px-4 py-3 text-lg"
-              placeholder="Email Address"
-              placeholderTextColor="#666"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
-
-          <View className="mb-4">
-            <View className="flex-row justify-between items-center mb-2">
-              <Text className="text-foreground text-lg">Password</Text>
+      <FormProvider {...form}>
+        <View className="flex-1 justify-center px-6">
+          <Card className="p-6 rounded-2xl">
+            <View className="mb-8">
+              <Text className="mb-2 text-4xl font-bold text-foreground">
+                Sign in to your account
+              </Text>
+              <Text className="text-xl text-gray-400">
+                Enter your email below to sign in to your account
+              </Text>
             </View>
-            <TextInput
-              className="bg-black text-foreground border border-gray-700 rounded-xl px-4 py-3 text-lg"
-              placeholder="Password"
-              placeholderTextColor="#666"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
+
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <View className="mb-4">
+                  <Label className="mb-2 text-lg text-foreground">Email</Label>
+                  <Input
+                    placeholder="Email Address"
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                  />
+                </View>
+              )}
             />
-            <Link href="/(auth)/forgotPassword" asChild>
-              <TouchableOpacity>
-                <Text className="text-foreground mt-4">Forgot password?</Text>
-              </TouchableOpacity>
+
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <View className="mb-4">
+                  <Label className="mb-2 text-lg text-foreground">
+                    Password
+                  </Label>
+                  <Input
+                    placeholder="Password"
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    secureTextEntry
+                  />
+                </View>
+              )}
+            />
+
+            <Link href="/forgotPassword" className="py-4 ml-auto">
+              <Text className="text-foreground">Forgot password?</Text>
             </Link>
-          </View>
-
-          <CustomButton
-            label={loading ? "Signing in..." : "Sign In"}
-            onPress={handleSignIn}
-            disabled={loading}
-            buttonStyles="bg-white py-4 rounded-full mb-4"
-            textStyle="text-background text-lg"
-          />
-
-          <View className="flex-row items-center my-6">
-            <View className="flex-1 h-px bg-gray-700" />
-            <Text className="text-gray-400 mx-4">Or continue with</Text>
-            <View className="flex-1 h-px bg-gray-700" />
-          </View>
-
-          <CustomButton
-            onPress={handleGoogleSignIn}
-            buttonStyles="bg-black border border-gray-700 py-4 rounded-full mb-4"
-            icon={require("../../assets/google.png")}
-            iconStyle="w-5 h-5 mr-2"
-            label="Sign in with Google"
-            textStyle="text-foreground text-lg"
-          />
+            <Button
+              disabled={loading}
+              onPress={() => handleSignIn(form.getValues())}
+              className="py-4 mb-4 bg-white rounded-full"
+            >
+              <Text className="text-lg text-center text-background">
+                {loading ? "Signing in..." : "Sign In"}
+              </Text>
+            </Button>
+          </Card>
 
           <View className="flex-row justify-center mt-6">
-            <Text className="text-gray-400 text-lg">
+            <Text className="text-lg text-gray-400">
               Don't have an account?{" "}
             </Text>
-            <Link href="/(auth)/signUp" asChild>
+            <Link href="/signUp" asChild>
               <TouchableOpacity>
-                <Text className="text-foreground text-lg font-medium">
+                <Text className="text-lg font-medium text-foreground">
                   Sign up
                 </Text>
               </TouchableOpacity>
             </Link>
           </View>
         </View>
-      </View>
+      </FormProvider>
     </View>
   );
 }

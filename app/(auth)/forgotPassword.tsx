@@ -11,10 +11,8 @@ export default function ForgotPasswordScreen() {
 
   const handleResetPassword = () => {
     setLoading(true);
-    // Implement your password reset logic here
     setTimeout(() => {
       setLoading(false);
-      // Show success message or navigate
       router.back();
     }, 1500);
   };
@@ -24,18 +22,18 @@ export default function ForgotPasswordScreen() {
       <View className="flex-1 justify-center px-6">
         <View className="border-[1.5px] border-white rounded-2xl p-6">
           <View className="mb-8">
-            <Text className="text-foreground text-4xl font-bold mb-2">
+            <Text className="mb-2 text-4xl font-bold text-foreground">
               Forgot your password?
             </Text>
-            <Text className="text-gray-400 text-xl">
+            <Text className="text-xl text-gray-400">
               Enter your email address to receive a password reset link
             </Text>
           </View>
 
           <View className="mb-4">
-            <Text className="text-foreground text-lg mb-2">Email</Text>
+            <Text className="mb-2 text-lg text-foreground">Email</Text>
             <TextInput
-              className="bg-black text-foreground border border-gray-700 rounded-xl px-4 py-3 text-lg"
+              className="px-4 py-3 text-lg bg-black rounded-xl border border-gray-700 text-foreground"
               placeholder="Email Address"
               placeholderTextColor="#666"
               value={email}

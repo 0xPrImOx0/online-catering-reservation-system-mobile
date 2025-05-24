@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(true);
     try {
       const res = await api.get("/auth/me");
+
       setCustomer(res.data.customer);
     } catch (err) {
       if (!axios.isAxiosError(err) || err.response?.status !== 401) {
@@ -65,7 +66,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     getCurrentCustomer();
-  }, []);
+    // console.log(customer);
+  }, [customer]);
 
   useEffect(() => {
     if (refresh) {

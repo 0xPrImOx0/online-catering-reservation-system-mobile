@@ -12,6 +12,7 @@ import {
   Phone,
   Ellipsis,
   HelpCircle,
+  LogOut,
 } from "lucide-react-native";
 import { useState } from "react";
 import { Separator } from "~/components/ui/separator";
@@ -164,6 +165,12 @@ export default function AppLayout() {
                 link={"/about-us"}
                 icon={HelpCircle}
                 title="About Food Sentinel"
+                setShowInfoModal={setShowInfoModal}
+              />
+              <AdditionalSettingsButtons
+                link={"/signIn"}
+                icon={User}
+                title="Sign In"
                 setShowInfoModal={setShowInfoModal}
               />
             </View>

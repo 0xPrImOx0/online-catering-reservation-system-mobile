@@ -486,9 +486,9 @@ export function useReservationForm() {
       if (axios.isAxiosError<{ error: string }>(err)) {
         const message = err.response?.data.error || "Unexpected Error Occur";
         console.log(message);
-        toast.error(message);
+        // toast.error(message);
       } else {
-        toast.error("Something went wrong. Please try again.");
+        // toast.error("Something went wrong. Please try again.");
       }
     }
 

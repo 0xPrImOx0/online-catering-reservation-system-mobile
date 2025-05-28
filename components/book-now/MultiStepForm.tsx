@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text } from "react-native";
 import React, { useRef, useState } from "react";
 import { Check } from "lucide-react-native";
 import { Progress } from "~/components/ui/progress";

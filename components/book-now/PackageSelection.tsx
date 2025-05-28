@@ -13,7 +13,7 @@ import { ReservationValues } from "~/hooks/use-reservation-form";
 import { Button } from "../ui/button";
 import MiniCateringPackageCard from "./MiniCateringPackageCard";
 import { ScrollView } from "react-native";
-import usePackages from "~/hooks/socket/use-packages";
+import useApiPackages from "~/hooks/useApiPackages";
 import Loading from "../Loading";
 
 interface PackageSelectionProps {
@@ -34,7 +34,7 @@ export default function PackageSelection({
     formState: { errors },
   } = useFormContext<ReservationValues>();
 
-  const { cateringPackages, isLoading } = usePackages();
+  const { cateringPackages, isLoading } = useApiPackages();
 
   return (
     <ScrollView

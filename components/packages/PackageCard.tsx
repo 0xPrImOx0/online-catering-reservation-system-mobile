@@ -4,7 +4,7 @@ import React from "react";
 import { CateringPackagesProps } from "~/types/package-types";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { Button } from "../ui/button";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { cn } from "~/lib/utils";
 
 export default function PackageCard({
@@ -75,7 +75,13 @@ export default function PackageCard({
           <Text className="text-sm text-muted-foreground">per pax</Text>
         </View>
         <View className={cn("w-full", !isFeatured && "items-end")}>
-          <Button size={"custom"} className="z-50 p-2">
+          <Button
+            size={"custom"}
+            className="z-50 p-2"
+            onPress={() => {
+              router.push(`/packages/${item._id}`);
+            }}
+          >
             <Text className="text-sm font-medium text-center text-primary-foreground">
               View Details
             </Text>

@@ -2,7 +2,6 @@ import { View, Text, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import CheckboxMenus from "./CheckboxMenus";
 import { Label } from "../ui/label";
-import AddRemoveMenuQuantity from "./AddRemoveMenuQuantity";
 import { defaultCategoryAndCount } from "~/lib/menu-select";
 import { PackageOption } from "~/types/package-types";
 import {

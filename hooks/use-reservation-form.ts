@@ -18,7 +18,7 @@ import axios from "axios";
 
 import * as z from "zod";
 import { useAuthContext } from "~/context/AuthContext";
-import usePackages from "./socket/use-packages";
+import useApiPackages from "./useApiPackages";
 
 // Helper to convert “hh:mm AM/PM” → minutes since midnight
 const timeToMinutes = (time: string) => {
@@ -134,7 +134,7 @@ export function useReservationForm() {
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [showPackageSelection, setShowPackageSelection] = useState(false);
   const [isCategoryError, setIsCategoryError] = useState(false);
-  const { cateringPackages } = usePackages();
+  const { cateringPackages } = useApiPackages();
 
   const refinedSchema = reservationSchema.superRefine((data, ctx) => {
     if (
@@ -356,32 +356,18 @@ export function useReservationForm() {
   const getAllMenus = async () => {
     try {
       const response = await api.get(`/menus`);
-      return response.data.data;
-    } catch (err) {
-      if (axios.isAxiosError<{ error: string }>(err)) {
-        const message =
-          err.response?.data.error || "Unexpected error occurred.";
-        console.error("ERROR FETCHING MENU", message);
-      } else {
-        console.error("Something went wrong. Please try again.");
-      }
-      return null;
+      return response.data?.data;
+    } catch {
+      return undefined;
     }
   };
 
   const getMenuItem = async (menuId: string) => {
     try {
       const response = await api.get(`/menus/${menuId}`);
-      return response.data.data;
-    } catch (err) {
-      if (axios.isAxiosError<{ error: string }>(err)) {
-        const message =
-          err.response?.data.error || "Unexpected error occurred.";
-        console.error("ERROR FETCHING MENU", message);
-      } else {
-        console.error("Something went wrong. Please try again.");
-      }
-      return null;
+      return response.data?.data;
+    } catch {
+      return undefined;
     }
   };
 
@@ -390,16 +376,8 @@ export function useReservationForm() {
     try {
       const response = await api.get(`/packages/${pkgId}`);
       return response.data.data;
-    } catch (err: unknown) {
-      console.log("ERRRORRR", err);
-
-      if (axios.isAxiosError<{ error: string }>(err)) {
-        const message = err.response?.data.error || "Unexpected Error Occur";
-
-        console.error("ERROR FETCHING PACKAGES", message);
-      } else {
-        console.error("Something went wrong. Please try again.");
-      }
+    } catch {
+      return undefined;
     }
   };
 
@@ -507,25 +485,25 @@ export function useReservationForm() {
         return ["selectedMenus"];
       case 3:
         if (orderType === "Delivery") {
-        return [
-          "eventType",
-          "deliveryAddress",
-          "reservationDate",
-          "reservationTime",
-          "guestCount",
-          "serviceType",
-          "serviceHours",
-        ];
-      } else {
-        return [
-          "eventType",
-          "reservationDate",
-          "reservationTime",
-          "guestCount",
-          "serviceType",
-          "serviceHours",
-        ];
-      }
+          return [
+            "eventType",
+            "deliveryAddress",
+            "reservationDate",
+            "reservationTime",
+            "guestCount",
+            "serviceType",
+            "serviceHours",
+          ];
+        } else {
+          return [
+            "eventType",
+            "reservationDate",
+            "reservationTime",
+            "guestCount",
+            "serviceType",
+            "serviceHours",
+          ];
+        }
       default:
         return [];
     }

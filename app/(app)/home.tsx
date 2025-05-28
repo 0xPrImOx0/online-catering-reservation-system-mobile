@@ -19,16 +19,16 @@ import Hero from "~/components/home/Hero";
 import { Card } from "~/components/ui/card";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { Link } from "expo-router";
-import usePackages from "~/hooks/socket/use-packages";
+import useApiPackages from "~/hooks/useApiPackages";
 import PackageCard from "~/components/packages/PackageCard";
 import { Button } from "~/components/ui/button";
-import useMenus from "~/hooks/socket/use-menus";
+import useApiMenus from "~/hooks/useApiMenus";
 import { Separator } from "~/components/ui/separator";
 
 export default function Home() {
   const { isDarkColorScheme } = useColorScheme();
-  const { featuredPackages } = usePackages();
-  const { menus } = useMenus();
+  const { featuredPackages } = useApiPackages();
+  const { menus } = useApiMenus();
 
   // Filtering Featured menus using the highest ratings and only reflect 6 of them using slice
   const featuredMenus = () => {

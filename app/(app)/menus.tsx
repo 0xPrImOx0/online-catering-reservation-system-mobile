@@ -16,7 +16,7 @@ import CategoryPill from "~/components/menus/CategoryPill";
 import MenuSearchBar from "~/components/menus/MenuSearchBar";
 import { categories } from "~/lib/menu-lists";
 import { useColorScheme } from "~/lib/useColorScheme";
-import useMenus from "~/hooks/socket/use-menus";
+import useApiMenus from "~/hooks/useApiMenus";
 import Loading from "~/components/Loading";
 
 export default function MenusPage() {
@@ -25,7 +25,7 @@ export default function MenusPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [query, setQuery] = useState("");
 
-  const { menus, isLoading } = useMenus();
+  const { menus, isLoading } = useApiMenus();
 
   const filteredMenuItems = menus
     ? menus.filter((item) => {

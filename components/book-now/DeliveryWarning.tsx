@@ -22,7 +22,7 @@ export default function DeliveryWarning({
         )}
       >
         <Button
-          className="absolute right-4 top-4 text-muted-foreground"
+          className="absolute top-4 right-4 text-muted-foreground"
           variant={"ghost"}
           size={"custom"}
           onPress={() => setCloseWarning((prev) => !prev)}
@@ -43,7 +43,7 @@ export default function DeliveryWarning({
   return (
     <TouchableOpacity
       onPress={() => setCloseWarning((prev) => !prev)}
-      className="flex-row items-center w-full gap-2 my-4 "
+      className="flex-row gap-2 items-center my-4 w-full"
     >
       <Info className="" color={"white"} size={18} />
       <Text className="text-foreground">See Delivery Warning</Text>

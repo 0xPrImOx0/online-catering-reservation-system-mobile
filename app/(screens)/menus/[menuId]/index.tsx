@@ -1,7 +1,6 @@
 import { View, Text, Image, ScrollView, FlatList } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { menuItems } from "~/lib/menu-lists";
 import { Badge } from "~/components/ui/badge";
 import clsx from "clsx";
 import { CategoryBadge } from "~/components/menus/MenuCategoryBadge";
@@ -9,74 +8,13 @@ import { Flame } from "lucide-react-native";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import TrayPriceCard from "~/components/menus/TrayPriceCard";
-import api from "~/lib/axiosInstance";
-import { MenuItem } from "~/types/menu-types";
-import axios from "axios";
-import {
-  initSocket,
-  subscribeToMenuDeleted,
-  subscribeToMenuUpdates,
-  unsubscribeFromMenuDeleted,
-  unsubscribeFromMenuUpdates,
-} from "~/lib/socket";
+import useApiMenus from "~/hooks/useApiMenus";
 
 export default function MenuShowcasePage() {
   const { menuId } = useLocalSearchParams();
-  const [menu, setMenu] = useState<MenuItem | null>(null);
+  const { menus } = useApiMenus();
 
-  // Handle menu updates from the socket
-  const handleMenuUpdated = useCallback(
-    (updatedMenu: MenuItem) => {
-      // Only update if it's the menu we're currently viewing
-      if (menu?._id === updatedMenu._id) {
-        console.log("🔄 Received updated menu from socket:", updatedMenu);
-        setMenu(updatedMenu);
-      }
-    },
-    [menu?._id]
-  );
-
-  // Handle menu deletion from the socket
-  const handleMenuDeleted = useCallback((deletedMenu: MenuItem) => {
-    console.log("❌ Menu deleted from socket:", deletedMenu);
-    // Set menu to null if the deleted menu is the one we're viewing
-    setMenu((prevMenu) =>
-      prevMenu && prevMenu._id === deletedMenu._id ? null : prevMenu
-    );
-  }, []);
-
-  // Set up socket connections for real-time updates
-  useEffect(() => {
-    initSocket();
-    subscribeToMenuUpdates(handleMenuUpdated);
-    subscribeToMenuDeleted(handleMenuDeleted);
-    
-    // Clean up socket connections when component unmounts
-    return () => {
-      unsubscribeFromMenuUpdates();
-      unsubscribeFromMenuDeleted();
-    };
-  }, [handleMenuUpdated, handleMenuDeleted]);
-
-  // Fetch menu data from API on component mount
-  useEffect(() => {
-    const getMenu = async () => {
-      try {
-        const response = await api.get(`/menus/${menuId}`);
-        setMenu(response.data.data);
-      } catch (err) {
-        if (axios.isAxiosError<{ error: string }>(err)) {
-          const message =
-            err.response?.data.error || "Unexpected error occurred.";
-          console.error("ERROR FETCHING MENU", message);
-        } else {
-          console.error("Something went wrong. Please try again.");
-        }
-      }
-    };
-
-    getMenu();
-  }, [menuId]); // Include menuId in dependency array
+  const menu = menus.find((menu) => menu._id === menuId);
 
   if (!menu) {
     return (
@@ -95,7 +33,6 @@ export default function MenuShowcasePage() {
             alt={menu.name}
             className="object-cover object-center h-[240px]"
           />
-          
 
           <View className="absolute top-2 right-2 flex-row gap-2">
             <Badge

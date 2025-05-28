@@ -50,7 +50,7 @@ export default function PackageDetailsDialog({
             <Button
               variant="ghost"
               size="icon"
-              className="absolute text-foreground rounded-fViewl top-4 right-4 bg-black/50 hover:bg-black/70"
+              className="absolute top-4 right-4 text-foreground rounded-fViewl bg-black/50 hover:bg-black/70"
               onPress={() => onOpenChange(false)}
             >
               <Text>
@@ -65,7 +65,7 @@ export default function PackageDetailsDialog({
               {pkg.description}
             </Text>
             {!isReservationForm && (
-              <View className="flex items-center justify-between px-3 py-2 mt-4 rounded-md bg-primary text-primary-foreground">
+              <View className="flex justify-between items-center px-3 py-2 mt-4 rounded-md bg-primary text-primary-foreground">
                 <View>
                   <Text className="text-lg font-bold">
                     {isPlated
@@ -81,14 +81,14 @@ export default function PackageDetailsDialog({
                   )}
                 </View>
                 <Button asChild variant={"secondary"}>
-                  <Link href={`/book-now`}>Book Now</Link>
+                  <Link href={`/book-now/0`}>Book Now</Link>
                 </Button>
               </View>
             )}
           </View>
         </View>
         {/* Scrollable Content Section */}
-        <ScrollView className="flex-grow p-6 overflow-y-auto">
+        <ScrollView className="overflow-y-auto flex-grow p-6">
           <View className="grid gap-6">
             <View className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <Card className="p-4">
@@ -143,7 +143,7 @@ export default function PackageDetailsDialog({
               <View className="grid grid-cols-1 gap-2">
                 {/* Show rice trays for buffet and plated packages */}
                 {pkg.packageType === "Event" && (
-                  <View className="flex items-center col-span-1 gap-2">
+                  <View className="flex col-span-1 gap-2 items-center">
                     <Text className="font-medium">
                       <CheckCircle2Icon className="w-4 h-4 text-green-500" />
                       {Math.ceil(pkg.minimumPax / 2)} trays of steamed rice
@@ -152,7 +152,7 @@ export default function PackageDetailsDialog({
                   </View>
                 )}
                 {displayInclusions.map((inclusion, index) => (
-                  <View key={index} className="flex items-center gap-2">
+                  <View key={index} className="flex gap-2 items-center">
                     <Text className="text-justify">
                       <CheckCircle2Icon className="w-4 h-4 text-green-500" />
                       {inclusion.includes}
@@ -178,7 +178,7 @@ export default function PackageDetailsDialog({
                         .map((dish) => (
                           <View
                             key={dish.name}
-                            className="flex items-center gap-2"
+                            className="flex gap-2 items-center"
                           >
                             <Text>
                               <CheckCircle2Icon className="w-4 h-4 text-green-500" />

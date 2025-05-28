@@ -3,21 +3,13 @@ import { Platform, Text, View } from "react-native";
 import { Input } from "~/components/ui/input";
 import { Label } from "../ui/label";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Calendar, CalendarIcon } from "lucide-react-native";
-import React, { useId, useState } from "react";
+import { CalendarIcon } from "lucide-react-native";
+import React, { useId } from "react";
 import { ReservationValues } from "~/hooks/use-reservation-form";
 import { format } from "date-fns";
 import { Button } from "../ui/button";
-import { cn } from "~/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import clsx from "clsx";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 
 export default function ReservationDateAndTime({
   control,

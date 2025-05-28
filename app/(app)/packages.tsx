@@ -5,12 +5,12 @@ import { useColorScheme } from "~/lib/useColorScheme";
 import CategoryPill from "~/components/menus/CategoryPill";
 import { packages } from "~/lib/packages-metadata";
 import PackageCard from "~/components/packages/PackageCard";
-import usePackages from "~/hooks/socket/use-packages";
+import useApiPackages from "~/hooks/useApiPackages";
 import Loading from "~/components/Loading";
 
 export default function PackagesPage() {
   const { isDarkColorScheme } = useColorScheme();
-  const { cateringPackages, isLoading, error } = usePackages();
+  const { cateringPackages, isLoading, error } = useApiPackages();
   const [selectedType, setSelectedType] = useState("All");
 
   const filterPackages = (type: string) => {

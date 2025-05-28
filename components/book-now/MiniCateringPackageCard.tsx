@@ -6,8 +6,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { CateringPackagesProps } from "~/types/package-types";
-import React, { useState, useEffect, useCallback } from "react";
-import PackageDetailsDialog from "./PackageDetailsDialog";
+import React, { useState, useEffect } from "react";
 import { EyeIcon, User } from "lucide-react-native";
 import clsx from "clsx";
 import { View, Text } from "react-native";

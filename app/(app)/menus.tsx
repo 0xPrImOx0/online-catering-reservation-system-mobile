@@ -6,6 +6,7 @@ import {
   Modal,
   FlatList,
   Image,
+  RefreshControl,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "~/components/ui/text";
@@ -25,7 +26,17 @@ export default function MenusPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [query, setQuery] = useState("");
 
-  const { menus, isLoading } = useApiMenus();
+  const { menus, isLoading, refresh } = useApiMenus();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refresh();
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const filteredMenuItems = menus
     ? menus.filter((item) => {
@@ -75,6 +86,14 @@ export default function MenusPage() {
           data={filteredMenuItems}
           keyExtractor={(item) => item._id}
           renderItem={(item) => <MenuCard item={item.item} />}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={[isDarkColorScheme ? '#ffffff' : '#000000']}
+              tintColor={isDarkColorScheme ? '#ffffff' : '#000000'}
+            />
+          }
         />
       ) : (
         <View className="items-center my-auto">

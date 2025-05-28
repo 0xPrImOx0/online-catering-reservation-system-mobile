@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, FlatList, Text } from "react-native";
+import { View, FlatList, Text, RefreshControl } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "~/lib/useColorScheme";
 import CategoryPill from "~/components/menus/CategoryPill";
@@ -10,8 +10,18 @@ import Loading from "~/components/Loading";
 
 export default function PackagesPage() {
   const { isDarkColorScheme } = useColorScheme();
-  const { cateringPackages, isLoading, error } = useApiPackages();
+  const { cateringPackages, isLoading, error, refreshPackages, refreshFeatured } = useApiPackages();
   const [selectedType, setSelectedType] = useState("All");
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await Promise.all([refreshPackages(), refreshFeatured()]);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const filterPackages = (type: string) => {
     if (!cateringPackages) return [];
@@ -58,6 +68,14 @@ export default function PackagesPage() {
           columnWrapperClassName="gap-3"
           renderItem={({ item }) => <PackageCard item={item} />}
           keyExtractor={(item) => item._id as string}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={[isDarkColorScheme ? '#ffffff' : '#000000']}
+              tintColor={isDarkColorScheme ? '#ffffff' : '#000000'}
+            />
+          }
         />
       )}
     </View>

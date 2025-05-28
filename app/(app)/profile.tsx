@@ -4,7 +4,6 @@ import { Text } from "~/components/ui/text";
 import { useColorScheme } from "~/lib/useColorScheme";
 import {
   LogOut,
-  MapPin,
   Phone,
   Mail,
   User,

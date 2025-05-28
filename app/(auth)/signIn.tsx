@@ -1,14 +1,12 @@
-"use client";
 import { Text } from "~/components/ui/text";
 import { useState } from "react";
-import { View, TextInput, TouchableOpacity, Image, Alert } from "react-native";
+import { View, TouchableOpacity, Image, Alert } from "react-native";
 import { Link, router, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import CustomButton from "../../components/CustomButton";
 import api from "~/lib/axiosInstance";
 import { useAuthContext } from "~/context/AuthContext";
 import { SignInFormValues } from "~/types/auth-types";
-import { Controller, Form, FormProvider, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "~/hooks/use-auth-form";
 import { Label } from "~/components/ui/label";
@@ -27,7 +25,7 @@ export default function SignInScreen() {
   });
   const { control } = form;
   const router = useRouter();
-  const { customer, setCustomer } = useAuthContext();
+  const { setCustomer } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const handleSignIn = async (values: SignInFormValues) => {
     try {

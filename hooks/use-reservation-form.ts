@@ -352,7 +352,6 @@ export function useReservationForm() {
     return isValid;
   };
 
-  //Find all menus (will transfer to the socket later on)
   const getAllMenus = async () => {
     try {
       const response = await api.get(`/menus`);
@@ -371,7 +370,6 @@ export function useReservationForm() {
     }
   };
 
-  ///Find all packages (will transfer to socket later on)
   const getPackageItem = async (pkgId: string) => {
     try {
       const response = await api.get(`/packages/${pkgId}`);
